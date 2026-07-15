@@ -1,0 +1,5 @@
+- [x] Verify workspace files are scaffolded for a Next.js + Tailwind + Three.js + GSAP project.
+- [x] Keep the website theme classy and aesthetic.
+- [x] Provide a seller login button on initial site display.
+- [x] Include an admin order section with orders fetched from an API.
+- [x] Add README.md with startup instructions.

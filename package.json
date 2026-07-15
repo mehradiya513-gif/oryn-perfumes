@@ -1,0 +1,30 @@
+{
+  "name": "outfit-perfume",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "preview": "next dev",
+    "deploy": "next build && next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "gsap": "3.13.0",
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "three": "0.165.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.2",
+    "@types/react": "18.3.5",
+    "@types/react-dom": "18.3.0",
+    "@types/three": "^0.184.1",
+    "autoprefixer": "10.4.19",
+    "postcss": "8.4.35",
+    "tailwindcss": "3.4.4",
+    "typescript": "5.6.2"
+  }
+}
