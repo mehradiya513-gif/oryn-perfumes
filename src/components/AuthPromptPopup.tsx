@@ -92,7 +92,8 @@ export default function AuthPromptPopup() {
                 alt="ORYN Logo"
                 width={130}
                 height={65}
-                className="object-contain mix-blend-multiply brightness-[1.25] contrast-[1.35] saturate-[.85]"
+                className="object-contain mix-blend-multiply brightness-[1.05] contrast-[1.1] saturate-[.85]"
+                style={{ clipPath: 'inset(15% 15% 22% 15%)' }}
               />
             </div>
             <h2

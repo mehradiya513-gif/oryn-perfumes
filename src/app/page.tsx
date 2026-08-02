@@ -110,7 +110,8 @@ export default function HomePage() {
               alt="ORYN Perfume"
               width={500}
               height={500}
-              className="relative z-10 w-[78%] max-w-[350px] h-auto object-contain mix-blend-multiply brightness-[1.25] contrast-[1.35] transition-transform duration-700 hover:scale-105"
+              className="relative z-10 w-[85%] max-w-[400px] h-auto object-contain mix-blend-multiply brightness-[1.05] contrast-[1.1] transition-transform duration-700 hover:scale-105"
+              style={{ clipPath: 'inset(15% 15% 22% 15%)' }}
             />
           </div>
         </section>
