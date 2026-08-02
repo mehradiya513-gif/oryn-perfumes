@@ -71,7 +71,7 @@ export default function SignUpModal() {
 
     if (isSignUp) {
       // --- SIGN UP FLOW ---
-      if (!name || !email || !password) {
+      if (!name.trim() || !email.trim() || !password.trim() || !phone.trim() || !address.trim()) {
         setStatus('Please fill in all required fields.')
         return
       }
@@ -88,8 +88,8 @@ export default function SignUpModal() {
         name: name.trim(),
         email: trimmedEmail,
         password: trimmedPass,
-        phone: phone ? phone.trim() : undefined,
-        address: address ? address.trim() : undefined,
+        phone: phone.trim(),
+        address: address.trim(),
         country: country,
       }
 
@@ -208,8 +208,8 @@ export default function SignUpModal() {
 
         {/* Status Messages */}
         {status && !status.includes('added to cart') && (
-          <div className="mb-5 rounded-xl border border-stone/25 bg-sand/75 px-4 py-3 text-xs font-medium text-center text-amber-900">
-            {status}
+          <div className="mb-5 rounded-xl border border-red-200 bg-red-50/80 px-4 py-3 text-xs font-semibold text-center text-red-800">
+            ⚠️ {status}
           </div>
         )}
 
@@ -261,13 +261,14 @@ export default function SignUpModal() {
             <>
               <div className="grid grid-cols-1 gap-4">
                 <label className="block text-xs font-medium text-olive/80">
-                  Phone Number (Optional)
+                  Phone Number *
                   <input
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="e.g. +91 98765 43210"
                     className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
+                    required={isSignUp}
                   />
                 </label>
               </div>
@@ -290,13 +291,14 @@ export default function SignUpModal() {
                   </label>
 
                   <label className="block text-xs font-medium text-olive/80 sm:col-span-2">
-                    Detailed Delivery Address (Optional)
+                    Detailed Delivery Address *
                     <input
                       type="text"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       placeholder="Street, Apartment, City, Postal Code"
                       className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
+                      required={isSignUp}
                     />
                   </label>
                 </div>
