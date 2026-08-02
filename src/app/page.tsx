@@ -61,12 +61,12 @@ export default function HomePage() {
         {/* Asymmetrical Editorial Hero Section */}
         <section
           ref={heroRef}
-          className="mb-32 grid gap-16 rounded-wabi-1 border border-stone/20 bg-sand/65 p-8 md:p-14 lg:grid-cols-12 lg:items-center shadow-soft"
+          className="mb-32 grid gap-16 rounded-wabi-1 border border-stone/10 bg-sand/65 p-8 md:p-14 lg:grid-cols-12 lg:items-center shadow-soft"
         >
           {/* Hero Context */}
           <div className="space-y-8 lg:col-span-7">
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sand border border-stone/35">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sand border border-stone/10">
                 <span className="text-xs">✨</span>
                 <p className="mono-tag text-[9px] font-bold text-stone">Sustainably Matured</p>
               </div>
@@ -96,7 +96,7 @@ export default function HomePage() {
               </button>
               <a 
                 href="/about" 
-                className="rounded-full border border-stone/40 text-olive bg-sand/40 px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono font-bold text-center transition hover:bg-olive hover:text-oatmeal hover:-translate-y-0.5 active:translate-y-0 duration-300"
+                className="rounded-full border border-stone/10 text-olive bg-sand/40 px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono font-bold text-center transition hover:bg-olive hover:text-oatmeal hover:-translate-y-0.5 active:translate-y-0 duration-300"
               >
                 Our Heritage
               </a>
@@ -110,7 +110,7 @@ export default function HomePage() {
               alt="ORYN Perfume"
               width={500}
               height={500}
-              className="relative z-10 w-[78%] max-w-[350px] h-auto object-contain mix-blend-multiply brightness-[1.1] contrast-[1.2] transition-transform duration-700 hover:scale-105"
+              className="relative z-10 w-[78%] max-w-[350px] h-auto object-contain mix-blend-multiply brightness-[1.25] contrast-[1.35] transition-transform duration-700 hover:scale-105"
             />
           </div>
         </section>
