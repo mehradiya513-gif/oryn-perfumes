@@ -110,7 +110,7 @@ export default function HomePage() {
               alt="ORYN Perfume"
               width={500}
               height={500}
-              className="relative z-10 w-[78%] max-w-[350px] h-auto object-contain drop-shadow-xl transition-transform duration-700 hover:scale-105 rounded-3xl"
+              className="relative z-10 w-[78%] max-w-[350px] h-auto object-contain mix-blend-multiply transition-transform duration-700 hover:scale-105"
             />
           </div>
         </section>

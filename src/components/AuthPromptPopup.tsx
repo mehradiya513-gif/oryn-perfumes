@@ -92,7 +92,7 @@ export default function AuthPromptPopup() {
                 alt="ORYN Logo"
                 width={130}
                 height={65}
-                className="object-contain"
+                className="object-contain mix-blend-multiply"
                 style={{ filter: 'saturate(0.85)' }}
               />
             </div>
