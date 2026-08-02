@@ -30,6 +30,13 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true)
   const [orders, setOrders] = useState<Order[]>([])
 
+  const [newUsername, setNewUsername] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [settingsSuccess, setSettingsSuccess] = useState('')
+  const [settingsError, setSettingsError] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
+
   const dashboardRef = useRef<HTMLDivElement | null>(null)
 
   // Verify login status on mount — redirect to login page if not authenticated
@@ -38,6 +45,8 @@ export default function AdminDashboardPage() {
     if (isLogged === 'true') {
       setSellerLoggedIn(true)
       fetchOrders()
+      // Load current seller username
+      setNewUsername(localStorage.getItem('oryn_seller_username') || 'seller')
     } else {
       router.replace('/admin/login')
     }
@@ -69,10 +78,55 @@ export default function AdminDashboardPage() {
     return { totalRevenue, orderCount, averageValue }
   }, [orders])
 
+  // Update credentials handler
+  const handleUpdateCredentials = (e: React.FormEvent) => {
+    e.preventDefault()
+    setSettingsError('')
+    setSettingsSuccess('')
+
+    const username = newUsername.trim()
+    const password = newPassword.trim()
+    const confirm = confirmPassword.trim()
+
+    if (!username) {
+      setSettingsError('Username cannot be empty.')
+      return
+    }
+    if (username.length < 3) {
+      setSettingsError('Username must be at least 3 characters.')
+      return
+    }
+    if (!password) {
+      setSettingsError('Password cannot be empty.')
+      return
+    }
+    if (password.length < 4) {
+      setSettingsError('Password must be at least 4 characters.')
+      return
+    }
+    if (password !== confirm) {
+      setSettingsError('Passwords do not match.')
+      return
+    }
+
+    setIsSaving(true)
+    setTimeout(() => {
+      localStorage.setItem('oryn_seller_username', username)
+      localStorage.setItem('oryn_seller_password', password)
+      // Keep admin session cookie alive
+      document.cookie = 'oryn_admin_session=true; path=/; max-age=86400; SameSite=Lax'
+      setNewPassword('')
+      setConfirmPassword('')
+      setSettingsSuccess('Access credentials updated successfully!')
+      setIsSaving(false)
+    }, 500)
+  }
+
   // Logout handler
   const handleLogout = () => {
     setSellerLoggedIn(false)
     localStorage.removeItem('oryn_seller_logged_in')
+    document.cookie = 'oryn_admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
     router.push('/admin/login')
   }
 
@@ -156,97 +210,164 @@ export default function AdminDashboardPage() {
             ))}
           </div>
 
-          {/* Orders Section */}
-          <div className="rounded-wabi-2 border border-stone/20 bg-sand/65 p-8 md:p-10 shadow-soft relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-stone/5 rounded-full blur-3xl pointer-events-none" />
-            
-            <div className="flex items-center justify-between mb-8 pb-5 border-b border-stone/20">
-              <h2 className="font-serif text-2xl font-light text-olive">Purchase Orders Vault</h2>
-              <button
-                onClick={fetchOrders}
-                className="text-[10px] font-bold uppercase tracking-wider text-olive/80 hover:text-olive flex items-center gap-1.5 bg-sand border border-stone/30 rounded-xl px-4 py-2 transition hover:bg-stone/15 font-mono"
-              >
-                🔄 Refresh Orders
-              </button>
+          <div className="grid gap-8 lg:grid-cols-3 items-start">
+            {/* Orders Section */}
+            <div className="lg:col-span-2 rounded-wabi-2 border border-stone/20 bg-sand/65 p-8 md:p-10 shadow-soft relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-stone/5 rounded-full blur-3xl pointer-events-none" />
+              
+              <div className="flex items-center justify-between mb-8 pb-5 border-b border-stone/20">
+                <h2 className="font-serif text-2xl font-light text-olive">Purchase Orders Vault</h2>
+                <button
+                  onClick={fetchOrders}
+                  className="text-[10px] font-bold uppercase tracking-wider text-olive/80 hover:text-olive flex items-center gap-1.5 bg-sand border border-stone/30 rounded-xl px-4 py-2 transition hover:bg-stone/15 font-mono"
+                >
+                  🔄 Refresh Orders
+                </button>
+              </div>
+
+              {orders.length === 0 ? (
+                <div className="rounded-[28px] border border-dashed border-stone/25 bg-sand/35 p-16 text-center space-y-4">
+                  <span className="text-4xl text-stone/40">⚜️</span>
+                  <p className="text-olive font-serif text-lg font-bold">No purchase orders placed yet</p>
+                  <p className="text-stone/85 text-xs max-w-xs mx-auto leading-relaxed">
+                    When customers purchase fragrances from your ORYN store, their order files will populate in this registry.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {orders.map((order) => (
+                    <div
+                      key={order.id}
+                      className="admin-order-row rounded-3xl border border-stone/15 bg-sand/40 p-6 hover:border-stone/35 hover:bg-sand/70 transition duration-300 space-y-5 shadow-xs"
+                    >
+                      {/* Header Info */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone/15 pb-4">
+                        <div>
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <p className="text-[10px] font-bold text-stone uppercase tracking-widest font-mono">ORDER FILE #{order.id}</p>
+                            <span className="px-3 py-0.5 rounded-full bg-sand border border-stone/30 text-[9px] font-bold text-olive uppercase tracking-wider font-mono">
+                              {order.paymentMethod === 'cod' ? 'Cash on Delivery' : order.paymentMethod === 'upi' ? 'Pay by any UPI' : order.paymentMethod || 'Cash on Delivery'}
+                            </span>
+                          </div>
+                          <p className="text-base font-serif font-semibold text-olive tracking-wide mt-1.5">{order.name || 'Guest Customer'}</p>
+                        </div>
+                        <div className="sm:text-right">
+                          <p className="text-[10px] text-stone/80 font-bold uppercase tracking-wider font-mono">{order.created}</p>
+                          <p className="text-2xl font-serif font-normal text-olive mt-1">₹{order.total}</p>
+                        </div>
+                      </div>
+
+                      {/* Customer details Grid */}
+                      <div className="grid gap-4 sm:grid-cols-3 text-xs text-olive/85 bg-sand/40 border border-stone/15 rounded-xl p-4">
+                        <div>
+                          <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Email Address</p>
+                          <p className="font-semibold text-olive/90 mt-1 truncate">{order.email}</p>
+                        </div>
+                        <div>
+                          <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Contact Phone</p>
+                          <p className="font-semibold text-olive/90 mt-1">{order.phone || 'N/A'}</p>
+                        </div>
+                        <div>
+                          <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Delivery Address</p>
+                          <p className="font-semibold text-olive/90 mt-1 whitespace-pre-wrap leading-relaxed">{order.address}</p>
+                        </div>
+                      </div>
+
+                      {/* Purchased items mapping */}
+                      <div className="space-y-3">
+                        <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Registry Items</p>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {order.items.map((item) => (
+                            <div
+                              key={item.id}
+                              className="flex items-center justify-between rounded-xl bg-sand/40 border border-stone/15 p-4 hover:border-stone/25 transition shadow-2xs"
+                            >
+                              <div className="space-y-1">
+                                <p className="text-xs font-serif font-semibold text-olive">{item.name}</p>
+                                <p className="text-[10px] text-stone/60 font-semibold uppercase tracking-wider font-mono">Qty: {item.quantity}</p>
+                              </div>
+                              {item.price === 0 ? (
+                                <span className="inline-block px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-[9px] font-bold text-emerald-800 uppercase tracking-wider font-mono">
+                                  🎁 Free Gift
+                                </span>
+                              ) : (
+                                <p className="text-xs font-bold text-olive font-semibold">₹{item.price * item.quantity}</p>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {orders.length === 0 ? (
-              <div className="rounded-[28px] border border-dashed border-stone/25 bg-sand/35 p-16 text-center space-y-4">
-                <span className="text-4xl text-stone/40">⚜️</span>
-                <p className="text-olive font-serif text-lg font-bold">No purchase orders placed yet</p>
-                <p className="text-stone/85 text-xs max-w-xs mx-auto leading-relaxed">
-                  When customers purchase fragrances from your ORYN store, their order files will populate in this registry.
-                </p>
+            {/* Access Settings Card */}
+            <div className="rounded-wabi-2 border border-stone/20 bg-sand/65 p-8 md:p-10 shadow-soft relative overflow-hidden space-y-6">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-stone/5 rounded-full blur-2xl pointer-events-none" />
+              
+              <div className="border-b border-stone/20 pb-5">
+                <h2 className="font-serif text-2xl font-light text-olive">Access Credentials</h2>
+                <p className="text-[10px] text-stone/85 mt-1 font-mono">Manage your seller dashboard login information</p>
               </div>
-            ) : (
-              <div className="space-y-6">
-                {orders.map((order) => (
-                  <div
-                    key={order.id}
-                    className="admin-order-row rounded-3xl border border-stone/15 bg-sand/40 p-6 hover:border-stone/35 hover:bg-sand/70 transition duration-300 space-y-5 shadow-xs"
-                  >
-                    {/* Header Info */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone/15 pb-4">
-                      <div>
-                        <div className="flex items-center gap-3 flex-wrap">
-                          <p className="text-[10px] font-bold text-stone uppercase tracking-widest font-mono">ORDER FILE #{order.id}</p>
-                          <span className="px-3 py-0.5 rounded-full bg-sand border border-stone/30 text-[9px] font-bold text-olive uppercase tracking-wider font-mono">
-                            {order.paymentMethod === 'cod' ? 'Cash on Delivery' : order.paymentMethod === 'upi' ? 'Pay by any UPI' : order.paymentMethod || 'Cash on Delivery'}
-                          </span>
-                        </div>
-                        <p className="text-base font-serif font-semibold text-olive tracking-wide mt-1.5">{order.name || 'Guest Customer'}</p>
-                      </div>
-                      <div className="sm:text-right">
-                        <p className="text-[10px] text-stone/80 font-bold uppercase tracking-wider font-mono">{order.created}</p>
-                        <p className="text-2xl font-serif font-normal text-olive mt-1">₹{order.total}</p>
-                      </div>
-                    </div>
 
-                    {/* Customer details Grid */}
-                    <div className="grid gap-4 sm:grid-cols-3 text-xs text-olive/85 bg-sand/40 border border-stone/15 rounded-xl p-4">
-                      <div>
-                        <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Email Address</p>
-                        <p className="font-semibold text-olive/90 mt-1 truncate">{order.email}</p>
-                      </div>
-                      <div>
-                        <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Contact Phone</p>
-                        <p className="font-semibold text-olive/90 mt-1">{order.phone || 'N/A'}</p>
-                      </div>
-                      <div>
-                        <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Delivery Address</p>
-                        <p className="font-semibold text-olive/90 mt-1 whitespace-pre-wrap leading-relaxed">{order.address}</p>
-                      </div>
-                    </div>
+              <form onSubmit={handleUpdateCredentials} className="space-y-4 relative">
+                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-olive/80 font-mono">
+                  Username
+                  <input
+                    type="text"
+                    value={newUsername}
+                    onChange={(e) => { setNewUsername(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
+                    className="mt-2 w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-2.5 text-xs text-olive outline-none focus:border-olive/60 transition"
+                    placeholder="Enter username"
+                  />
+                </label>
 
-                    {/* Purchased items mapping */}
-                    <div className="space-y-3">
-                      <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Registry Items</p>
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        {order.items.map((item) => (
-                          <div
-                            key={item.id}
-                            className="flex items-center justify-between rounded-xl bg-sand/40 border border-stone/15 p-4 hover:border-stone/25 transition shadow-2xs"
-                          >
-                            <div className="space-y-1">
-                              <p className="text-xs font-serif font-semibold text-olive">{item.name}</p>
-                              <p className="text-[10px] text-stone/60 font-semibold uppercase tracking-wider font-mono">Qty: {item.quantity}</p>
-                            </div>
-                            {item.price === 0 ? (
-                              <span className="inline-block px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-[9px] font-bold text-emerald-800 uppercase tracking-wider font-mono">
-                                🎁 Free Gift
-                              </span>
-                            ) : (
-                              <p className="text-xs font-bold text-olive font-semibold">₹{item.price * item.quantity}</p>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-olive/80 font-mono">
+                  New Password
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => { setNewPassword(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
+                    className="mt-2 w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-2.5 text-xs text-olive outline-none focus:border-olive/60 transition"
+                    placeholder="••••••••"
+                  />
+                </label>
 
+                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-olive/80 font-mono">
+                  Confirm Password
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => { setConfirmPassword(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
+                    className="mt-2 w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-2.5 text-xs text-olive outline-none focus:border-olive/60 transition"
+                    placeholder="••••••••"
+                  />
+                </label>
+
+                {settingsError && (
+                  <div className="rounded-xl border border-red-200 bg-red-50/80 px-3 py-2 text-[10px] font-semibold text-red-800 text-center leading-relaxed">
+                    ⚠️ {settingsError}
                   </div>
-                ))}
-              </div>
-            )}
+                )}
+
+                {settingsSuccess && (
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50/80 px-3 py-2 text-[10px] font-semibold text-emerald-800 text-center leading-relaxed">
+                    ✓ {settingsSuccess}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSaving}
+                  className="w-full mt-2 rounded-full bg-olive text-oatmeal py-3.5 text-[10px] font-bold uppercase tracking-wider font-mono transition hover:bg-stone disabled:opacity-75 cursor-pointer shadow-sm"
+                >
+                  {isSaving ? 'Saving...' : 'Save Settings'}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
     </main>

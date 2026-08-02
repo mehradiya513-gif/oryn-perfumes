@@ -10,6 +10,11 @@ import { useCart } from '@/context/CartContext'
 export default function HomePage() {
   const { addToCart } = useCart()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [isSeller, setIsSeller] = useState(false)
+
+  useEffect(() => {
+    setIsSeller(localStorage.getItem('oryn_seller_logged_in') === 'true')
+  }, [])
   
   const heroRef = useRef<HTMLDivElement | null>(null)
   const collectionRef = useRef<HTMLDivElement | null>(null)
@@ -406,9 +411,11 @@ export default function HomePage() {
           <div className="flex items-center gap-6">
             <a href="/about" className="hover:text-stone transition">About Our Brand</a>
             <a href="/blog" className="hover:text-stone transition">Olfactory Blog</a>
-            <a href="/admin" className="hover:text-stone transition flex items-center gap-1">
-              🔑 Seller Portal
-            </a>
+            {isSeller && (
+              <a href="/admin" className="hover:text-stone transition flex items-center gap-1">
+                🔑 Seller Portal
+              </a>
+            )}
           </div>
         </div>
       </footer>

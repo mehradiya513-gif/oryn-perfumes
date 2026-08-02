@@ -141,11 +141,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }
 
   const addToCart = (product: Product | { id: string; name: string; price: number; image?: string }) => {
-    if (!customer) {
-      setPendingItem(product)
-      setAuthPromptOpen(true)
-      return
-    }
     performAddToCart(product)
   }
 

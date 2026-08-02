@@ -17,7 +17,7 @@ const upiApps = [
 ]
 
 export default function CheckoutModal() {
-  const { cart, orderOpen, setOrderOpen, cartTotal, clearCart, setOrderSuccess, orderSuccess, updateQuantity, customer, freebies } = useCart()
+  const { cart, orderOpen, setOrderOpen, cartTotal, clearCart, setOrderSuccess, orderSuccess, updateQuantity, customer, freebies, setAuthPromptOpen } = useCart()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -84,16 +84,6 @@ export default function CheckoutModal() {
     setSubmitting(true)
     setStatus('')
 
-    // Pick 2 random freebies from Claw Clip, Lipgloss, Scented Candle
-    const giftPool = ['Claw Clip', 'Lipgloss', 'Scented Candle']
-    const selectedGifts = [...giftPool].sort(() => 0.5 - Math.random()).slice(0, 2)
-    const freebieItems = selectedGifts.map((gift, idx) => ({
-      id: `mystery-freebie-${idx + 1}-${gift.toLowerCase().replace(' ', '-')}`,
-      name: `🎁 Free Gift: ${gift}`,
-      price: 0,
-      quantity: 1
-    }))
-
     try {
       const response = await fetch('/api/orders', {
         method: 'POST',
@@ -106,10 +96,7 @@ export default function CheckoutModal() {
           country,
           paymentMethod: finalPaymentMethod,
           total: cartTotal,
-          items: [
-            ...cart.map((i) => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
-            ...freebieItems
-          ],
+          items: cart.map((i) => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
         }),
       })
 
@@ -134,6 +121,11 @@ export default function CheckoutModal() {
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!customer) {
+      setAuthPromptOpen(true)
+      return
+    }
+
     if (paymentMethod === 'upi') {
       setShowUpiModal(true)
       setUpiStep('select')
@@ -172,9 +164,6 @@ export default function CheckoutModal() {
               <h2 className="font-serif text-3xl font-bold tracking-wide text-olive">Order Placed Successfully</h2>
               <p className="text-xs text-olive/80 max-w-md mx-auto leading-relaxed">
                 Thank you for choosing ORYN. A confirmation receipt has been sent to your email. Your luxury fragrance experience is underway.
-              </p>
-              <p className="text-[10px] text-stone font-mono bg-sand/50 rounded-xl px-4 py-2 border border-stone/10 inline-block mt-2 font-semibold">
-                🎁 2x Mystery Freebies (Claw Clips, Lipgloss, or Candles) included!
               </p>
               <div className="inline-block mt-3 px-4 py-1.5 rounded-full border border-stone/25 bg-sand text-xs font-semibold text-olive tracking-widest uppercase">
                 Order Reference #{orderSuccess.id}
@@ -217,31 +206,6 @@ export default function CheckoutModal() {
             >
               Continue exploring
             </button>
-          </div>
-        ) : !acknowledgedFreebie ? (
-          /* Freebie Announcement View */
-          <div className="text-center py-8 px-4 sm:px-10 max-w-xl mx-auto space-y-6">
-            <div className="text-5xl animate-bounce">🎁✨</div>
-            <div className="space-y-3">
-              <span className="text-[9px] tracking-[0.25em] font-mono font-bold uppercase text-stone block">Surprise Unlocked</span>
-              <h2 className="font-serif text-3xl font-bold tracking-wide text-olive">2 Complimentary Mystery Freebies</h2>
-              <p className="text-sm text-stone/85 leading-relaxed mt-4">
-                Congratulations! Your order qualifies for <span className="font-semibold text-olive">2 surprise free gifts</span> automatically included in your package!
-              </p>
-              <p className="text-xs text-stone/75 font-mono max-w-sm mx-auto leading-relaxed mt-2">
-                Our team will hand-select a combination of premium claw clips, lipgloss, or scented candles to complete your luxury fragrance experience.
-              </p>
-            </div>
-            
-            <div className="pt-6 border-t border-stone/20 mt-6">
-              <button
-                type="button"
-                onClick={() => setAcknowledgedFreebie(true)}
-                className="w-full rounded-full bg-olive text-oatmeal hover:bg-stone hover:text-oatmeal py-4 text-xs font-bold uppercase tracking-[0.2em] transition duration-300 shadow-md flex items-center justify-center gap-2"
-              >
-                Claim & Proceed to Checkout
-              </button>
-            </div>
           </div>
         ) : (
           /* Normal Checkout View */

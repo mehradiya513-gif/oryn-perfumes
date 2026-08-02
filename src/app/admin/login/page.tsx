@@ -23,6 +23,15 @@ export default function SellerLoginPage() {
     }
   }, [router])
 
+  // Check for the secret URL query parameter on mount and set session cookie
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const secret = params.get('secret')
+    if (secret === 'oryn-owner-key') {
+      document.cookie = 'oryn_admin_session=true; path=/; max-age=86400; SameSite=Lax'
+    }
+  }, [])
+
   // Entrance animation
   useEffect(() => {
     if (cardRef.current) {
@@ -67,8 +76,12 @@ export default function SellerLoginPage() {
     setIsLoading(true)
     // Simulate brief auth delay for UX
     setTimeout(() => {
-      if (userLower === 'seller' && pass === 'oryn123') {
+      const storedUser = (localStorage.getItem('oryn_seller_username') || 'seller').toLowerCase()
+      const storedPass = localStorage.getItem('oryn_seller_password') || 'oryn123'
+
+      if (userLower === storedUser && pass === storedPass) {
         localStorage.setItem('oryn_seller_logged_in', 'true')
+        document.cookie = 'oryn_admin_session=true; path=/; max-age=86400; SameSite=Lax'
         router.push('/admin')
       } else {
         setLoginError('Invalid credentials. Please check your username and password.')

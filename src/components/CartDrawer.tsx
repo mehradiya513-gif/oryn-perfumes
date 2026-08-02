@@ -6,7 +6,7 @@ import gsap from 'gsap'
 import { useCart } from '@/context/CartContext'
 
 export default function CartDrawer() {
-  const { cart, cartOpen, setCartOpen, updateQuantity, removeFromCart, cartTotal, setOrderOpen, setStatus } = useCart()
+  const { cart, cartOpen, setCartOpen, updateQuantity, removeFromCart, cartTotal, setOrderOpen, setStatus, customer, setAuthPromptOpen } = useCart()
   const overlayRef = useRef<HTMLDivElement | null>(null)
   const drawerRef = useRef<HTMLDivElement | null>(null)
 
@@ -52,7 +52,7 @@ export default function CartDrawer() {
         <div className="flex items-center justify-between p-6 sm:p-8 border-b border-stone/20">
           <div className="space-y-1">
             <span className="text-[9px] font-mono tracking-[0.2em] text-stone font-bold uppercase">Your selection</span>
-            <h2 className="font-serif text-2xl font-bold tracking-wide text-olive">Olfactory Cart</h2>
+            <h2 className="font-serif text-2xl font-bold tracking-wide text-olive">Oryn Cart</h2>
           </div>
           <button
             type="button"
@@ -168,8 +168,12 @@ export default function CartDrawer() {
               onClick={() => {
                 handleClose()
                 setTimeout(() => {
-                  setOrderOpen(true)
-                  setStatus('')
+                  if (!customer) {
+                    setAuthPromptOpen(true)
+                  } else {
+                    setOrderOpen(true)
+                    setStatus('')
+                  }
                 }, 300)
               }}
               className="w-full rounded-full bg-olive text-oatmeal py-3.5 text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:bg-stone hover:text-oatmeal shadow-md active:scale-[0.99]"

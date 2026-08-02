@@ -146,7 +146,7 @@ export default function AboutPage() {
             ].map((item, index) => (
               <div key={index} className="space-y-3 z-0">
                 <div className="h-10 w-10 rounded-full bg-sand flex items-center justify-center border border-stone/30">
-                  <div className="h-4.5 w-4.5 rounded-full bg-stone/40" />
+                  <div className="h-4 w-4 rounded-full bg-stone/40" />
                 </div>
                 <h3 className="font-serif text-lg font-medium text-olive">{item.title}</h3>
                 <p className="text-olive/75 text-xs leading-relaxed font-sans">{item.description}</p>

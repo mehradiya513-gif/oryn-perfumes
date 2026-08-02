@@ -101,10 +101,10 @@ export default function AuthPromptPopup() {
               className="font-serif text-2xl font-semibold text-[#3D302B] leading-snug mb-2"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              Sign in to continue shopping
+              Sign in to checkout
             </h2>
             <p className="text-sm text-[#3D302B]/60 leading-relaxed max-w-[260px]">
-              Create an account or log in to add items to your cart and complete your order.
+              Create an account or log in to proceed to checkout and complete your order.
             </p>
           </div>
 
