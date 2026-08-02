@@ -106,7 +106,7 @@ export default function HomePage() {
           {/* Hero Logo Panel */}
           <div className="lg:col-span-5 h-80 sm:h-96 relative flex items-center justify-center">
             <Image
-              src="/images/ORYN.png"
+              src="/images/IMG-20260802-WA0019.jpg"
               alt="ORYN Perfume"
               width={500}
               height={500}

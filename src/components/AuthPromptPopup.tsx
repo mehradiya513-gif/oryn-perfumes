@@ -88,7 +88,7 @@ export default function AuthPromptPopup() {
           <div className="flex flex-col items-center text-center mb-6">
             <div className="mb-4 flex items-center justify-center">
               <Image
-                src="/images/oryn_logo.png"
+                src="/images/IMG-20260802-WA0019.jpg"
                 alt="ORYN Logo"
                 width={130}
                 height={65}
