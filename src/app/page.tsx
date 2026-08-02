@@ -104,14 +104,13 @@ export default function HomePage() {
           </div>
 
           {/* Hero Logo Panel */}
-          <div className="lg:col-span-5 h-80 sm:h-96 rounded-wabi-3 overflow-hidden bg-[#0f0a04] border border-stone/20 shadow-subtle relative flex items-center justify-center">
-            <div className="absolute inset-0 rounded-wabi-3" style={{ background: 'radial-gradient(ellipse at center, rgba(180,140,60,0.12) 0%, transparent 70%)' }} />
+          <div className="lg:col-span-5 h-80 sm:h-96 relative flex items-center justify-center">
             <Image
               src="/images/ORYN.png"
               alt="ORYN Perfume"
               width={500}
               height={500}
-              className="relative z-10 w-[78%] h-auto object-contain drop-shadow-[0_0_40px_rgba(180,140,60,0.4)] transition-transform duration-700 hover:scale-105"
+              className="relative z-10 w-[78%] max-w-[350px] h-auto object-contain drop-shadow-xl transition-transform duration-700 hover:scale-105 rounded-3xl"
             />
           </div>
         </section>
