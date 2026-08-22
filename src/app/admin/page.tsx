@@ -22,6 +22,16 @@ type Order = {
   total: number
   items: OrderItem[]
   created: string
+  status?: string
+}
+
+type Lead = {
+  id: string
+  name: string
+  email: string
+  phone: string
+  message: string
+  createdAt: string
 }
 
 export default function AdminDashboardPage() {
@@ -29,6 +39,9 @@ export default function AdminDashboardPage() {
   const [sellerLoggedIn, setSellerLoggedIn] = useState(false)
   const [loading, setLoading] = useState(true)
   const [orders, setOrders] = useState<Order[]>([])
+  const [leads, setLeads] = useState<Lead[]>([])
+  const [activeTab, setActiveTab] = useState<'orders' | 'leads'>('orders')
+  const [dispatchingId, setDispatchingId] = useState<string | null>(null)
 
   const [newUsername, setNewUsername] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -45,6 +58,7 @@ export default function AdminDashboardPage() {
     if (isLogged === 'true') {
       setSellerLoggedIn(true)
       fetchOrders()
+      fetchLeads()
       // Load current seller username
       setNewUsername(localStorage.getItem('oryn_seller_username') || 'seller')
     } else {
@@ -65,6 +79,35 @@ export default function AdminDashboardPage() {
         setOrders([])
         setLoading(false)
       })
+  }
+
+  const fetchLeads = () => {
+    fetch('/api/leads')
+      .then((res) => res.json())
+      .then((data) => {
+        setLeads(data.leads || [])
+      })
+      .catch(() => setLeads([]))
+  }
+
+  const handleDispatchOrder = async (orderId: string) => {
+    setDispatchingId(orderId)
+    try {
+      const res = await fetch(`/api/orders/${orderId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'dispatched' })
+      })
+      if (res.ok) {
+        setOrders(orders.map(o => o.id === orderId ? { ...o, status: 'dispatched' } : o))
+      } else {
+        alert('Failed to update order status')
+      }
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setDispatchingId(null)
+    }
   }
 
   // Dashboard Stats Calculations
@@ -211,8 +254,27 @@ export default function AdminDashboardPage() {
           </div>
 
           <div className="grid gap-8 lg:grid-cols-3 items-start">
-            {/* Orders Section */}
-            <div className="lg:col-span-2 rounded-wabi-2 border border-stone/20 bg-sand/65 p-8 md:p-10 shadow-soft relative overflow-hidden">
+            {/* Main Content Area */}
+            <div className="lg:col-span-2 space-y-6">
+              
+              {/* Tabs */}
+              <div className="flex items-center gap-2 p-1.5 bg-sand/65 border border-stone/20 rounded-2xl shadow-soft w-fit">
+                <button
+                  onClick={() => setActiveTab('orders')}
+                  className={`px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition ${activeTab === 'orders' ? 'bg-olive text-oatmeal shadow-xs' : 'text-olive/70 hover:text-olive hover:bg-stone/10'}`}
+                >
+                  Purchase Orders
+                </button>
+                <button
+                  onClick={() => setActiveTab('leads')}
+                  className={`px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition ${activeTab === 'leads' ? 'bg-olive text-oatmeal shadow-xs' : 'text-olive/70 hover:text-olive hover:bg-stone/10'}`}
+                >
+                  Customer Leads
+                </button>
+              </div>
+
+            {activeTab === 'orders' ? (
+            <div className="rounded-wabi-2 border border-stone/20 bg-sand/65 p-8 md:p-10 shadow-soft relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-stone/5 rounded-full blur-3xl pointer-events-none" />
               
               <div className="flex items-center justify-between mb-8 pb-5 border-b border-stone/20">
@@ -251,9 +313,25 @@ export default function AdminDashboardPage() {
                           </div>
                           <p className="text-base font-serif font-semibold text-olive tracking-wide mt-1.5">{order.name || 'Guest Customer'}</p>
                         </div>
-                        <div className="sm:text-right">
-                          <p className="text-[10px] text-stone/80 font-bold uppercase tracking-wider font-mono">{order.created}</p>
-                          <p className="text-2xl font-serif font-normal text-olive mt-1">₹{order.total}</p>
+                        <div className="sm:text-right flex flex-col sm:items-end gap-2">
+                          <div>
+                            <p className="text-[10px] text-stone/80 font-bold uppercase tracking-wider font-mono">{order.created}</p>
+                            <p className="text-2xl font-serif font-normal text-olive mt-1">₹{order.total}</p>
+                          </div>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className={`px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-widest font-mono border ${order.status === 'dispatched' ? 'bg-emerald-50/50 border-emerald-200 text-emerald-700' : 'bg-amber-50/50 border-amber-200 text-amber-700'}`}>
+                              {order.status === 'dispatched' ? '✓ Dispatched' : '⏳ Pending'}
+                            </span>
+                            {order.status !== 'dispatched' && (
+                              <button
+                                onClick={() => handleDispatchOrder(order.id)}
+                                disabled={dispatchingId === order.id}
+                                className="px-3 py-1 bg-olive text-oatmeal rounded-md text-[9px] font-bold uppercase tracking-widest font-mono hover:bg-stone transition disabled:opacity-50"
+                              >
+                                {dispatchingId === order.id ? 'Updating...' : 'Mark Dispatched'}
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
 
@@ -302,6 +380,55 @@ export default function AdminDashboardPage() {
                   ))}
                 </div>
               )}
+            </div>
+            ) : (
+            <div className="rounded-wabi-2 border border-stone/20 bg-sand/65 p-8 md:p-10 shadow-soft relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-stone/5 rounded-full blur-3xl pointer-events-none" />
+              
+              <div className="flex items-center justify-between mb-8 pb-5 border-b border-stone/20">
+                <h2 className="font-serif text-2xl font-light text-olive">Customer Leads</h2>
+                <button
+                  onClick={fetchLeads}
+                  className="text-[10px] font-bold uppercase tracking-wider text-olive/80 hover:text-olive flex items-center gap-1.5 bg-sand border border-stone/30 rounded-xl px-4 py-2 transition hover:bg-stone/15 font-mono"
+                >
+                  🔄 Refresh Leads
+                </button>
+              </div>
+
+              {leads.length === 0 ? (
+                <div className="rounded-[28px] border border-dashed border-stone/25 bg-sand/35 p-16 text-center space-y-4">
+                  <span className="text-4xl text-stone/40">📝</span>
+                  <p className="text-olive font-serif text-lg font-bold">No leads found</p>
+                  <p className="text-stone/85 text-xs max-w-xs mx-auto leading-relaxed">
+                    Customer inquiries and contact form submissions will appear here.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {leads.map((lead) => (
+                    <div key={lead.id} className="rounded-2xl border border-stone/15 bg-sand/40 p-5 hover:border-stone/35 transition space-y-3 shadow-xs">
+                      <div className="flex justify-between items-start border-b border-stone/10 pb-3">
+                        <div>
+                          <p className="font-serif text-lg font-semibold text-olive">{lead.name}</p>
+                          <div className="flex items-center gap-3 mt-1">
+                            <p className="text-[10px] font-bold font-mono text-stone tracking-wider">{lead.email}</p>
+                            {lead.phone && (
+                              <p className="text-[10px] font-bold font-mono text-stone tracking-wider border-l border-stone/30 pl-3">{lead.phone}</p>
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-[9px] font-bold font-mono text-stone/60 uppercase tracking-widest">{new Date(lead.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono mb-1.5">Message</p>
+                        <p className="text-xs text-olive/90 leading-relaxed bg-white/40 p-3 rounded-xl border border-stone/10">{lead.message || 'No message provided.'}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            )}
             </div>
 
             {/* Access Settings Card */}
