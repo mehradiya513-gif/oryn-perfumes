@@ -5,21 +5,7 @@ export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone()
   const pathname = url.pathname
 
-  // 1. Protect all /admin routes
-  if (pathname.startsWith('/admin')) {
-    const hasAdminSession = request.cookies.has('oryn_admin_session')
-    const secret = url.searchParams.get('secret')
-    const hasSecretKey = secret === 'oryn-owner-key'
-
-    // Allow request to pass if it has the secret URL query parameter or an active admin cookie session
-    if (hasSecretKey || hasAdminSession) {
-      return NextResponse.next()
-    }
-
-    // Mask page as "Not Found" if unauthorized
-    url.pathname = '/404'
-    return NextResponse.rewrite(url)
-  }
+  // 1. /admin routes are now accessible directly without a secret key
 
   // 2. Protect GET requests to /api/orders
   if (pathname === '/api/orders' && request.method === 'GET') {
