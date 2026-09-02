@@ -5,25 +5,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        oatmeal: '#FDFBF9',
-        olive: '#3D302B',
-        stone: '#D2B4A4',
-        sand: '#F5EBE6',
-        linen: '#FAF6F3',
-        // Preserve legacy handles but map them to the new Rose Gold & Cashmere luxury colors
-        cream: 'rgba(61, 48, 43, 0.05)',
-        sable: '#3D302B',
-        blush: '#D2B4A4',
-        mist: 'rgba(210, 180, 164, 0.2)',
-        ink: '#3D302B',
+        oatmeal: '#F9F8F6',
+        olive: '#0A2342',
+        stone: '#B4905A',
+        sand: '#F2EFE9',
+        linen: '#F6F4F0',
+        // Preserve legacy handles but map them to the new Jewel tones
+        cream: 'rgba(10, 35, 66, 0.05)',
+        sable: '#0A2342',
+        blush: '#B4905A',
+        mist: 'rgba(180, 144, 90, 0.2)',
+        ink: '#0A2342',
       },
       boxShadow: {
-        soft: '0 15px 45px -10px rgba(61, 48, 43, 0.06)',
-        subtle: '0 8px 30px rgba(210, 180, 164, 0.06)',
+        soft: '0 15px 45px -10px rgba(10, 35, 66, 0.06)',
+        subtle: '0 8px 30px rgba(180, 144, 90, 0.06)',
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+        serif: ['"Merriweather"', 'Georgia', 'serif'],
+        sans: ['"Lato"', 'system-ui', 'sans-serif'],
         mono: ['"Courier Prime"', 'monospace'],
       },
       borderRadius: {
