@@ -6,6 +6,7 @@ import CartDrawer from '@/components/CartDrawer'
 import CheckoutModal from '@/components/CheckoutModal'
 import SignUpModal from '@/components/SignUpModal'
 import AuthPromptPopup from '@/components/AuthPromptPopup'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'ORYN | Timeless Sustainable Fragrances',
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AuthPromptPopup />
           <SignUpModal />
           <main>{children}</main>
+          <Footer />
         </CartProvider>
       </body>
     </html>

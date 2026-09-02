@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
 import products, { Product } from '@/lib/products'
-import posts from '@/lib/posts'
 import { useCart } from '@/context/CartContext'
 
 export default function HomePage() {
@@ -331,94 +330,7 @@ export default function HomePage() {
           ))}
         </section>
 
-        {/* Blog & Stories Spotlight */}
-        <section className="mb-12">
-          <div className="mb-16 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-center sm:text-left">
-            <div className="space-y-3">
-              <span className="mono-tag text-[9px] font-bold text-stone">
-                Chronicles of patience
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-light text-olive tracking-wide">
-                The Botanical Blog
-              </h2>
-              <p className="max-w-xl text-xs sm:text-sm text-olive/75 leading-relaxed">
-                Explore the stories, ecological choices, and design processes that make our fragrances cherished signatures.
-              </p>
-            </div>
-            <a
-              href="/blog"
-              className="inline-flex items-center gap-2 rounded-full border border-stone/25 bg-sand px-6 py-3 text-xs font-bold uppercase tracking-wider font-mono text-olive hover:text-stone hover:border-stone transition shadow-xs self-center sm:self-end"
-            >
-              Explore all stories <span className="text-lg">→</span>
-            </a>
-          </div>
-
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.slice(0, 3).map((post) => (
-              <article
-                key={post.slug}
-                className="group rounded-wabi-3 border border-stone/25 bg-sand/60 overflow-hidden transition-all duration-500 hover:shadow-subtle hover:border-stone/40 hover:bg-sand flex flex-col h-full"
-              >
-                <a href={`/blog/${post.slug}`} className="flex flex-col h-full">
-                  <div className="relative h-48 overflow-hidden bg-sand border-b border-stone/20">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-cover filter saturate-[0.8] soft-focus-img"
-                    />
-                  </div>
-                  <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between text-[9px] text-stone font-bold font-mono uppercase tracking-wider">
-                        <span className="text-olive">{post.category}</span>
-                        <span>{post.date}</span>
-                      </div>
-                      <h3 className="font-serif text-lg font-normal tracking-wide text-olive group-hover:text-stone transition leading-snug line-clamp-2">
-                        {post.title}
-                      </h3>
-                      <p className="text-xs text-olive/80 leading-relaxed line-clamp-3">
-                        {post.excerpt}
-                      </p>
-                    </div>
-                    
-                    <div className="flex items-center justify-between pt-4 border-t border-stone/15 mt-auto text-xs font-semibold text-olive/80">
-                      <div className="flex items-center gap-2 text-stone font-mono text-[9px]">
-                        <span>{post.author.avatar}</span>
-                        <span className="ml-1">{post.author.name}</span>
-                      </div>
-                      <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-200 text-stone">
-                        Read <span className="text-sm">→</span>
-                      </span>
-                    </div>
-                  </div>
-                </a>
-              </article>
-            ))}
-          </div>
-        </section>
-
       </div>
-
-      {/* Footer */}
-      <footer className="border-t border-stone/20 mt-32 py-16 bg-sand/50">
-        <div className="mx-auto max-w-7xl px-6 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-olive/75 text-xs">
-          <div className="flex items-center gap-3">
-            <span className="font-serif text-base tracking-[0.2em] text-olive uppercase">ORYN</span>
-            <span className="text-stone/40">|</span>
-            <p>&copy; 2026 ORYN. All rights reserved.</p>
-          </div>
-          <div className="flex items-center gap-6">
-            <a href="/about" className="hover:text-stone transition">About Our Brand</a>
-            <a href="/blog" className="hover:text-stone transition">Olfactory Blog</a>
-            {isSeller && (
-              <a href="/admin" className="hover:text-stone transition flex items-center gap-1">
-                🔑 Seller Portal
-              </a>
-            )}
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
