@@ -1,31 +1,4 @@
-'use client'
-
-import { useState } from 'react'
-
 export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' })
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
-
-  const handleContactSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setFormStatus('submitting')
-    try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-      if (res.ok) {
-        setFormStatus('success')
-        setFormData({ name: '', email: '', phone: '', message: '' })
-      } else {
-        setFormStatus('error')
-      }
-    } catch (err) {
-      setFormStatus('error')
-    }
-  }
-
   return (
     <main className="min-h-screen bg-transparent pb-32 text-olive">
       <section className="mx-auto max-w-4xl px-6 sm:px-10 py-24">
@@ -38,60 +11,19 @@ export default function ContactPage() {
             </p>
           </div>
           
-          <form onSubmit={handleContactSubmit} className="space-y-4 max-w-lg mx-auto">
-            <div className="grid grid-cols-2 gap-4">
-              <input 
-                type="text" 
-                placeholder="Name" 
-                required
-                value={formData.name}
-                onChange={e => setFormData({...formData, name: e.target.value})}
-                className="w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-3 text-xs text-olive outline-none focus:border-olive/60 transition"
-              />
-              <input 
-                type="email" 
-                placeholder="Email Address" 
-                required
-                value={formData.email}
-                onChange={e => setFormData({...formData, email: e.target.value})}
-                className="w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-3 text-xs text-olive outline-none focus:border-olive/60 transition"
-              />
-            </div>
-            <input 
-              type="tel" 
-              placeholder="Phone Number (Optional)" 
-              value={formData.phone}
-              onChange={e => setFormData({...formData, phone: e.target.value})}
-              className="w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-3 text-xs text-olive outline-none focus:border-olive/60 transition"
-            />
-            <textarea 
-              placeholder="Your Message" 
-              rows={4}
-              required
-              value={formData.message}
-              onChange={e => setFormData({...formData, message: e.target.value})}
-              className="w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-3 text-xs text-olive outline-none focus:border-olive/60 transition resize-none"
-            ></textarea>
-            
-            <button 
-              type="submit" 
-              disabled={formStatus === 'submitting'}
-              className="w-full rounded-full bg-olive text-oatmeal py-3.5 text-[10px] font-bold uppercase tracking-wider font-mono hover:bg-stone transition disabled:opacity-50"
+          <div className="flex justify-center w-full">
+            <iframe 
+              src="https://docs.google.com/forms/d/e/1FAIpQLSdfK82gOEqk26t393lPCH1G8PRjAg60u3f1bAjgTdg1vWiySw/viewform?embedded=true" 
+              width="100%" 
+              height="800" 
+              frameBorder="0" 
+              marginHeight={0} 
+              marginWidth={0}
+              className="max-w-2xl bg-transparent"
             >
-              {formStatus === 'submitting' ? 'Sending...' : 'Send Message'}
-            </button>
-            
-            {formStatus === 'success' && (
-              <p className="text-emerald-700 text-xs text-center font-bold bg-emerald-50/50 p-2 rounded-xl border border-emerald-200">
-                ✓ Message sent successfully! We will contact you soon.
-              </p>
-            )}
-            {formStatus === 'error' && (
-              <p className="text-red-700 text-xs text-center font-bold bg-red-50/50 p-2 rounded-xl border border-red-200">
-                ⚠️ Failed to send message. Please try again.
-              </p>
-            )}
-          </form>
+              Loading…
+            </iframe>
+          </div>
         </div>
       </section>
     </main>
