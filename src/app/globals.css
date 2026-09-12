@@ -7,7 +7,7 @@
 :root {
   color-scheme: light;
   font-family: 'Lato', 'Merriweather', Georgia, serif;
-  background-color: #F9F8F6;
+  background-color: #FDFBFB;
 }
 
 * {
@@ -21,8 +21,8 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #F9F8F6;
-  color: #0A2342;
+  background-color: #FDFBFB;
+  color: #13402E;
   font-family: 'Lato', system-ui, sans-serif;
   position: relative;
   overflow-x: hidden;
@@ -65,8 +65,8 @@ textarea {
 }
 
 ::selection {
-  background: rgba(10, 35, 66, 0.12);
-  color: #0A2342;
+  background: rgba(19, 64, 46, 0.12);
+  color: #13402E;
 }
 
 /* Wabi-Sabi Organic Scrollbar */
@@ -75,54 +75,54 @@ html::-webkit-scrollbar {
 }
 
 html::-webkit-scrollbar-track {
-  background: #F9F8F6;
+  background: #FDFBFB;
 }
 
 html::-webkit-scrollbar-thumb {
-  background: #B4905A;
+  background: #C89E99;
   border-radius: 99px;
 }
 
 html::-webkit-scrollbar-thumb:hover {
-  background: #0A2342;
+  background: #13402E;
 }
 
 /* Wabi-Sabi Card & Container Styling */
 .wabi-card {
-  background: #F2EFE9;
-  border: 1px solid rgba(180, 144, 90, 0.25);
-  box-shadow: 0 10px 30px rgba(10, 35, 66, 0.04);
+  background: #F4EBEA;
+  border: 1px solid rgba(200, 158, 153, 0.25);
+  box-shadow: 0 10px 30px rgba(19, 64, 46, 0.04);
   transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .wabi-card:hover {
-  border-color: rgba(10, 35, 66, 0.4);
-  box-shadow: 0 15px 40px rgba(10, 35, 66, 0.07);
+  border-color: rgba(19, 64, 46, 0.4);
+  box-shadow: 0 15px 40px rgba(19, 64, 46, 0.07);
 }
 
 .wabi-btn-primary {
-  background-color: #0A2342;
-  color: #F9F8F6;
-  border: 1px solid #0A2342;
+  background-color: #13402E;
+  color: #FDFBFB;
+  border: 1px solid #13402E;
   transition: all 0.4s ease;
 }
 
 .wabi-btn-primary:hover {
   background-color: transparent;
-  color: #0A2342;
+  color: #13402E;
 }
 
 .wabi-btn-secondary {
-  border: 1px solid rgba(10, 35, 66, 0.3);
-  color: #0A2342;
+  border: 1px solid rgba(19, 64, 46, 0.3);
+  color: #13402E;
   background-color: transparent;
   transition: all 0.4s ease;
 }
 
 .wabi-btn-secondary:hover {
-  background-color: #0A2342;
-  color: #F9F8F6;
-  border-color: #0A2342;
+  background-color: #13402E;
+  color: #FDFBFB;
+  border-color: #13402E;
 }
 
 /* Soft Unsharp Imagery Style */

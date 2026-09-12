@@ -5,21 +5,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        oatmeal: '#F9F8F6',
-        olive: '#0A2342',
-        stone: '#B4905A',
-        sand: '#F2EFE9',
-        linen: '#F6F4F0',
+        oatmeal: '#FDFBFB',
+        olive: '#13402E',
+        stone: '#C89E99',
+        sand: '#F4EBEA',
+        linen: '#FAF5F5',
         // Preserve legacy handles but map them to the new Jewel tones
-        cream: 'rgba(10, 35, 66, 0.05)',
-        sable: '#0A2342',
-        blush: '#B4905A',
-        mist: 'rgba(180, 144, 90, 0.2)',
-        ink: '#0A2342',
+        cream: 'rgba(19, 64, 46, 0.05)',
+        sable: '#13402E',
+        blush: '#C89E99',
+        mist: 'rgba(200, 158, 153, 0.2)',
+        ink: '#13402E',
       },
       boxShadow: {
-        soft: '0 15px 45px -10px rgba(10, 35, 66, 0.06)',
-        subtle: '0 8px 30px rgba(180, 144, 90, 0.06)',
+        soft: '0 15px 45px -10px rgba(19, 64, 46, 0.06)',
+        subtle: '0 8px 30px rgba(200, 158, 153, 0.06)',
       },
       fontFamily: {
         serif: ['"Merriweather"', 'Georgia', 'serif'],
