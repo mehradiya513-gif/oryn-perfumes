@@ -184,7 +184,7 @@ export default function HomePage() {
                         <h3 className="font-serif text-3xl sm:text-4xl font-light text-olive tracking-wide">
                           {selectedProduct.name}
                         </h3>
-                        <p className="text-[10px] font-mono uppercase tracking-widest text-stone mt-1">
+                        <p className="text-xs sm:text-sm font-serif font-bold uppercase tracking-wide text-olive mt-1">
                           {selectedProduct.fragrance}
                         </p>
                       </div>
@@ -290,7 +290,7 @@ export default function HomePage() {
                 {/* Context */}
                 <div className="p-6 space-y-4">
                   <div className="space-y-1.5">
-                    <p className="text-[9px] uppercase tracking-[0.2em] font-mono font-bold text-stone">{product.fragrance}</p>
+                    <p className="text-xs uppercase tracking-wide font-serif font-bold text-olive">{product.fragrance}</p>
                     <h3 className="font-serif text-lg font-normal tracking-wide text-olive group-hover:text-stone transition duration-300">{product.name}</h3>
                   </div>
                   <p className="text-xs text-olive/85 leading-relaxed line-clamp-2">{product.description}</p>
