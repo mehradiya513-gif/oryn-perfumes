@@ -16,8 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-oatmeal min-h-screen text-olive antialiased selection:bg-olive/10 selection:text-olive relative">
-        <div className="grain-overlay" />
+      <body className="bg-white min-h-screen text-primary antialiased relative">
         <CartProvider>
           <Header />
           <CartDrawer />

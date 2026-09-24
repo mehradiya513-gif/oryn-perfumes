@@ -1,336 +1,236 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
-import gsap from 'gsap'
 import products, { Product } from '@/lib/products'
 import { useCart } from '@/context/CartContext'
 
 export default function HomePage() {
   const { addToCart } = useCart()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-  const [isSeller, setIsSeller] = useState(false)
-
-  useEffect(() => {
-    setIsSeller(localStorage.getItem('oryn_seller_logged_in') === 'true')
-  }, [])
-  
-  const heroRef = useRef<HTMLDivElement | null>(null)
-  const collectionRef = useRef<HTMLDivElement | null>(null)
-  const detailRef = useRef<HTMLDivElement | null>(null)
-
-  // Scroll and select product
-  const selectProductAndScroll = (product: Product) => {
-    setSelectedProduct(product)
-    setTimeout(() => {
-      detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      gsap.fromTo(
-        detailRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' }
-      )
-    }, 100)
-  }
 
   const scrollToCollection = () => {
-    collectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // Entrance animations on mount
-  useEffect(() => {
-    if (!heroRef.current) return
-
-    gsap.fromTo(
-      heroRef.current,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }
-    )
-
-    gsap.fromTo(
-      '.product-card',
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1.0, stagger: 0.12, ease: 'power2.out', delay: 0.2 }
-    )
-  }, [])
-
   return (
-    <div className="min-h-screen bg-transparent pb-32 text-olive">
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10">
-        
-        {/* Asymmetrical Editorial Hero Section */}
-        <section
-          ref={heroRef}
-          className="mb-32 grid gap-16 rounded-wabi-1 border border-stone/10 bg-sand/65 p-8 md:p-14 lg:grid-cols-12 lg:items-center shadow-soft"
-        >
-          {/* Hero Context */}
-          <div className="space-y-8 lg:col-span-7">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sand border border-stone/10">
-                <span className="text-xs">✨</span>
-                <p className="mono-tag text-[9px] font-bold text-stone">Sustainably Matured</p>
-              </div>
-              
-              <h1 className="font-serif text-6xl sm:text-8xl font-bold text-olive tracking-wider uppercase leading-none">
-                ORYN
-              </h1>
-              
-              <h2 className="font-serif italic text-xl sm:text-3xl text-stone font-light tracking-wide">
-                embracing tranquility & slow formulation
-              </h2>
-              
-              <p className="text-sm leading-relaxed text-olive/80 max-w-xl font-sans pt-2">
-                A botanical sanctuary born from a quiet observation: fashion had turned into something fleeting. 
-                Instead of chasing synthetic trends, we nurture signature fragrances that settle organically on your skin. 
-                ORYN celebrates the quiet beauty of natural raw ingredients, batch-matured and sourced ethically.
-              </p>
+    <div className="min-h-screen bg-white">
+      {/* Modern Split Hero Section */}
+      <section className="relative w-full h-[90vh] md:h-screen flex flex-col md:flex-row bg-surface overflow-hidden pt-20 md:pt-0">
+        <div className="flex-1 flex items-center justify-center p-8 md:p-16 lg:p-24 z-10">
+          <div className="max-w-xl space-y-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-border rounded-full text-xs font-semibold tracking-wide text-muted uppercase">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+              New Collection
             </div>
-
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center pt-2">
+            
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-primary leading-[1.1]">
+              Discover Your <br />
+              <span className="text-accent">Signature</span> Scent
+            </h1>
+            
+            <p className="text-lg text-muted max-w-md leading-relaxed">
+              Elevate your daily ritual with our premium, sustainably crafted fragrances. Designed for the modern individual who values quality and elegance.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
-                type="button"
                 onClick={scrollToCollection}
-                className="rounded-full bg-olive text-oatmeal px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono font-bold transition hover:bg-stone hover:-translate-y-0.5 active:translate-y-0 duration-300 shadow-xs"
+                className="btn-primary py-4 px-8 text-base"
               >
-                Explore Collection
+                Shop Collection
               </button>
               <a 
                 href="/about" 
-                className="rounded-full border border-stone/10 text-olive bg-sand/40 px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-mono font-bold text-center transition hover:bg-olive hover:text-oatmeal hover:-translate-y-0.5 active:translate-y-0 duration-300"
+                className="btn-secondary py-4 px-8 text-base"
               >
-                Our Heritage
+                Our Story
               </a>
             </div>
           </div>
+        </div>
+        <div className="flex-1 relative h-64 md:h-full bg-white">
+          <Image
+            src="/images/IMG-20260802-WA0019.jpg"
+            alt="ORYN Perfume"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-surface to-transparent md:w-1/3"></div>
+        </div>
+      </section>
 
-          {/* Hero Logo Panel */}
-          <div className="lg:col-span-5 h-80 sm:h-96 relative flex items-center justify-center">
-            <Image
-              src="/images/IMG-20260802-WA0019.jpg"
-              alt="ORYN Perfume"
-              width={500}
-              height={500}
-              className="relative z-10 w-[85%] max-w-[400px] h-auto object-contain mix-blend-multiply brightness-[1.05] contrast-[1.1] transition-transform duration-700 hover:scale-105"
-              style={{ clipPath: 'inset(15% 15% 22% 15%)' }}
-            />
+      {/* Brand Features Bar */}
+      <section className="border-y border-border bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-border">
+          <div className="flex flex-col items-center gap-3 md:px-8 py-4 md:py-0">
+            <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 className="text-lg font-semibold text-primary">Ethically Sourced</h3>
+            <p className="text-sm text-muted">Premium ingredients from sustainable global partners.</p>
           </div>
-        </section>
-
-        {/* Product Collection Section */}
-        <section ref={collectionRef} className="mb-32">
-          <div className="mb-20 space-y-4 max-w-2xl text-center sm:text-left">
-            <span className="mono-tag text-[9px] font-bold text-stone">
-              Signature Scents
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-light text-olive tracking-wide">
-              The Sensory Registry
-            </h2>
-            <p className="text-xs sm:text-sm text-olive/75 leading-relaxed">
-              Discover our carefully curated registry of organic, slow-aged fragrances. Each scent matures with your body chemistry, leaving a close, personal trail.
-            </p>
+          <div className="flex flex-col items-center gap-3 md:px-8 py-4 md:py-0">
+            <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 className="text-lg font-semibold text-primary">Long Lasting</h3>
+            <p className="text-sm text-muted">Expertly formulated for 12+ hours of projection.</p>
           </div>
+          <div className="flex flex-col items-center gap-3 md:px-8 py-4 md:py-0">
+            <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+            <h3 className="text-lg font-semibold text-primary">Premium Packaging</h3>
+            <p className="text-sm text-muted">Minimalist glass bottles designed to be displayed.</p>
+          </div>
+        </div>
+      </section>
 
-          {/* Spotlight Detailed Product Section */}
-          {selectedProduct && (
-            <div
-              ref={detailRef}
-              className="mb-24 rounded-wabi-2 border border-stone/25 bg-sand/70 p-6 sm:p-10 md:p-14 shadow-soft relative overflow-hidden transition-all duration-500"
-            >
-              {/* Close Button */}
-              <button
-                type="button"
-                onClick={() => setSelectedProduct(null)}
-                className="absolute right-6 top-6 z-10 h-10 w-10 rounded-full border border-stone/30 bg-sand text-olive/70 hover:text-olive hover:border-stone transition flex items-center justify-center font-bold text-sm shadow-xs"
-                title="Close spotlight"
+      {/* Main Collection */}
+      <section id="collection" className="mx-auto max-w-7xl px-6 py-24 sm:px-10">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+          <div className="max-w-2xl space-y-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">The Collection</h2>
+            <p className="text-muted text-lg">Curated fragrances for every occasion.</p>
+          </div>
+        </div>
+
+        {/* Product Grid */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {products.map((product) => (
+            <div key={product.id} className="product-card-modern flex flex-col h-full bg-white relative">
+              <div 
+                className="product-image-container cursor-pointer p-8 bg-surface/50"
+                onClick={() => setSelectedProduct(product)}
               >
-                ✕
-              </button>
-
-              <div className="grid gap-12 lg:grid-cols-12 relative z-0">
-                {/* Product Image Panel */}
-                <div className="lg:col-span-5 flex flex-col justify-center">
-                  <div className={`relative w-full aspect-square rounded-wabi-1 overflow-hidden bg-sand border border-stone/20 p-8 flex items-center justify-center`}>
-                    <div className="relative w-4/5 h-4/5">
-                      <Image
-                        src={selectedProduct.image}
-                        alt={selectedProduct.name}
-                        fill
-                        className="object-contain filter saturate-[0.8] soft-focus-img"
-                        sizes="(max-width: 1024px) 80vw, 40vw"
-                        priority
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Product Details Panel */}
-                <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
-                  <div className="space-y-5">
-                    {/* Badges */}
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="px-3 py-1 rounded-full bg-stone/10 border border-stone/30 text-[9px] font-mono tracking-widest uppercase text-olive">
-                        Scent Spotlight
-                      </span>
-                      <span className="text-[10px] text-olive/80 bg-sand border border-stone/20 rounded-full px-3 py-1 font-mono uppercase tracking-wide">
-                        {selectedProduct.concentration}
-                      </span>
-                      <span className="text-[10px] text-stone bg-sand border border-stone/20 rounded-full px-3 py-1 font-medium italic">
-                        {selectedProduct.family} Family
-                      </span>
-                    </div>
-
-                    {/* Title & Price */}
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-stone/25 pb-4">
-                      <div>
-                        <h3 className="font-serif text-3xl sm:text-4xl font-light text-olive tracking-wide">
-                          {selectedProduct.name}
-                        </h3>
-                        <p className="text-xs sm:text-sm font-serif font-bold uppercase tracking-wide text-olive mt-1">
-                          {selectedProduct.fragrance}
-                        </p>
-                      </div>
-                      <span className="text-3xl font-light text-olive font-serif shrink-0">
-                        ₹{selectedProduct.price}
-                      </span>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-xs sm:text-sm text-olive/75 leading-relaxed font-sans border-l-2 border-stone pl-4 py-1">
-                      {selectedProduct.description}
-                    </p>
-
-                    {/* Olfactory Notes (Pyramid) */}
-                    <div className="space-y-3 pt-2">
-                      <h4 className="mono-tag text-[9px] font-bold text-stone">The Olfactory Journey</h4>
-                      <div className="grid gap-4 sm:grid-cols-3">
-                        <div className="rounded-2xl border border-stone/20 bg-sand/50 p-4 space-y-1">
-                          <span className="text-xs font-bold text-olive block">🍋 Top Notes</span>
-                          <p className="text-[11px] text-olive/85 leading-relaxed mt-1">
-                            {selectedProduct.topNotes}
-                          </p>
-                        </div>
-                        <div className="rounded-2xl border border-stone/20 bg-sand/50 p-4 space-y-1">
-                          <span className="text-xs font-bold text-olive block">🌸 Heart Notes</span>
-                          <p className="text-[11px] text-olive/85 leading-relaxed mt-1">
-                            {selectedProduct.heartNotes}
-                          </p>
-                        </div>
-                        <div className="rounded-2xl border border-stone/20 bg-sand/50 p-4 space-y-1">
-                          <span className="text-xs font-bold text-olive block">🪵 Base Notes</span>
-                          <p className="text-[11px] text-olive/85 leading-relaxed mt-1">
-                            {selectedProduct.baseNotes}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Scent Properties */}
-                    <div className="flex flex-wrap gap-x-8 gap-y-3 text-[11px] text-olive/70 pt-3 border-t border-stone/20 font-mono">
-                      <div>
-                        <span className="font-semibold text-olive/80">⏳ Longevity: </span>
-                        {selectedProduct.longevity}
-                      </div>
-                      <div>
-                        <span className="font-semibold text-olive/80">💨 Projection: </span>
-                        {selectedProduct.projection}
-                      </div>
-                      <div>
-                        <span className="font-semibold text-olive/80">✨ Occasion: </span>
-                        {selectedProduct.occasion}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex items-center gap-4 pt-4">
-                    <button
-                      type="button"
-                      onClick={() => addToCart(selectedProduct)}
-                      className="flex-1 rounded-full bg-olive text-oatmeal px-8 py-3.5 text-[10px] font-bold uppercase tracking-widest font-mono transition hover:bg-stone flex items-center justify-center gap-2 shadow-xs"
-                    >
-                      Add to Cart
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedProduct(null)}
-                      className="rounded-full border border-stone/30 bg-sand text-olive/70 px-6 py-3.5 text-[10px] font-bold uppercase tracking-widest font-mono transition hover:bg-stone/15 hover:text-olive"
-                    >
-                      Close Spotlight
-                    </button>
-                  </div>
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="product-image-modern object-contain p-6 mix-blend-multiply"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                />
+                {/* Quick view overlay */}
+                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                  <span className="bg-white text-primary text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                    Quick View
+                  </span>
                 </div>
               </div>
-            </div>
-          )}
-
-          {/* Products Grid */}
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
-              <article
-                key={product.id}
-                onClick={() => selectProductAndScroll(product)}
-                className={`product-card group rounded-wabi-1 border overflow-hidden transition-all duration-500 cursor-pointer hover:shadow-soft hover:-translate-y-1 ${
-                  selectedProduct?.id === product.id
-                    ? 'border-stone bg-sand shadow-subtle ring-1 ring-stone/15'
-                    : 'border-stone/20 bg-sand/55 hover:border-stone/45 hover:bg-sand shadow-xs'
-                }`}
-              >
-                {/* Image Container */}
-                <div className="relative h-64 overflow-hidden bg-sand/40 border-b border-stone/10 p-10 flex items-center justify-center">
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-contain filter saturate-[0.8] soft-focus-img"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  </div>
+              
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-semibold text-lg text-primary truncate pr-4">{product.name}</h3>
+                  <span className="font-semibold text-primary">₹{product.price}</span>
                 </div>
+                <p className="text-sm text-accent font-medium mb-3">{product.fragrance}</p>
+                <p className="text-sm text-muted line-clamp-2 mb-6 flex-grow">{product.description}</p>
                 
-                {/* Context */}
-                <div className="p-6 space-y-4">
-                  <div className="space-y-1.5">
-                    <p className="text-xs uppercase tracking-wide font-serif font-bold text-olive">{product.fragrance}</p>
-                    <h3 className="font-serif text-lg font-normal tracking-wide text-olive group-hover:text-stone transition duration-300">{product.name}</h3>
-                  </div>
-                  <p className="text-xs text-olive/85 leading-relaxed line-clamp-2">{product.description}</p>
-                  
-                  <div className="flex items-center justify-between pt-4 border-t border-stone/15">
-                    <span className="text-base font-normal text-olive font-serif">₹{product.price}</span>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        addToCart(product)
-                      }}
-                      className="rounded-full bg-olive text-oatmeal px-5 py-2 text-[9px] font-bold uppercase tracking-widest font-mono transition hover:bg-stone hover:text-oatmeal shadow-xs"
-                    >
-                      Add to cart
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* Brand Values / Luxury Accents */}
-        <section className="mb-32 grid gap-12 rounded-wabi-2 bg-sand/65 p-10 sm:p-14 text-olive lg:grid-cols-3 shadow-soft border border-stone/20 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-stone/5 rounded-full blur-3xl pointer-events-none" />
-          {[
-            { icon: '🌱', title: 'Sustainable Harvests', desc: 'Zero-waste botanical harvesting and ethically sourced natural ingredients from local cooperatives.' },
-            { icon: '⏳', title: 'Slow Chemistry', desc: 'Rejecting seasonal fast-fashion. Formulated for longevity to settle comfortably for years.' },
-            { icon: '🪵', title: 'Organic Texture', desc: 'Raw, durable crystal container designs made to be kept, refilled, and cherished.' },
-          ].map((item, idx) => (
-            <div key={idx} className="space-y-3 z-0">
-              <div className="text-3xl text-stone">{item.icon}</div>
-              <h3 className="font-serif text-xl font-normal tracking-wide text-olive">{item.title}</h3>
-              <p className="text-olive/80 text-xs leading-relaxed">{item.desc}</p>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    addToCart(product)
+                  }}
+                  className="w-full bg-primary text-white py-3 rounded-modern font-medium text-sm hover:bg-primary/90 transition-colors shadow-sm"
+                >
+                  Add to Cart
+                </button>
+              </div>
             </div>
           ))}
-        </section>
+        </div>
+      </section>
 
-      </div>
+      {/* Product Modal */}
+      {selectedProduct && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm">
+          <div 
+            className="absolute inset-0" 
+            onClick={() => setSelectedProduct(null)}
+          ></div>
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative z-10 flex flex-col md:flex-row">
+            <button 
+              className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-surface text-primary hover:bg-border transition-colors"
+              onClick={() => setSelectedProduct(null)}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <div className="md:w-1/2 bg-surface p-8 flex items-center justify-center relative min-h-[300px]">
+              <Image
+                src={selectedProduct.image}
+                alt={selectedProduct.name}
+                fill
+                className="object-contain p-12 mix-blend-multiply"
+              />
+            </div>
+            
+            <div className="md:w-1/2 p-8 md:p-10 flex flex-col justify-center">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="px-2.5 py-1 bg-surface border border-border text-xs font-semibold rounded-full text-muted uppercase tracking-wider">
+                  {selectedProduct.concentration}
+                </span>
+                <span className="px-2.5 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full uppercase tracking-wider">
+                  {selectedProduct.family}
+                </span>
+              </div>
+              
+              <h2 className="text-3xl font-bold text-primary mb-1">{selectedProduct.name}</h2>
+              <p className="text-lg font-medium text-accent mb-4">{selectedProduct.fragrance}</p>
+              
+              <p className="text-muted text-base leading-relaxed mb-6">
+                {selectedProduct.description}
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div>
+                  <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Top Notes</h4>
+                  <p className="text-sm text-muted">{selectedProduct.topNotes}</p>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Heart Notes</h4>
+                  <p className="text-sm text-muted">{selectedProduct.heartNotes}</p>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Base Notes</h4>
+                  <p className="text-sm text-muted">{selectedProduct.baseNotes}</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between pt-6 border-t border-border mt-auto">
+                <span className="text-2xl font-bold text-primary">₹{selectedProduct.price}</span>
+                <button
+                  onClick={() => {
+                    addToCart(selectedProduct)
+                    setSelectedProduct(null)
+                  }}
+                  className="btn-primary px-8"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Newsletter / CTA Section */}
+      <section className="bg-surface py-24 px-6 mt-12">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <h2 className="text-3xl font-bold text-primary">Join the Insider List</h2>
+          <p className="text-muted text-lg max-w-xl mx-auto">
+            Subscribe to receive updates on new launches, exclusive offers, and the art of fragrance layering.
+          </p>
+          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-4" onSubmit={(e) => e.preventDefault()}>
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              className="flex-1 px-4 py-3 rounded-modern border border-border focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-shadow"
+              required
+            />
+            <button type="submit" className="btn-primary whitespace-nowrap">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </section>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,8 +6,7 @@
 
 :root {
   color-scheme: light;
-  font-family: 'Lato', 'Merriweather', Georgia, serif;
-  background-color: #FDFBFB;
+  background-color: #ffffff;
 }
 
 * {
@@ -21,40 +20,22 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #FDFBFB;
-  color: #13402E;
-  font-family: 'Lato', system-ui, sans-serif;
-  position: relative;
-  overflow-x: hidden;
-}
-
-/* Wabi-Sabi Grainy Paper Texture Overlay */
-.grain-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  content: "";
-  opacity: 0.02;
-  pointer-events: none;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-color: #ffffff;
+  color: #09090b;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
 h2,
 h3,
-h4 {
-  font-family: 'Merriweather', serif;
-  font-weight: 300;
-  letter-spacing: 0.04em;
-  line-height: 1.15;
-}
-
-h1 {
-  font-size: 3.5rem;
-  letter-spacing: 0.05em;
+h4,
+h5,
+h6 {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 button,
@@ -65,81 +46,28 @@ textarea {
 }
 
 ::selection {
-  background: rgba(19, 64, 46, 0.12);
-  color: #13402E;
+  background: #2563eb;
+  color: #ffffff;
 }
 
-/* Wabi-Sabi Organic Scrollbar */
-html::-webkit-scrollbar {
-  width: 6px;
+/* Modern E-commerce Button */
+.btn-primary {
+  @apply bg-primary text-white font-medium px-6 py-3 rounded-modern transition-all duration-200 hover:bg-primary/90 flex items-center justify-center;
 }
 
-html::-webkit-scrollbar-track {
-  background: #FDFBFB;
+.btn-secondary {
+  @apply bg-surface text-primary border border-border font-medium px-6 py-3 rounded-modern transition-all duration-200 hover:bg-border flex items-center justify-center;
 }
 
-html::-webkit-scrollbar-thumb {
-  background: #C89E99;
-  border-radius: 99px;
+/* Modern Product Card */
+.product-card-modern {
+  @apply bg-white border border-border rounded-modern overflow-hidden transition-all duration-300 hover:shadow-modern-hover hover:-translate-y-1 group;
 }
 
-html::-webkit-scrollbar-thumb:hover {
-  background: #13402E;
+.product-image-container {
+  @apply relative w-full aspect-[4/5] bg-surface overflow-hidden flex items-center justify-center;
 }
 
-/* Wabi-Sabi Card & Container Styling */
-.wabi-card {
-  background: #F4EBEA;
-  border: 1px solid rgba(200, 158, 153, 0.25);
-  box-shadow: 0 10px 30px rgba(19, 64, 46, 0.04);
-  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.wabi-card:hover {
-  border-color: rgba(19, 64, 46, 0.4);
-  box-shadow: 0 15px 40px rgba(19, 64, 46, 0.07);
-}
-
-.wabi-btn-primary {
-  background-color: #13402E;
-  color: #FDFBFB;
-  border: 1px solid #13402E;
-  transition: all 0.4s ease;
-}
-
-.wabi-btn-primary:hover {
-  background-color: transparent;
-  color: #13402E;
-}
-
-.wabi-btn-secondary {
-  border: 1px solid rgba(19, 64, 46, 0.3);
-  color: #13402E;
-  background-color: transparent;
-  transition: all 0.4s ease;
-}
-
-.wabi-btn-secondary:hover {
-  background-color: #13402E;
-  color: #FDFBFB;
-  border-color: #13402E;
-}
-
-/* Soft Unsharp Imagery Style */
-.soft-focus-img {
-  filter: blur(0.4px) contrast(0.95) saturate(0.9);
-  transition: filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.soft-focus-img:hover {
-  filter: blur(0px) contrast(1) saturate(1);
-  transform: scale(1.02);
-}
-
-/* Monospace label tags */
-.mono-tag {
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+.product-image-modern {
+  @apply object-cover transition-transform duration-700 group-hover:scale-105;
 }

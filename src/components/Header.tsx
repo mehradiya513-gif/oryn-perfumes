@@ -9,11 +9,6 @@ export default function Header() {
   const pathname = usePathname()
   const { cart, cartOpen, setCartOpen, customer, setSignUpOpen, logoutCustomer } = useCart()
   const [dropdownOpen, setDropdownOpen] = React.useState(false)
-  const [isSeller, setIsSeller] = React.useState(false)
-
-  React.useEffect(() => {
-    setIsSeller(localStorage.getItem('oryn_seller_logged_in') === 'true')
-  }, [])
 
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0)
 
@@ -23,28 +18,29 @@ export default function Header() {
   ]
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-stone/25 bg-oatmeal/90 backdrop-blur-md transition-all duration-300">
-      <div className="mx-auto max-w-7xl px-6 py-4 sm:px-10 flex items-center justify-between">
-
+    <header className="fixed top-0 w-full z-40 bg-white/80 backdrop-blur-md border-b border-border transition-all duration-300">
+      <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+        
+        {/* Logo */}
+        <div className="flex-shrink-0">
+          <a href="/" className="text-2xl font-serif font-bold text-primary tracking-tighter">
+            ORYN
+          </a>
+        </div>
 
         {/* Center Navigation */}
-        <nav className="hidden md:flex items-center gap-10">
+        <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
             const isActive = pathname === link.href
             return (
               <a
                 key={link.label}
                 href={link.href}
-                className={`relative text-[11px] uppercase tracking-[0.15em] transition-all duration-300 hover:text-stone ${
-                  isActive 
-                    ? 'text-olive font-bold' 
-                    : 'text-olive/75 font-medium'
+                className={`text-sm font-medium transition-colors hover:text-accent ${
+                  isActive ? 'text-primary' : 'text-muted'
                 }`}
               >
                 {link.label}
-                {isActive && (
-                  <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-[1px] w-4 bg-stone" />
-                )}
               </a>
             )
           })}
@@ -57,20 +53,20 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setSignUpOpen(true)}
-              className="rounded-full border border-stone/30 bg-sand text-olive px-4 py-2 text-[10px] uppercase tracking-[0.15em] font-medium transition hover:bg-stone/10 hover:border-olive/40 flex items-center gap-1.5 shadow-xs"
+              className="text-sm font-medium text-primary hover:text-accent transition-colors"
             >
-              Sign Up
+              Sign In
             </button>
           ) : (
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="rounded-full border border-stone/30 bg-sand text-olive px-4 py-2 text-[10px] uppercase tracking-[0.15em] font-medium transition hover:bg-stone/10 hover:border-olive/40 flex items-center gap-2 shadow-xs"
+                className="flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors"
               >
-                <span>⚜️ {customer.name}</span>
+                <span>{customer.name}</span>
                 <svg
-                  className={`h-3 w-3 transition-transform duration-300 ${dropdownOpen ? 'rotate-180' : ''}`}
+                  className={`h-4 w-4 transition-transform duration-300 ${dropdownOpen ? 'rotate-180' : ''}`}
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -80,10 +76,10 @@ export default function Header() {
                 </svg>
               </button>
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-stone/20 bg-oatmeal p-2 shadow-xl z-50">
-                  <div className="px-4 py-2 border-b border-stone/10 mb-1">
-                    <p className="text-[9px] font-mono uppercase tracking-wider text-stone font-bold">Email</p>
-                    <p className="text-[11px] text-olive font-medium truncate">{customer.email}</p>
+                <div className="absolute right-0 mt-2 w-48 rounded-modern border border-border bg-white shadow-xl z-50 overflow-hidden">
+                  <div className="px-4 py-3 bg-surface border-b border-border">
+                    <p className="text-xs font-semibold text-muted mb-1">Signed in as</p>
+                    <p className="text-sm font-medium text-primary truncate">{customer.email}</p>
                   </div>
                   <button
                     type="button"
@@ -91,7 +87,7 @@ export default function Header() {
                       logoutCustomer()
                       setDropdownOpen(false)
                     }}
-                    className="w-full text-left rounded-xl px-4 py-2 text-xs text-red-700 hover:bg-red-50 hover:text-red-800 transition"
+                    className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors"
                   >
                     Log Out
                   </button>
@@ -99,15 +95,16 @@ export default function Header() {
               )}
             </div>
           )}
+          
           {/* Cart Trigger Button */}
           <button
             type="button"
             onClick={() => setCartOpen(!cartOpen)}
-            className="relative rounded-full border border-stone/30 bg-sand p-2.5 text-olive transition hover:bg-stone/10 hover:border-olive/40 flex items-center justify-center shadow-xs"
+            className="relative p-2 text-primary hover:text-accent transition-colors flex items-center justify-center"
             aria-label="Shopping Cart"
           >
             <svg
-              className="h-5 w-5"
+              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.5"
@@ -120,12 +117,11 @@ export default function Header() {
               />
             </svg>
             {cartItemsCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 bg-olive text-oatmeal text-[9px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+              <span className="absolute top-0 right-0 bg-accent text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center shadow-sm">
                 {cartItemsCount}
               </span>
             )}
           </button>
-
         </div>
       </div>
     </header>
