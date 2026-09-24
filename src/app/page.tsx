@@ -95,7 +95,7 @@ export default function HomePage() {
         {/* Product Grid */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product) => (
-            <div key={product.id} className="product-card-modern flex flex-col h-full bg-white relative">
+            <div key={product.id} className="product-card-modern group flex flex-col h-full bg-white relative">
               <div 
                 className="product-image-container cursor-pointer p-8 bg-surface/50"
                 onClick={() => setSelectedProduct(product)}

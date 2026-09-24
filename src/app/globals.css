@@ -61,7 +61,7 @@ textarea {
 
 /* Modern Product Card */
 .product-card-modern {
-  @apply bg-white border border-border rounded-modern overflow-hidden transition-all duration-300 hover:shadow-modern-hover hover:-translate-y-1 group;
+  @apply bg-white border border-border rounded-modern overflow-hidden transition-all duration-300 hover:shadow-modern-hover hover:-translate-y-1;
 }
 
 .product-image-container {
