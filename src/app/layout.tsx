@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="bg-white min-h-screen text-primary antialiased relative">
+    <html lang="en" className="dark">
+      <body className="bg-primary min-h-screen text-text antialiased relative">
         <CartProvider>
           <Header />
           <CartDrawer />

@@ -18,26 +18,26 @@ export default function Header() {
   ]
 
   return (
-    <header className="fixed top-0 w-full z-40 bg-white/80 backdrop-blur-md border-b border-border transition-all duration-300">
+    <header className="fixed top-0 w-full z-40 bg-primary/80 backdrop-blur-md border-b border-white/5 transition-all duration-300">
       <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
         
         {/* Logo */}
         <div className="flex-shrink-0">
-          <a href="/" className="text-2xl font-serif font-bold text-primary tracking-tighter">
+          <a href="/" className="text-2xl font-serif font-bold text-text tracking-[0.2em] uppercase">
             ORYN
           </a>
         </div>
 
         {/* Center Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => {
             const isActive = pathname === link.href
             return (
               <a
                 key={link.label}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-accent ${
-                  isActive ? 'text-primary' : 'text-muted'
+                className={`text-xs uppercase tracking-[0.2em] font-medium transition-colors hover:text-accent ${
+                  isActive ? 'text-text' : 'text-text-muted'
                 }`}
               >
                 {link.label}
@@ -47,13 +47,13 @@ export default function Header() {
         </nav>
 
         {/* Actions Buttons */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           {/* Customer Signup / Profile Dropdown */}
           {!customer ? (
             <button
               type="button"
               onClick={() => setSignUpOpen(true)}
-              className="text-sm font-medium text-primary hover:text-accent transition-colors"
+              className="text-xs uppercase tracking-[0.2em] font-medium text-text hover:text-accent transition-colors"
             >
               Sign In
             </button>
@@ -62,7 +62,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors"
+                className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-medium text-text hover:text-accent transition-colors"
               >
                 <span>{customer.name}</span>
                 <svg
@@ -76,10 +76,10 @@ export default function Header() {
                 </svg>
               </button>
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-modern border border-border bg-white shadow-xl z-50 overflow-hidden">
-                  <div className="px-4 py-3 bg-surface border-b border-border">
-                    <p className="text-xs font-semibold text-muted mb-1">Signed in as</p>
-                    <p className="text-sm font-medium text-primary truncate">{customer.email}</p>
+                <div className="absolute right-0 mt-4 w-56 rounded-sm border border-white/10 bg-surface shadow-2xl z-50 overflow-hidden backdrop-blur-md">
+                  <div className="px-4 py-4 bg-surface-light border-b border-white/5">
+                    <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-text-muted mb-1">Signed in as</p>
+                    <p className="text-sm font-medium text-text truncate">{customer.email}</p>
                   </div>
                   <button
                     type="button"
@@ -87,7 +87,7 @@ export default function Header() {
                       logoutCustomer()
                       setDropdownOpen(false)
                     }}
-                    className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                    className="w-full text-left px-4 py-4 text-xs uppercase tracking-[0.2em] text-red-400 hover:bg-white/5 transition-colors"
                   >
                     Log Out
                   </button>
@@ -100,11 +100,11 @@ export default function Header() {
           <button
             type="button"
             onClick={() => setCartOpen(!cartOpen)}
-            className="relative p-2 text-primary hover:text-accent transition-colors flex items-center justify-center"
+            className="relative p-2 text-text hover:text-accent transition-colors flex items-center justify-center"
             aria-label="Shopping Cart"
           >
             <svg
-              className="h-6 w-6"
+              className="h-5 w-5"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.5"
@@ -117,7 +117,7 @@ export default function Header() {
               />
             </svg>
             {cartItemsCount > 0 && (
-              <span className="absolute top-0 right-0 bg-accent text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center shadow-sm">
+              <span className="absolute top-0 right-0 bg-accent text-primary text-[9px] font-bold rounded-full h-4 w-4 flex items-center justify-center shadow-glow">
                 {cartItemsCount}
               </span>
             )}
