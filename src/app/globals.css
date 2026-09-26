@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
-  background-color: #050505;
+  color-scheme: light;
+  background-color: #FDFCFA;
 }
 
 * {
@@ -20,8 +20,8 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #050505;
-  color: #F2F0EB;
+  background-color: #FDFCFA;
+  color: #1C1917;
   font-family: 'Outfit', 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -46,32 +46,36 @@ textarea {
 }
 
 ::selection {
-  background: #C4A47C;
-  color: #050505;
+  background: #8A6D4B;
+  color: #FDFCFA;
 }
 
-/* Luxury Button Styles */
+/* Editorial Button Styles */
 .btn-primary {
-  @apply bg-accent text-primary font-medium px-8 py-4 transition-all duration-500 hover:bg-accent-hover flex items-center justify-center uppercase tracking-[0.2em] text-xs shadow-glow;
+  @apply bg-olive text-oatmeal font-medium px-8 py-4 transition-all duration-500 hover:bg-accent flex items-center justify-center uppercase tracking-[0.2em] text-xs;
 }
 
 .btn-secondary {
-  @apply bg-transparent text-accent border border-accent/50 font-medium px-8 py-4 transition-all duration-500 hover:bg-accent/10 flex items-center justify-center uppercase tracking-[0.2em] text-xs;
+  @apply bg-transparent text-olive border border-olive/30 font-medium px-8 py-4 transition-all duration-500 hover:border-olive hover:bg-olive/5 flex items-center justify-center uppercase tracking-[0.2em] text-xs;
 }
 
-/* Luxury Product Card */
+/* Editorial Product Card */
 .product-card-modern {
-  @apply bg-surface border border-border/30 hover:border-accent/50 transition-all duration-700 hover:shadow-luxury-hover rounded-modern overflow-hidden;
+  @apply bg-white border border-olive/10 hover:border-accent/40 transition-all duration-700 hover:shadow-luxury-hover rounded-modern overflow-hidden;
 }
 
 .product-image-container {
-  @apply relative w-full aspect-[4/5] bg-surface-light overflow-hidden flex items-center justify-center;
+  @apply relative w-full aspect-[4/5] bg-white overflow-hidden flex items-center justify-center;
 }
 
 .product-image-modern {
-  @apply object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90 group-hover:opacity-100;
+  @apply object-contain transition-transform duration-1000 group-hover:scale-105;
 }
 
 .glass-panel {
-  @apply bg-surface/80 backdrop-blur-md border border-white/10 shadow-luxury-soft;
+  @apply bg-white/70 backdrop-blur-md border border-olive/10 shadow-luxury-soft;
+}
+
+.mono-tag {
+  @apply font-mono uppercase tracking-[0.25em];
 }
