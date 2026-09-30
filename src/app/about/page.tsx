@@ -85,7 +85,7 @@ export default function AboutPage() {
       {/* The mark — the rose-gold Oryn plaque, cropped to the mark itself */}
       <section className="mx-auto max-w-[1400px] px-6 md:px-10 pb-24 md:pb-32">
         <Reveal>
-          <div className="relative aspect-[5/6] md:aspect-[4/5] max-w-xl mx-auto overflow-hidden">
+          <div className="relative aspect-[20/21] max-w-xl mx-auto overflow-hidden">
             <Image
               src="/images/oryn-plaque.jpg"
               alt="The Oryn rose-gold mark"
