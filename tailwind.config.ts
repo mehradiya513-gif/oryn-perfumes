@@ -16,7 +16,7 @@ const config: Config = {
       },
       fontFamily: {
         serif: ['"Playfair Display"', '"Times New Roman"', 'serif'],
-        sans: ['Jost', '"Avenir Next"', 'system-ui', 'sans-serif'],
+        sans: ['"Work Sans"', '"Avenir Next"', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         brand: '0.42em',

@@ -76,11 +76,11 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1400px] grid lg:grid-cols-2 lg:min-h-[100svh]">
           {/* Copy — left, on warm near-black */}
           <div className="order-2 lg:order-1 flex items-center px-6 md:px-10 pt-14 pb-20 lg:py-0 lg:pl-10 xl:pl-16">
-            <div className="max-w-2xl">
+            <div className="max-w-3xl">
               <p className="hero-rise hero-rise-1 text-[10px] uppercase tracking-[0.35em] text-ivory/50 mb-8">
                 A new fragrance house — Est. MMXXVI
               </p>
-              <h1 className="hero-rise hero-rise-2 font-serif text-[2.75rem] sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] leading-[1.08] text-ivory mb-8">
+              <h1 className="hero-rise hero-rise-2 font-serif text-[2.75rem] sm:text-5xl lg:text-[2.9rem] xl:text-[3.8rem] leading-[1.12] text-ivory mb-8">
                 The scent you wear
                 <br />
                 becomes part of

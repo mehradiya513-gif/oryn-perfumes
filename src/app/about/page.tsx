@@ -82,19 +82,19 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      {/* The mark — the rose-gold Oryn plaque, uncropped */}
+      {/* The mark — the rose-gold Oryn plaque, cropped to the mark itself */}
       <section className="mx-auto max-w-[1400px] px-6 md:px-10 pb-24 md:pb-32">
         <Reveal>
-          <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden">
+          <div className="relative aspect-[5/6] md:aspect-[4/5] max-w-xl mx-auto overflow-hidden">
             <Image
-              src="/images/IMG-20260802-WA0019.jpg"
+              src="/images/oryn-plaque.jpg"
               alt="The Oryn rose-gold mark"
               fill
-              sizes="(max-width: 768px) 100vw, 92vw"
-              className="object-cover object-[center_58%]"
+              sizes="(max-width: 768px) 92vw, 576px"
+              className="object-cover"
             />
           </div>
-          <p className="mt-3 text-[10px] uppercase tracking-[0.25em] text-stone">
+          <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-stone text-center">
             The Oryn mark, as it appears on every bottle
           </p>
         </Reveal>
