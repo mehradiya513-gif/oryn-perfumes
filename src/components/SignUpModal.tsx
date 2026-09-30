@@ -17,7 +17,7 @@ export default function SignUpModal() {
   const modalRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
 
-  // Check if opened in login mode from AuthPromptPopup
+  // Open in login mode when requested from the auth prompt
   useEffect(() => {
     if (signUpOpen) {
       const mode = sessionStorage.getItem('oryn_auth_mode')
@@ -38,7 +38,7 @@ export default function SignUpModal() {
     'France',
     'Australia',
     'United Arab Emirates',
-    'Singapore'
+    'Singapore',
   ]
 
   const handleClose = () => {
@@ -52,13 +52,13 @@ export default function SignUpModal() {
     const trimmedEmail = email.trim().toLowerCase()
     const trimmedPass = password.trim()
 
-    // 1. Guard against seller credentials
+    // Guard against seller credentials
     if (trimmedEmail === 'seller' || trimmedEmail === 'seller@oryn.com') {
       setStatus('This credential belongs to a Seller Account. Please log in through the Seller Portal.')
       return
     }
 
-    // Load registered customers database
+    // Load registered customers
     const customersRaw = localStorage.getItem('oryn_customers')
     let customersList: any[] = []
     if (customersRaw) {
@@ -70,20 +70,17 @@ export default function SignUpModal() {
     }
 
     if (isSignUp) {
-      // --- SIGN UP FLOW ---
       if (!name.trim() || !email.trim() || !password.trim() || !phone.trim() || !address.trim()) {
         setStatus('Please fill in all required fields.')
         return
       }
 
-      // Check if email already registered
       const exists = customersList.find((c: any) => c.email.toLowerCase() === trimmedEmail)
       if (exists) {
-        setStatus('This email is already registered. Please switch to Sign In.')
+        setStatus('This email is already registered. Please sign in.')
         return
       }
 
-      // Save customer to list
       const newCustomer = {
         name: name.trim(),
         email: trimmedEmail,
@@ -96,7 +93,6 @@ export default function SignUpModal() {
       customersList.push(newCustomer)
       localStorage.setItem('oryn_customers', JSON.stringify(customersList))
 
-      // Log customer in
       loginCustomer({
         name: newCustomer.name,
         email: newCustomer.email,
@@ -105,7 +101,6 @@ export default function SignUpModal() {
         country: newCustomer.country,
       })
 
-      // Reset inputs
       setName('')
       setEmail('')
       setPassword('')
@@ -114,21 +109,17 @@ export default function SignUpModal() {
       setCountry('India')
 
       setSignUpOpen(false)
-      setStatus('Account created successfully! Welcome to ORYN.')
+      setStatus('Account created. Welcome to ORYN.')
     } else {
-      // --- SIGN IN FLOW ---
       if (!email || !password) {
         setStatus('Please enter both email and password.')
         return
       }
 
-      // Find user
-      const foundUser = customersList.find(
-        (c: any) => c.email.toLowerCase() === trimmedEmail
-      )
+      const foundUser = customersList.find((c: any) => c.email.toLowerCase() === trimmedEmail)
 
       if (!foundUser) {
-        setStatus('No customer account found with this email. Please sign up.')
+        setStatus('No account found with this email. Please create one.')
         return
       }
 
@@ -137,7 +128,6 @@ export default function SignUpModal() {
         return
       }
 
-      // Log customer in
       loginCustomer({
         name: foundUser.name,
         email: foundUser.email,
@@ -146,16 +136,14 @@ export default function SignUpModal() {
         country: foundUser.country,
       })
 
-      // Reset inputs
       setEmail('')
       setPassword('')
 
       setSignUpOpen(false)
-      setStatus('Welcome back to ORYN!')
+      setStatus('Welcome back to ORYN.')
     }
   }
 
-  // Handle escape key to close modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && signUpOpen) {
@@ -168,90 +156,78 @@ export default function SignUpModal() {
 
   if (!signUpOpen) return null
 
+  const inputClass =
+    'w-full bg-transparent border-0 border-b border-ink/25 focus:border-ink outline-none py-2.5 text-sm text-ink placeholder:text-stone/60 transition-colors'
+  const labelClass = 'block text-[10px] uppercase tracking-[0.2em] text-stone mb-2'
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop overlay */}
       <div
         ref={overlayRef}
         onClick={handleClose}
-        className="absolute inset-0 bg-black/45 backdrop-blur-md"
+        className="absolute inset-0 bg-ink/55 backdrop-blur-sm"
       />
 
-      {/* Modal Container */}
       <div
         ref={modalRef}
-        className="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[2rem] border border-stone/20 bg-oatmeal p-6 sm:p-10 shadow-2xl text-olive scrollbar-thin scrollbar-thumb-stone/30"
+        className="relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto bg-ivory text-ink p-8 md:p-12 shadow-2xl animate-fade-in"
       >
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between border-b border-stone/20 pb-5">
+        <div className="flex items-start justify-between border-b border-ink/15 pb-6 mb-8">
           <div>
-            <span className="text-[9px] font-mono uppercase tracking-[0.25em] font-bold text-stone block mb-1">
-              Customer Account
-            </span>
-            <h2 className="font-serif text-3xl font-bold tracking-wide text-olive">
-              {isSignUp ? 'Join ORYN' : 'Sign In to ORYN'}
-            </h2>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-gold mb-2">Customer account</p>
+            <h2 className="font-serif text-3xl">{isSignUp ? 'Join Oryn' : 'Welcome back'}</h2>
           </div>
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-full border border-stone/30 bg-sand p-2.5 text-olive/80 transition hover:bg-stone/10 hover:text-olive shadow-xs h-9 w-9 flex items-center justify-center font-bold"
+            className="text-stone hover:text-ink transition-colors mt-1"
+            aria-label="Close"
           >
-            ✕
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
           </button>
         </div>
 
-        {/* Informative Notice */}
-        <div className="mb-6 rounded-2xl bg-sand/40 border border-stone/15 p-4 text-xs text-olive/90 leading-relaxed font-serif">
-          ✨ <strong>{isSignUp ? 'Create an account to start shopping' : 'Welcome back to your slow luxury fragrance sanctuary.'}</strong> Enjoy complimentary shipping on all orders.
-        </div>
-
-        {/* Status Messages */}
         {status && !status.includes('added to cart') && (
-          <div className="mb-5 rounded-xl border border-red-200 bg-red-50/80 px-4 py-3 text-xs font-semibold text-center text-red-800">
-            ⚠️ {status}
-          </div>
+          <p className="mb-8 text-sm text-ink-soft border-l-2 border-gold pl-4">{status}</p>
         )}
 
-        {/* Auth Form */}
-        <form onSubmit={handleAuthSubmit} className="space-y-5">
+        <form onSubmit={handleAuthSubmit} className="space-y-7">
           {isSignUp && (
-            <div className="grid grid-cols-1 gap-4">
-              <label className="block text-xs font-medium text-olive/80">
-                Full Name *
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter your name"
-                  className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
-                  required={isSignUp}
-                />
-              </label>
-            </div>
+            <label className="block">
+              <span className={labelClass}>Full name</span>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                className={inputClass}
+                required={isSignUp}
+              />
+            </label>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <label className="block text-xs font-medium text-olive/80">
-              Email Address *
+          <div className="grid sm:grid-cols-2 gap-7">
+            <label className="block">
+              <span className={labelClass}>Email</span>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
+                placeholder="you@example.com"
+                className={inputClass}
                 required
               />
             </label>
-
-            <label className="block text-xs font-medium text-olive/80">
-              Password *
+            <label className="block">
+              <span className={labelClass}>Password</span>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
+                className={inputClass}
                 required
               />
             </label>
@@ -259,65 +235,56 @@ export default function SignUpModal() {
 
           {isSignUp && (
             <>
-              <div className="grid grid-cols-1 gap-4">
-                <label className="block text-xs font-medium text-olive/80">
-                  Phone Number *
+              <div className="grid sm:grid-cols-2 gap-7">
+                <label className="block">
+                  <span className={labelClass}>Phone</span>
                   <input
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="e.g. +91 98765 43210"
-                    className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
+                    placeholder="+91"
+                    className={inputClass}
                     required={isSignUp}
                   />
                 </label>
+                <label className="block">
+                  <span className={labelClass}>Country</span>
+                  <select
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className={`${inputClass} cursor-pointer`}
+                  >
+                    {countries.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               </div>
 
-              <div className="grid grid-cols-1 gap-4">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <label className="block text-xs font-medium text-olive/80 sm:col-span-1">
-                    Country
-                    <select
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                      className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10 cursor-pointer"
-                    >
-                      {countries.map((c) => (
-                        <option key={c} value={c} className="bg-oatmeal text-olive">
-                          {c}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-
-                  <label className="block text-xs font-medium text-olive/80 sm:col-span-2">
-                    Detailed Delivery Address *
-                    <input
-                      type="text"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      placeholder="Street, Apartment, City, Postal Code"
-                      className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
-                      required={isSignUp}
-                    />
-                  </label>
-                </div>
-              </div>
+              <label className="block">
+                <span className={labelClass}>Delivery address</span>
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Street, apartment, city, postal code"
+                  className={inputClass}
+                  required={isSignUp}
+                />
+              </label>
             </>
           )}
 
-          <button
-            type="submit"
-            className="w-full mt-4 rounded-full bg-olive text-oatmeal hover:bg-stone hover:text-oatmeal py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-md flex items-center justify-center gap-2 active:scale-[0.99]"
-          >
-            {isSignUp ? 'Create Account & Shop' : 'Sign In'}
+          <button type="submit" className="btn-dark w-full mt-2">
+            {isSignUp ? 'Create account' : 'Sign in'}
           </button>
         </form>
 
-        {/* Form Toggle Switch */}
-        <div className="mt-6 text-center text-xs text-stone">
+        <p className="mt-8 text-center text-xs font-light text-stone">
           {isSignUp ? (
-            <p>
+            <>
               Already have an account?{' '}
               <button
                 type="button"
@@ -325,27 +292,27 @@ export default function SignUpModal() {
                   setIsSignUp(false)
                   setStatus('')
                 }}
-                className="font-bold text-olive underline hover:text-stone transition"
+                className="text-ink underline underline-offset-4 hover:text-gold transition-colors"
               >
-                Sign In
+                Sign in
               </button>
-            </p>
+            </>
           ) : (
-            <p>
-              Don't have an account?{' '}
+            <>
+              New to Oryn?{' '}
               <button
                 type="button"
                 onClick={() => {
                   setIsSignUp(true)
                   setStatus('')
                 }}
-                className="font-bold text-olive underline hover:text-stone transition"
+                className="text-ink underline underline-offset-4 hover:text-gold transition-colors"
               >
-                Sign Up
+                Create an account
               </button>
-            </p>
+            </>
           )}
-        </div>
+        </p>
       </div>
     </div>
   )

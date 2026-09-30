@@ -1,31 +1,33 @@
+'use client'
+
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-transparent pb-32 text-olive">
-      <section className="mx-auto max-w-4xl px-6 sm:px-10 py-24">
-        <div className="bg-sand/40 border border-stone/20 rounded-wabi-1 p-8 sm:p-12 shadow-soft">
-          <div className="text-center mb-8 space-y-3">
-            <span className="mono-tag text-[9px] font-bold text-stone">Get in Touch</span>
-            <h1 className="font-serif text-3xl font-light text-olive tracking-wide">Contact ORYN</h1>
-            <p className="text-olive/75 text-xs font-sans max-w-md mx-auto">
-              Have a question about our batch process, or interested in a wholesale partnership? Leave your details below and our team will get back to you.
-            </p>
-          </div>
-          
-          <div className="flex justify-center w-full">
-            <iframe 
-              src="https://docs.google.com/forms/d/e/1FAIpQLSdfK82gOEqk26t393lPCH1G8PRjAg60u3f1bAjgTdg1vWiySw/viewform?embedded=true" 
-              width="100%" 
-              height="800" 
-              frameBorder="0" 
-              marginHeight={0} 
-              marginWidth={0}
-              className="max-w-2xl bg-transparent"
-            >
-              Loading…
-            </iframe>
-          </div>
+    <div className="bg-ivory text-ink">
+      <section className="mx-auto max-w-3xl px-6 pt-40 md:pt-52 pb-24 md:pb-32 text-center">
+        <p className="section-tag">Contact</p>
+        <h1 className="font-serif text-4xl md:text-6xl leading-[1.12] mb-8">
+          Talk to <span className="italic">Oryn</span>
+        </h1>
+        <p className="text-ink-soft font-light leading-relaxed text-base md:text-lg max-w-xl mx-auto mb-16">
+          A question about the fragrances, a note, a beginning — we read everything and answer
+          personally.
+        </p>
+
+        <div className="border-t border-ink/15 pt-12 text-left">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSdfK82gOEqk26t393lPCH1G8PRjAg60u3f1bAjgTdg1vWiySw/viewform?embedded=true"
+            width="100%"
+            height="720"
+            frameBorder="0"
+            marginHeight={0}
+            marginWidth={0}
+            title="Oryn contact form"
+            className="w-full"
+          >
+            Loading…
+          </iframe>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

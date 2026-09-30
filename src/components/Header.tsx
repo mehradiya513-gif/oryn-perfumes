@@ -1,128 +1,189 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
 
 export default function Header() {
   const pathname = usePathname()
   const { cart, cartOpen, setCartOpen, customer, setSignUpOpen, logoutCustomer } = useCart()
-  const [dropdownOpen, setDropdownOpen] = React.useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  const onHome = pathname === '/'
+  // Transparent over the homepage hero; quiet ivory once scrolled or on inner pages.
+  const transparent = onHome && !scrolled && !cartOpen
+
+  const inkText = transparent ? 'text-ivory' : 'text-ink'
+  const mutedText = transparent ? 'text-ivory/70' : 'text-stone'
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : 'unset'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [menuOpen])
 
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0)
 
   const navLinks = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
+    { label: 'The Collection', href: '/#collection' },
+    { label: 'Our Story', href: '/about' },
+    { label: 'Contact', href: '/contact' },
   ]
 
   return (
-    <header className="fixed top-0 w-full z-40 bg-primary/85 backdrop-blur-md border-b border-olive/10 transition-all duration-300">
-      <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-700 ${
+          transparent ? 'bg-transparent' : 'bg-ivory/95 backdrop-blur-sm border-b border-ink/10'
+        }`}
+      >
+        <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-5 flex items-center justify-between">
+          {/* Wordmark */}
+          <Link
+            href="/"
+            className={`font-serif text-xl md:text-2xl font-medium tracking-brand uppercase ${inkText} transition-colors duration-700`}
+          >
+            Oryn
+          </Link>
 
-        {/* Logo */}
-        <div className="flex-shrink-0">
-          <a href="/" className="text-xl font-serif font-bold text-olive tracking-[0.35em] uppercase">
-            ORYN
-          </a>
-        </div>
-
-        {/* Center Navigation */}
-        <nav className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href
-            return (
-              <a
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <Link
                 key={link.label}
                 href={link.href}
-                className={`mono-tag text-[10px] font-medium transition-colors hover:text-accent ${
-                  isActive ? 'text-olive' : 'text-stone'
-                }`}
+                className={`text-[10px] uppercase tracking-wide2 ${mutedText} hover:text-gold transition-colors duration-300`}
               >
                 {link.label}
-              </a>
-            )
-          })}
-        </nav>
+              </Link>
+            ))}
+          </nav>
 
-        {/* Actions Buttons */}
-        <div className="flex items-center gap-6">
-          {/* Customer Signup / Profile Dropdown */}
-          {!customer ? (
-            <button
-              type="button"
-              onClick={() => setSignUpOpen(true)}
-              className="mono-tag text-[10px] font-medium text-olive hover:text-accent transition-colors"
-            >
-              Sign In
-            </button>
-          ) : (
-            <div className="relative">
+          {/* Actions */}
+          <div className="flex items-center gap-6">
+            {!customer ? (
               <button
                 type="button"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 mono-tag text-[10px] font-medium text-olive hover:text-accent transition-colors"
+                onClick={() => setSignUpOpen(true)}
+                className={`hidden sm:inline-block text-[10px] uppercase tracking-wide2 ${mutedText} hover:text-gold transition-colors duration-300`}
               >
-                <span>{customer.name}</span>
-                <svg
-                  className={`h-3.5 w-3.5 transition-transform duration-300 ${dropdownOpen ? 'rotate-180' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                </svg>
+                Account
               </button>
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-4 w-56 rounded-modern border border-olive/10 bg-white shadow-luxury-soft z-50 overflow-hidden">
-                  <div className="px-4 py-4 bg-sand border-b border-olive/10">
-                    <p className="mono-tag text-[9px] font-semibold text-stone mb-1">Signed in as</p>
-                    <p className="text-sm font-medium text-olive truncate">{customer.email}</p>
+            ) : (
+              <div className="relative hidden sm:block">
+                <button
+                  type="button"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className={`text-[10px] uppercase tracking-wide2 ${inkText} hover:text-gold transition-colors duration-300`}
+                >
+                  {customer.name.split(' ')[0]}
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-5 w-56 bg-ivory border border-ink/15 shadow-xl z-50">
+                    <div className="px-5 py-4 border-b border-ink/10">
+                      <p className="text-[9px] uppercase tracking-wide2 text-stone mb-1">Signed in as</p>
+                      <p className="text-sm text-ink truncate">{customer.email}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        logoutCustomer()
+                        setDropdownOpen(false)
+                      }}
+                      className="w-full text-left px-5 py-4 text-[10px] uppercase tracking-wide2 text-ink hover:text-gold transition-colors"
+                    >
+                      Log out
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      logoutCustomer()
-                      setDropdownOpen(false)
-                    }}
-                    className="w-full text-left px-4 py-4 mono-tag text-[10px] text-red-700 hover:bg-sand transition-colors"
-                  >
-                    Log Out
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Cart Trigger Button */}
-          <button
-            type="button"
-            onClick={() => setCartOpen(!cartOpen)}
-            className="relative p-2 text-olive hover:text-accent transition-colors flex items-center justify-center"
-            aria-label="Shopping Cart"
-          >
-            <svg
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"
-              />
-            </svg>
-            {cartItemsCount > 0 && (
-              <span className="absolute top-0 right-0 bg-accent text-white text-[9px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
-                {cartItemsCount}
-              </span>
+                )}
+              </div>
             )}
-          </button>
+
+            {/* Cart */}
+            <button
+              type="button"
+              onClick={() => setCartOpen(!cartOpen)}
+              className={`relative ${inkText} hover:text-gold transition-colors duration-300`}
+              aria-label="Shopping bag"
+            >
+              <span className="text-[10px] uppercase tracking-wide2">Bag</span>
+              {cartItemsCount > 0 && (
+                <span className="absolute -top-2.5 -right-4 text-[9px] text-gold">
+                  ({cartItemsCount})
+                </span>
+              )}
+            </button>
+
+            {/* Mobile menu button */}
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              className={`md:hidden ${inkText} transition-colors duration-300`}
+              aria-label="Open menu"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Mobile menu — full-screen editorial */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-50 bg-ivory flex flex-col animate-fade-in md:hidden">
+          <div className="flex items-center justify-between px-6 py-5">
+            <span className="font-serif text-xl font-medium tracking-brand uppercase text-ink">Oryn</span>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              className="text-ink"
+              aria-label="Close menu"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </div>
+          <nav className="flex-1 flex flex-col items-center justify-center gap-10 px-6">
+            {navLinks.map((link, i) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="font-serif text-3xl text-ink hero-rise"
+                style={{ animationDelay: `${0.1 + i * 0.1}s` }}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <button
+              type="button"
+              onClick={() => {
+                setMenuOpen(false)
+                setSignUpOpen(true)
+              }}
+              className="text-[10px] uppercase tracking-wide2 text-stone mt-4"
+            >
+              {customer ? `Account — ${customer.name.split(' ')[0]}` : 'Account'}
+            </button>
+          </nav>
+          <p className="text-center text-[9px] uppercase tracking-[0.3em] text-stone pb-10">
+            A new fragrance house
+          </p>
+        </div>
+      )}
+    </>
   )
 }

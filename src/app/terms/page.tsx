@@ -1,26 +1,36 @@
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-transparent pb-32 text-olive">
-      <section className="mx-auto max-w-3xl px-6 py-24 sm:px-10">
-        <span className="mono-tag text-[9px] font-bold text-stone mb-4 block">Legal</span>
-        <h1 className="font-serif text-4xl sm:text-5xl font-light text-olive mb-8 tracking-wide">Terms & Conditions</h1>
-        
-        <div className="space-y-8 text-sm text-olive/80 leading-relaxed font-sans">
-          <p>Last updated: {new Date().toLocaleDateString()}</p>
-          
-          <section className="space-y-4">
-            <h2 className="font-serif text-2xl font-light text-olive">1. Introduction</h2>
-            <p>Welcome to ORYN. By accessing this website, we assume you accept these terms and conditions. Do not continue to use ORYN if you do not agree to take all of the terms and conditions stated on this page.</p>
+    <div className="bg-ivory text-ink">
+      <section className="mx-auto max-w-3xl px-6 pt-40 md:pt-48 pb-28 md:pb-32">
+        <p className="section-tag">Legal</p>
+        <h1 className="font-serif text-4xl md:text-5xl mb-10">Terms &amp; Conditions</h1>
+        <p className="text-[10px] uppercase tracking-[0.25em] text-stone mb-14">
+          Last updated {new Date().toLocaleDateString()}
+        </p>
+
+        <div className="space-y-12 text-ink-soft font-light leading-relaxed">
+          <section>
+            <h2 className="font-serif text-2xl text-ink mb-4">1. Introduction</h2>
+            <p>
+              Welcome to Oryn. By accessing this website, you accept these terms and conditions.
+              Do not continue to use Oryn if you do not agree to all of the terms stated on this
+              page.
+            </p>
           </section>
 
-          <section className="space-y-4">
-            <h2 className="font-serif text-2xl font-light text-olive">2. Intellectual Property</h2>
-            <p>Unless otherwise stated, ORYN and/or its licensors own the intellectual property rights for all material on ORYN. All intellectual property rights are reserved. You may access this from ORYN for your own personal use subjected to restrictions set in these terms and conditions.</p>
+          <section>
+            <h2 className="font-serif text-2xl text-ink mb-4">2. Intellectual Property</h2>
+            <p>
+              Unless otherwise stated, Oryn and/or its licensors own the intellectual property
+              rights for all material on Oryn. All intellectual property rights are reserved. You
+              may access this site for your own personal use, subject to the restrictions set in
+              these terms and conditions.
+            </p>
           </section>
 
-          <section className="space-y-4">
-            <h2 className="font-serif text-2xl font-light text-olive">3. Restrictions</h2>
-            <p>You are specifically restricted from all of the following:</p>
+          <section>
+            <h2 className="font-serif text-2xl text-ink mb-4">3. Restrictions</h2>
+            <p className="mb-4">You are specifically restricted from all of the following:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Publishing any website material in any other media</li>
               <li>Selling, sublicensing and/or otherwise commercializing any website material</li>
@@ -29,6 +39,6 @@ export default function TermsPage() {
           </section>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

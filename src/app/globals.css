@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,9 @@
 
 :root {
   color-scheme: light;
-  background-color: #FDFCFA;
+  --ivory: #f4efe6;
+  --ink: #2a231d;
+  --gold: #a98545;
 }
 
 * {
@@ -20,11 +22,13 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #FDFCFA;
-  color: #1C1917;
-  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  background-color: #f4efe6;
+  color: #2a231d;
+  font-family: 'Jost', 'Avenir Next', system-ui, sans-serif;
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 h1,
@@ -33,9 +37,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-weight: 400;
 }
 
 button,
@@ -46,36 +49,110 @@ textarea {
 }
 
 ::selection {
-  background: #8A6D4B;
-  color: #FDFCFA;
+  background: #2a231d;
+  color: #f4efe6;
 }
 
-/* Editorial Button Styles */
-.btn-primary {
-  @apply bg-olive text-oatmeal font-medium px-8 py-4 transition-all duration-500 hover:bg-accent flex items-center justify-center uppercase tracking-[0.2em] text-xs;
+/* ————— Buttons: quiet, architectural ————— */
+.btn-dark {
+  @apply inline-flex items-center justify-center bg-ink text-ivory px-10 py-4 text-[11px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 hover:bg-gold;
 }
 
-.btn-secondary {
-  @apply bg-transparent text-olive border border-olive/30 font-medium px-8 py-4 transition-all duration-500 hover:border-olive hover:bg-olive/5 flex items-center justify-center uppercase tracking-[0.2em] text-xs;
+.btn-outline {
+  @apply inline-flex items-center justify-center border border-ink/30 text-ink px-10 py-4 text-[11px] font-normal uppercase tracking-[0.28em] transition-all duration-500 hover:border-ink hover:bg-ink hover:text-ivory;
 }
 
-/* Editorial Product Card */
-.product-card-modern {
-  @apply bg-white border border-olive/10 hover:border-accent/40 transition-all duration-700 hover:shadow-luxury-hover rounded-modern overflow-hidden;
+.btn-light {
+  @apply inline-flex items-center justify-center bg-ivory text-ink px-10 py-4 text-[11px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 hover:bg-gold hover:text-ivory;
 }
 
-.product-image-container {
-  @apply relative w-full aspect-[4/5] bg-white overflow-hidden flex items-center justify-center;
+/* ————— Shared page primitives (inner pages) ————— */
+.page-shell {
+  @apply bg-ivory text-ink;
 }
 
-.product-image-modern {
-  @apply object-contain transition-transform duration-1000 group-hover:scale-105;
+.section-tag {
+  @apply block text-[10px] font-normal uppercase tracking-[0.35em] text-gold mb-6;
 }
 
-.glass-panel {
-  @apply bg-white/70 backdrop-blur-md border border-olive/10 shadow-luxury-soft;
+.hairline {
+  @apply border-0 border-t border-ink/15;
 }
 
-.mono-tag {
-  @apply font-mono uppercase tracking-[0.25em];
+.frame-line {
+  @apply pointer-events-none absolute border border-gold/30;
+}
+
+/* ————— Editorial figure (photo + caption) ————— */
+.oryn-figure {
+  @apply relative;
+}
+
+.oryn-figure img {
+  @apply block w-full h-auto;
+}
+
+.oryn-figure figcaption {
+  @apply mt-3 text-[10px] uppercase tracking-[0.25em] text-stone;
+}
+
+/* ————— Motion: gentle reveal on scroll ————— */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Hero entrance */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-rise {
+  animation: hero-rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-rise-1 {
+  animation-delay: 0.1s;
+}
+.hero-rise-2 {
+  animation-delay: 0.25s;
+}
+.hero-rise-3 {
+  animation-delay: 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise,
+  .hero-rise-1,
+  .hero-rise-2,
+  .hero-rise-3 {
+    animation: none;
+  }
 }

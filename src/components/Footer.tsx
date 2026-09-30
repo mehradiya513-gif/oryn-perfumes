@@ -10,39 +10,45 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer className="bg-sand border-t border-olive/10 pt-16 pb-10 mt-auto">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-14">
-          <div className="md:col-span-2">
-            <h2 className="text-xl font-serif font-bold text-olive tracking-[0.35em] uppercase mb-5">ORYN</h2>
-            <p className="text-stone text-sm max-w-md leading-relaxed">
-              Sustainable fragrances crafted in small batches — designed to be worn for years, not seasons.
+    <footer className="bg-ink text-ivory">
+      <div className="mx-auto max-w-[1400px] px-6 md:px-10 pt-20 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-16">
+          {/* Brand */}
+          <div className="md:col-span-6">
+            <p className="font-serif text-2xl font-medium tracking-brand uppercase mb-6">Oryn</p>
+            <p className="text-ivory/60 text-sm leading-relaxed max-w-sm font-light">
+              A new fragrance house. Six fragrances composed with intention —
+              made to be worn, lived in, and remembered.
             </p>
           </div>
-          <div>
-            <h3 className="mono-tag text-[10px] font-semibold text-olive mb-5">Explore</h3>
-            <ul className="space-y-3 text-sm text-stone">
-              <li><a href="/" className="hover:text-accent transition-colors">Shop</a></li>
-              <li><a href="/about" className="hover:text-accent transition-colors">Our Story</a></li>
-              <li><a href="/about#contact" className="hover:text-accent transition-colors">Contact</a></li>
+
+          {/* Explore */}
+          <div className="md:col-span-3">
+            <p className="text-[10px] uppercase tracking-wide2 text-gold mb-6">Explore</p>
+            <ul className="space-y-3.5 text-sm font-light text-ivory/70">
+              <li><a href="/#collection" className="hover:text-ivory transition-colors">The Collection</a></li>
+              <li><a href="/about" className="hover:text-ivory transition-colors">Our Story</a></li>
+              <li><a href="/contact" className="hover:text-ivory transition-colors">Contact</a></li>
             </ul>
           </div>
-          <div>
-            <h3 className="mono-tag text-[10px] font-semibold text-olive mb-5">Legal</h3>
-            <ul className="space-y-3 text-sm text-stone">
-              <li><a href="/terms" className="hover:text-accent transition-colors">Terms of Service</a></li>
-              <li><a href="/privacy" className="hover:text-accent transition-colors">Privacy Policy</a></li>
-              <li><a href="/refund" className="hover:text-accent transition-colors">Refund Policy</a></li>
+
+          {/* Care */}
+          <div className="md:col-span-3">
+            <p className="text-[10px] uppercase tracking-wide2 text-gold mb-6">Client Care</p>
+            <ul className="space-y-3.5 text-sm font-light text-ivory/70">
+              <li><a href="/shipping" className="hover:text-ivory transition-colors">Shipping</a></li>
+              <li><a href="/refund" className="hover:text-ivory transition-colors">Refunds</a></li>
+              <li><a href="/privacy" className="hover:text-ivory transition-colors">Privacy</a></li>
+              <li><a href="/terms" className="hover:text-ivory transition-colors">Terms</a></li>
             </ul>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-olive/10 mono-tag text-[10px] text-stone">
-          <p>&copy; {new Date().getFullYear()} ORYN. All rights reserved.</p>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-ivory/10 text-[10px] uppercase tracking-[0.25em] text-ivory/40">
+          <p>&copy; {new Date().getFullYear()} Oryn — All rights reserved</p>
           {isSeller && (
-            <a href="/admin" className="hover:text-accent transition-colors flex items-center gap-2 mt-4 md:mt-0 font-medium">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-              Admin Portal
+            <a href="/admin" className="hover:text-gold transition-colors uppercase tracking-[0.25em]">
+              Admin
             </a>
           )}
         </div>

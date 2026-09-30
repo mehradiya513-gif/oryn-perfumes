@@ -9,8 +9,9 @@ import AuthPromptPopup from '@/components/AuthPromptPopup'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'ORYN | Timeless Sustainable Fragrances',
-  description: 'Experience ORYN - a perfume brand dedicated to timelessness, sustainability, and quality. Discover our curated collection of long-lasting fragrances designed to be cherished for years.',
+  title: 'ORYN — A New Fragrance House',
+  description:
+    'Six fragrances, composed with patience and restraint. Discover ORYN — a new fragrance house worth discovering.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -6,18 +6,30 @@ import { useCart } from '@/context/CartContext'
 import { countries } from '@/lib/countries'
 
 const upiApps = [
-  { id: 'gpay', name: 'Google Pay', icon: '🤖' },
-  { id: 'phonepe', name: 'PhonePe', icon: '🟣' },
-  { id: 'paytm', name: 'Paytm', icon: '🔵' },
-  { id: 'bhim', name: 'BHIM UPI', icon: '🇮🇳' },
-  { id: 'amazonpay', name: 'Amazon Pay', icon: '🟠' },
-  { id: 'cred', name: 'CRED Pay', icon: '🖤' },
-  { id: 'mobikwik', name: 'Mobikwik', icon: '⚡' },
-  { id: 'other', name: 'Other UPI ID', icon: '✍️' },
+  { id: 'gpay', name: 'Google Pay' },
+  { id: 'phonepe', name: 'PhonePe' },
+  { id: 'paytm', name: 'Paytm' },
+  { id: 'bhim', name: 'BHIM UPI' },
+  { id: 'amazonpay', name: 'Amazon Pay' },
+  { id: 'cred', name: 'CRED Pay' },
+  { id: 'mobikwik', name: 'Mobikwik' },
+  { id: 'other', name: 'Other UPI ID' },
 ]
 
 export default function CheckoutModal() {
-  const { cart, orderOpen, setOrderOpen, cartTotal, clearCart, setOrderSuccess, orderSuccess, updateQuantity, customer, freebies, setAuthPromptOpen } = useCart()
+  const {
+    cart,
+    orderOpen,
+    setOrderOpen,
+    cartTotal,
+    clearCart,
+    setOrderSuccess,
+    orderSuccess,
+    updateQuantity,
+    customer,
+    freebies,
+    setAuthPromptOpen,
+  } = useCart()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -31,28 +43,24 @@ export default function CheckoutModal() {
   const [upiStep, setUpiStep] = useState<'select' | 'processing'>('select')
   const [submitting, setSubmitting] = useState(false)
   const [status, setStatus] = useState('')
-  const [acknowledgedFreebie, setAcknowledgedFreebie] = useState(false)
 
   const overlayRef = useRef<HTMLDivElement | null>(null)
   const modalRef = useRef<HTMLDivElement | null>(null)
 
-  // Toggle body scroll and animate
   useEffect(() => {
     if (orderOpen) {
-      setAcknowledgedFreebie(false)
       document.body.style.overflow = 'hidden'
       gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' })
       gsap.fromTo(
         modalRef.current,
-        { opacity: 0, scale: 0.95, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.4, delay: 0.05, ease: 'power3.out' },
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.45, delay: 0.05, ease: 'power3.out' },
       )
     } else {
       document.body.style.overflow = 'unset'
     }
   }, [orderOpen])
 
-  // Pre-fill shipping info for logged-in customer
   useEffect(() => {
     if (orderOpen && customer) {
       setName(customer.name || '')
@@ -67,8 +75,7 @@ export default function CheckoutModal() {
     gsap.to(overlayRef.current, { opacity: 0, duration: 0.25, ease: 'power2.in' })
     gsap.to(modalRef.current, {
       opacity: 0,
-      scale: 0.95,
-      y: 20,
+      y: 24,
       duration: 0.25,
       ease: 'power2.in',
       onComplete: () => {
@@ -104,7 +111,6 @@ export default function CheckoutModal() {
       if (response.ok && data.order) {
         setOrderSuccess(data.order)
         clearCart()
-        // Reset inputs
         setName('')
         setEmail('')
         setPhone('')
@@ -139,179 +145,144 @@ export default function CheckoutModal() {
 
   if (!orderOpen) return null
 
+  const inputClass =
+    'w-full bg-transparent border-0 border-b border-ink/25 focus:border-ink outline-none py-2.5 text-sm text-ink placeholder:text-stone/60 transition-colors'
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop overlay */}
-      <div
-        ref={overlayRef}
-        onClick={handleClose}
-        className="absolute inset-0 bg-black/45 backdrop-blur-md"
-      />
+      <div ref={overlayRef} onClick={handleClose} className="absolute inset-0 bg-ink/55 backdrop-blur-sm" />
 
-      {/* Modal Container */}
       <div
         ref={modalRef}
-        className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[2rem] border border-stone/20 bg-oatmeal p-6 sm:p-10 shadow-2xl text-olive scrollbar-thin scrollbar-thumb-stone/30"
+        className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-ivory text-ink shadow-2xl"
       >
-        {/* Order Success View */}
         {orderSuccess ? (
-          <div className="text-center py-6 space-y-6 max-w-xl mx-auto">
-            <div className="mx-auto h-16 w-16 rounded-full bg-emerald-50 border border-emerald-400 flex items-center justify-center text-emerald-800 text-3xl font-light">
-              ✓
-            </div>
-            <div className="space-y-2">
-              <span className="text-[10px] tracking-[0.25em] font-mono font-bold uppercase text-stone">Confirmed</span>
-              <h2 className="font-serif text-3xl font-bold tracking-wide text-olive">Order Placed Successfully</h2>
-              <p className="text-xs text-olive/80 max-w-md mx-auto leading-relaxed">
-                Thank you for choosing ORYN. A confirmation receipt has been sent to your email. Your luxury fragrance experience is underway.
-              </p>
-              <div className="inline-block mt-3 px-4 py-1.5 rounded-full border border-stone/25 bg-sand text-xs font-semibold text-olive tracking-widest uppercase">
-                Order Reference #{orderSuccess.id}
-              </div>
+          /* ————— Confirmation ————— */
+          <div className="text-center py-14 px-8 space-y-8 max-w-xl mx-auto">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-gold">Confirmed</p>
+            <h2 className="font-serif text-3xl md:text-4xl">Thank you.</h2>
+            <p className="text-ink-soft font-light leading-relaxed max-w-md mx-auto">
+              Your order has been placed, and a confirmation has been sent to your email. Your
+              fragrance is being prepared with care.
+            </p>
+            <div className="inline-block border border-ink/20 px-6 py-2.5 text-[10px] uppercase tracking-[0.25em] text-ink-soft">
+              Order reference #{orderSuccess.id}
             </div>
 
-            {/* Receipt Summary */}
-            <div className="rounded-2xl border border-stone/20 bg-sand/65 p-5 text-left text-xs space-y-4">
-              <h3 className="text-[9px] font-mono font-bold uppercase tracking-wider text-stone border-b border-stone/10 pb-2">Delivery Summary</h3>
+            <div className="text-left border-t border-ink/15 pt-8 space-y-4 text-sm font-light">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-stone/85">Recipient</p>
-                  <p className="font-semibold text-olive mt-0.5">{orderSuccess.name}</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-stone mb-1">Recipient</p>
+                  <p>{orderSuccess.name}</p>
                 </div>
                 <div>
-                  <p className="text-stone/85">Phone</p>
-                  <p className="font-semibold text-olive mt-0.5">{orderSuccess.phone}</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-stone mb-1">Phone</p>
+                  <p>{orderSuccess.phone}</p>
                 </div>
                 <div className="col-span-2">
-                  <p className="text-stone/85">Destination Address</p>
-                  <p className="font-semibold text-olive mt-0.5 whitespace-pre-wrap">{orderSuccess.address}, {orderSuccess.country}</p>
-                </div>
-                <div>
-                  <p className="text-stone/85">Payment Gateway</p>
-                  <p className="font-semibold text-olive mt-0.5">
-                    {orderSuccess.paymentMethod === 'cod' ? 'Cash on Delivery' : orderSuccess.paymentMethod === 'upi' ? 'Pay by any UPI' : orderSuccess.paymentMethod}
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-stone mb-1">Delivering to</p>
+                  <p className="whitespace-pre-wrap">
+                    {orderSuccess.address}, {orderSuccess.country}
                   </p>
                 </div>
                 <div>
-                  <p className="text-stone/85">Placed On</p>
-                  <p className="font-semibold text-olive mt-0.5">{orderSuccess.created}</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-stone mb-1">Payment</p>
+                  <p>
+                    {orderSuccess.paymentMethod === 'cod'
+                      ? 'Cash on Delivery'
+                      : orderSuccess.paymentMethod === 'upi'
+                        ? 'Pay by any UPI'
+                        : orderSuccess.paymentMethod}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-stone mb-1">Placed on</p>
+                  <p>{orderSuccess.created}</p>
                 </div>
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={handleClose}
-              className="w-full rounded-full bg-olive text-oatmeal py-3.5 text-xs font-bold uppercase tracking-[0.2em] transition hover:bg-stone hover:text-oatmeal shadow-md"
-            >
+            <button type="button" onClick={handleClose} className="btn-dark w-full">
               Continue exploring
             </button>
           </div>
         ) : (
-          /* Normal Checkout View */
-          <div>
-            {/* Header */}
-            <div className="mb-8 flex items-center justify-between border-b border-stone/20 pb-5">
+          /* ————— Checkout ————— */
+          <div className="p-8 md:p-12">
+            <div className="flex items-start justify-between border-b border-ink/15 pb-6 mb-10">
               <div>
-                <span className="text-[9px] font-mono uppercase tracking-[0.25em] font-bold text-stone block mb-1">Secure Checkout</span>
-                <h2 className="font-serif text-3xl font-bold tracking-wide text-olive">Complete Your Order</h2>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-gold mb-2">Secure checkout</p>
+                <h2 className="font-serif text-3xl">Complete your order</h2>
               </div>
               <button
                 type="button"
                 onClick={handleClose}
-                className="rounded-full border border-stone/30 bg-sand p-2.5 text-olive/80 transition hover:bg-stone/10 hover:text-olive shadow-xs h-9 w-9 flex items-center justify-center font-bold"
+                className="text-stone hover:text-ink transition-colors mt-1"
+                aria-label="Close checkout"
               >
-                ✕
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+                </svg>
               </button>
             </div>
 
-            {/* Content Form */}
-            <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              {/* Form Input Side */}
-              <div className="space-y-5">
-                <h3 className="text-[10px] font-mono font-bold uppercase tracking-wider text-stone mb-2">Shipping Information</h3>
-                
-                <label className="block text-xs font-medium text-olive/80">
-                  Full Name
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter your name"
-                    className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
-                    required
-                  />
+            <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* Shipping */}
+              <div className="space-y-7">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-stone">Shipping information</p>
+
+                <label className="block">
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-stone mb-2">Full name</span>
+                  <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className={inputClass} />
                 </label>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <label className="block text-xs font-medium text-olive/80">
-                    Email Address
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="your@email.com"
-                      className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
-                      required
-                    />
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <label className="block">
+                    <span className="block text-[10px] uppercase tracking-[0.2em] text-stone mb-2">Email</span>
+                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className={inputClass} />
                   </label>
-
-                  <label className="block text-xs font-medium text-olive/80">
-                    Phone Number
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+1 (555) 000-0000"
-                      className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
-                      required
-                    />
+                  <label className="block">
+                    <span className="block text-[10px] uppercase tracking-[0.2em] text-stone mb-2">Phone</span>
+                    <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91" className={inputClass} />
                   </label>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4">
-                  <label className="block text-xs font-medium text-olive/80">
-                    Country
-                    <select
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                      className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10 cursor-pointer"
-                    >
-                      {countries.map((c) => (
-                        <option key={c} value={c} className="bg-oatmeal text-olive">
-                          {c}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
+                <label className="block">
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-stone mb-2">Country</span>
+                  <select value={country} onChange={(e) => setCountry(e.target.value)} className={`${inputClass} cursor-pointer`}>
+                    {countries.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </label>
 
-                <label className="block text-xs font-medium text-olive/80">
-                  Detailed Address
+                <label className="block">
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-stone mb-2">Address</span>
                   <textarea
+                    required
+                    rows={3}
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Street Address, App/Suite, City, State, ZIP Code"
-                    rows={3}
-                    className="mt-2 w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/50 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10 resize-none"
-                    required
+                    placeholder="Street, apartment, city, state, ZIP"
+                    className={`${inputClass} resize-none`}
                   />
                 </label>
 
-                {/* Payment Selection */}
-                <div className="pt-2">
-                  <span className="block text-[10px] font-mono font-bold uppercase tracking-wider text-stone mb-3">Select Payment Method</span>
-                  <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-stone mb-4">Payment</span>
+                  <div className="grid grid-cols-2 gap-4">
                     {[
-                      { id: 'cod', label: 'Cash on Delivery', icon: '💵' },
-                      { id: 'upi', label: 'Pay by any UPI', icon: '📱' }
+                      { id: 'cod', label: 'Cash on Delivery' },
+                      { id: 'upi', label: 'Pay by any UPI' },
                     ].map((method) => (
                       <label
                         key={method.id}
-                        className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition select-none ${
+                        className={`border px-4 py-3.5 text-xs cursor-pointer transition-colors duration-300 flex items-center gap-3 ${
                           paymentMethod === method.id
-                            ? 'border-olive bg-sand text-olive font-bold'
-                            : 'border-stone/20 hover:border-stone/40 bg-sand/35 text-olive/70'
+                            ? 'border-ink text-ink'
+                            : 'border-ink/20 text-ink-soft hover:border-ink/40'
                         }`}
                       >
                         <input
@@ -322,159 +293,150 @@ export default function CheckoutModal() {
                           onChange={() => setPaymentMethod(method.id)}
                           className="sr-only"
                         />
-                        <span className="text-xl">{method.icon}</span>
-                        <span className="text-xs">{method.label}</span>
+                        <span
+                          className={`h-2 w-2 rounded-full border transition-colors ${
+                            paymentMethod === method.id ? 'bg-gold border-gold' : 'border-stone'
+                          }`}
+                        />
+                        {method.label}
                       </label>
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* Summary & Checkout Button Side */}
-              <div className="flex flex-col justify-between border-t md:border-t-0 md:border-l border-stone/25 pt-8 md:pt-0 md:pl-10 text-olive">
-                <div className="space-y-5">
-                  <h3 className="text-[10px] font-mono font-bold uppercase tracking-wider text-stone">Order Summary</h3>
-                  <div className="max-h-[220px] overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-stone/30">
-                    {cart.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex items-center justify-between gap-4 p-3 rounded-2xl bg-sand/45 border border-stone/20"
-                      >
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-olive truncate">{item.name}</p>
-                          <p className="text-xs text-stone font-medium">₹{item.price} each</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <button
-                            type="button"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="h-6 w-6 rounded-md bg-sand border border-stone/30 hover:border-stone text-olive/80 hover:text-olive flex items-center justify-center text-xs font-bold transition"
-                          >
-                            -
-                          </button>
-                          <span className="text-xs font-semibold w-5 text-center text-olive/90">{item.quantity}</span>
-                          <button
-                            type="button"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="h-6 w-6 rounded-md bg-sand border border-stone/30 hover:border-stone text-olive/80 hover:text-olive flex items-center justify-center text-xs font-bold transition"
-                          >
-                            +
-                          </button>
-                        </div>
-                        <div className="text-right min-w-[60px]">
-                          <p className="text-sm font-bold text-olive">₹{item.price * item.quantity}</p>
-                        </div>
-                      </div>
-                    ))}
+              {/* Summary */}
+              <div className="flex flex-col">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-stone mb-6">Order summary</p>
 
-                    {freebies.map((gift) => (
-                      <div
-                        key={gift.id}
-                        className="flex items-center justify-between gap-4 p-3 rounded-2xl bg-stone/5 border border-stone/20"
-                      >
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-olive truncate">{gift.name}</p>
-                          <p className="text-xs text-stone/70 font-medium line-clamp-1">{gift.description}</p>
-                        </div>
-                        <div className="text-right min-w-[60px] pr-2">
-                          <span className="text-xs font-mono font-bold uppercase text-stone">Free</span>
-                        </div>
+                <div className="space-y-5 flex-1">
+                  {cart.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between gap-4 border-b border-ink/10 pb-4">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm">{item.name.replace(/^Oryn\s/, '')}</p>
+                        <p className="text-xs font-light text-stone mt-0.5">₹{item.price} each</p>
                       </div>
-                    ))}
-                  </div>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="h-6 w-6 border border-ink/20 text-xs hover:border-ink transition-colors flex items-center justify-center"
+                          aria-label="Decrease quantity"
+                        >
+                          −
+                        </button>
+                        <span className="text-xs w-4 text-center font-light">{item.quantity}</span>
+                        <button
+                          type="button"
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="h-6 w-6 border border-ink/20 text-xs hover:border-ink transition-colors flex items-center justify-center"
+                          aria-label="Increase quantity"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <p className="text-sm w-16 text-right font-light">₹{item.price * item.quantity}</p>
+                    </div>
+                  ))}
+
+                  {freebies.map((gift) => (
+                    <div key={gift.id} className="flex items-center justify-between gap-4 border-b border-ink/10 pb-4">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm">{gift.name}</p>
+                        <p className="text-xs font-light text-stone mt-0.5 line-clamp-1">{gift.description}</p>
+                      </div>
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-gold">With our compliments</span>
+                    </div>
+                  ))}
                 </div>
 
-                <div className="pt-6 border-t border-stone/25 mt-6 space-y-3">
-                  <div className="flex items-center justify-between text-xs text-olive/75">
+                <div className="border-t border-ink/15 mt-8 pt-6 space-y-3">
+                  <div className="flex items-center justify-between text-sm font-light text-ink-soft">
                     <span>Subtotal</span>
-                    <span className="font-semibold text-olive">₹{cartTotal}</span>
+                    <span>₹{cartTotal}</span>
                   </div>
-                  <div className="flex items-center justify-between text-xs text-olive/75">
+                  <div className="flex items-center justify-between text-sm font-light text-ink-soft">
                     <span>Shipping</span>
-                    <span className="text-stone font-semibold uppercase tracking-wider text-[10px]">Complimentary</span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-gold">Complimentary</span>
                   </div>
-                  <div className="flex items-center justify-between pt-3 border-t border-stone/25">
-                    <span className="font-serif text-base text-olive/85">Total Price</span>
-                    <span className="text-3xl font-extrabold text-olive">₹{cartTotal}</span>
+                  <div className="flex items-center justify-between pt-3 border-t border-ink/15">
+                    <span className="font-serif text-lg">Total</span>
+                    <span className="font-serif text-2xl">₹{cartTotal}</span>
                   </div>
 
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full mt-5 rounded-full bg-olive text-oatmeal hover:bg-stone hover:text-oatmeal disabled:bg-stone/20 disabled:text-olive/40 py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-md flex items-center justify-center gap-2 active:scale-[0.99]"
+                    className="btn-dark w-full mt-4 disabled:opacity-50"
                   >
-                    {submitting ? (
-                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-olive border-t-transparent" />
-                    ) : (
-                      <>
-                        <span>🔒</span> Place Order
-                      </>
-                    )}
+                    {submitting ? 'Placing order…' : 'Place order'}
                   </button>
-                  {status ? (
-                    <p className="text-xs font-semibold text-red-800 bg-red-50 border border-red-200 rounded-lg p-2.5 text-center mt-2.5">
-                      ⚠️ {status}
-                    </p>
-                  ) : null}
+
+                  {status && (
+                    <p className="text-xs text-ink-soft border-l-2 border-gold pl-4 pt-1">{status}</p>
+                  )}
                 </div>
               </div>
             </form>
           </div>
         )}
 
-        {/* UPI Application Selector Popup */}
+        {/* ————— UPI selector ————— */}
         {showUpiModal && (
-          <div className="absolute inset-0 z-40 bg-black/65 backdrop-blur-md flex items-center justify-center p-4 rounded-[2rem] overflow-y-auto">
-            <div className="bg-oatmeal border border-stone/20 rounded-[2rem] w-full max-w-lg p-6 sm:p-8 space-y-6 shadow-2xl relative text-olive">
+          <div className="absolute inset-0 z-40 bg-ink/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+            <div className="bg-ivory w-full max-w-md p-8 md:p-10 space-y-8 shadow-2xl relative text-ink my-auto">
               <button
                 type="button"
                 onClick={() => setShowUpiModal(false)}
-                className="absolute top-4 right-4 rounded-full border border-stone/30 bg-sand hover:bg-stone/10 p-2 text-olive transition h-8 w-8 flex items-center justify-center text-xs"
+                className="absolute top-5 right-5 text-stone hover:text-ink transition-colors"
+                aria-label="Close"
               >
-                ✕
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+                </svg>
               </button>
 
               {upiStep === 'select' ? (
-                <div className="space-y-6">
-                  <div className="text-center space-y-1">
-                    <span className="text-[9px] tracking-[0.25em] font-mono font-bold uppercase text-stone">Secure UPI Checkout</span>
-                    <h3 className="font-serif text-2xl font-bold tracking-wide text-olive">Select UPI App</h3>
-                    <p className="text-[11px] text-stone/85">Choose your preferred UPI application to pay <span className="font-semibold text-olive">₹{cartTotal}</span></p>
+                <>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-gold mb-2">Secure UPI checkout</p>
+                    <h3 className="font-serif text-2xl mb-1">Select your UPI app</h3>
+                    <p className="text-sm font-light text-ink-soft">
+                      To pay ₹{cartTotal}
+                    </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 max-h-[250px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-stone/30">
+                  <div className="grid grid-cols-2 gap-3">
                     {upiApps.map((app) => (
-                      <div
+                      <button
+                        type="button"
                         key={app.id}
                         onClick={() => {
                           setSelectedUpiApp(app.id)
-                          if (app.id !== 'other') {
-                            setUpiId('')
-                          }
+                          if (app.id !== 'other') setUpiId('')
                         }}
-                        className={`flex flex-col items-center justify-center p-4 rounded-2xl border cursor-pointer select-none transition duration-300 ${
+                        className={`border px-4 py-3.5 text-xs text-left transition-colors duration-300 ${
                           selectedUpiApp === app.id
-                            ? 'border-olive bg-sand shadow-sm ring-2 ring-stone/10 font-bold'
-                            : 'border-stone/15 hover:border-stone/30 bg-sand/35 hover:scale-[1.02]'
+                            ? 'border-ink text-ink'
+                            : 'border-ink/20 text-ink-soft hover:border-ink/40'
                         }`}
                       >
-                        <span className="text-2xl mb-1">{app.icon}</span>
-                        <span className="text-xs text-olive">{app.name}</span>
-                      </div>
+                        {app.name}
+                      </button>
                     ))}
                   </div>
 
                   {selectedUpiApp === 'other' && (
-                    <div className="space-y-2">
-                      <label className="block text-[10px] font-mono font-bold uppercase tracking-wider text-stone">Enter UPI ID</label>
+                    <label className="block">
+                      <span className="block text-[10px] uppercase tracking-[0.2em] text-stone mb-2">UPI ID</span>
                       <input
                         type="text"
-                        placeholder="e.g. username@bank"
+                        placeholder="name@bank"
                         value={upiId}
                         onChange={(e) => setUpiId(e.target.value)}
-                        className="w-full rounded-xl border border-stone/30 bg-sand/65 px-4 py-3 text-sm text-olive placeholder:text-stone/45 outline-none transition focus:border-olive focus:ring-4 focus:ring-stone/10"
+                        className={inputClass}
                       />
-                    </div>
+                    </label>
                   )}
 
                   <button
@@ -482,35 +444,26 @@ export default function CheckoutModal() {
                     disabled={submitting || !selectedUpiApp || (selectedUpiApp === 'other' && !upiId.includes('@'))}
                     onClick={async () => {
                       setUpiStep('processing')
-                      // Simulate processing delay, then submit order
                       setTimeout(async () => {
-                        const appName = upiApps.find(a => a.id === selectedUpiApp)?.name || 'UPI'
+                        const appName = upiApps.find((a) => a.id === selectedUpiApp)?.name || 'UPI'
                         const methodLabel = selectedUpiApp === 'other' ? `UPI (${upiId})` : `UPI - ${appName}`
                         await submitOrder(methodLabel)
                       }, 2500)
                     }}
-                    className="w-full rounded-full bg-olive text-oatmeal hover:bg-stone hover:text-oatmeal disabled:bg-stone/20 disabled:text-olive/40 py-3.5 text-xs font-bold uppercase tracking-[0.2em] transition duration-300 shadow-md flex items-center justify-center gap-2"
+                    className="btn-dark w-full disabled:opacity-50"
                   >
                     Pay ₹{cartTotal}
                   </button>
-                </div>
+                </>
               ) : (
-                <div className="py-8 flex flex-col items-center justify-center text-center space-y-6">
-                  <div className="relative flex items-center justify-center">
-                    <span className="animate-ping absolute inline-flex h-12 w-12 rounded-full bg-olive/20 opacity-75" />
-                    <div className="h-16 w-16 rounded-full border-[3px] border-olive/20 border-t-olive animate-spin flex items-center justify-center text-xl">
-                      🛡️
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="font-serif text-xl font-bold tracking-wide text-olive">Security authorization</h4>
-                    <p className="text-xs text-stone/85 max-w-xs leading-relaxed mx-auto">
-                      Connecting securely to {upiApps.find(a => a.id === selectedUpiApp)?.name || 'UPI'} Gateway...
-                    </p>
-                    <p className="text-[10px] text-stone font-mono animate-pulse">
-                      Please approve the payment request on your mobile app.
-                    </p>
-                  </div>
+                <div className="py-10 text-center space-y-5">
+                  <div className="h-10 w-10 mx-auto border-2 border-ink/15 border-t-gold rounded-full animate-spin" />
+                  <h4 className="font-serif text-xl">Authorizing</h4>
+                  <p className="text-sm font-light text-ink-soft max-w-xs mx-auto leading-relaxed">
+                    Connecting to{' '}
+                    {upiApps.find((a) => a.id === selectedUpiApp)?.name || 'UPI'}. Please approve
+                    the payment request on your device.
+                  </p>
                 </div>
               )}
             </div>
