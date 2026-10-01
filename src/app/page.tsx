@@ -81,11 +81,11 @@ export default function HomePage() {
             priority
             fill
             sizes="100vw"
-            className="object-cover opacity-60"
+            className="object-cover opacity-75 brightness-[1.9] saturate-[1.15]"
           />
           {/* Warm amber cast + a soft scrim on the copy side only */}
           <div className="absolute inset-0 bg-[#8a5a24]/10 mix-blend-overlay" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#241a11]/90 via-[#241a11]/35 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#241a11]/85 via-[#241a11]/30 to-transparent" />
           <div className="lg:hidden absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#241a11]/80 to-transparent" />
         </div>
 
@@ -116,10 +116,10 @@ export default function HomePage() {
 
           {/* The brand plate — where the bottle stood */}
           <div className="order-1 lg:order-2 relative flex items-center justify-center min-h-[64svh] lg:min-h-full px-6 py-16 lg:py-24">
-            <div className="hero-rise hero-rise-2 relative w-60 sm:w-72 lg:w-[21rem] aspect-[7/9] border border-gold/40 p-2">
+            <div className="hero-rise hero-rise-2 relative w-60 sm:w-72 lg:w-[21rem] aspect-[4/5] border border-gold/40 p-2">
               <div className="relative h-full w-full overflow-hidden">
                 <Image
-                  src="/images/IMG-20260802-WA0019.jpg"
+                  src="/images/oryn-brand-plate.png"
                   alt="ORYN — brand emblem"
                   fill
                   priority
