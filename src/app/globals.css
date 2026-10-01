@@ -25,7 +25,7 @@ body {
   background-color: #f4efe6;
   color: #2a231d;
   font-family: 'Work Sans', 'Avenir Next', system-ui, sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -38,7 +38,7 @@ h4,
 h5,
 h6 {
   font-family: 'Playfair Display', 'Times New Roman', serif;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 button,
