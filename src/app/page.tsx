@@ -118,7 +118,7 @@ export default function HomePage() {
           <div className="order-1 lg:order-2 relative flex items-center justify-center min-h-[64svh] lg:min-h-full px-6 py-16 lg:py-24">
             <div className="hero-rise hero-rise-2 relative w-64 sm:w-80 lg:w-[23rem] aspect-square">
               <Image
-                src="/images/oryn-emblem.png"
+                src="/images/oryn-emblem-dark.png"
                 alt="ORYN — brand emblem"
                 fill
                 priority

@@ -1,19 +1,17 @@
 """One-off: extract the emblem from the ivory plate as a transparent PNG.
 
-v2 — deeper, richer treatment so the mark reads against the warm backdrop:
-- Alpha: smoothstep between t=0.055 (paper/soft shadows -> gone) and t=0.14
-  (emblem body -> fully opaque), then gamma 0.8 to lift thin antialiased strokes.
-  t = tone distance from the paper, where paper luminance is ~238.
-- Color: emblem shading is mapped onto a light-gold -> deep-bronze ramp so the
-  mark keeps depth but sits darker and more saturated than before.
+v3 — dark antique-brass treatment for strong contrast on the bright backdrop:
+- Alpha: smoothstep between t=0.05 and t=0.12, gamma 0.7 (near-solid strokes).
+- Color: light antique gold -> very deep bronze ramp.
+- Output under a NEW filename to bust any cached lighter version.
 """
 from PIL import Image
 
 SRC = "public/images/oryn-brand-plate.png"
-OUT = "public/images/oryn-emblem.png"
+OUT = "public/images/oryn-emblem-dark.png"
 
-LIGHT_GOLD = (198, 158, 92)    # highlights
-DEEP_BRONZE = (118, 86, 38)    # deepest strokes
+LIGHT_GOLD = (168, 128, 62)    # lightest emblem tone
+DEEP_BRONZE = (86, 60, 26)     # deepest strokes
 PAPER_LUM = 238.0
 T_MAX = 0.34                   # highest tone-distance found in the plate
 
@@ -39,7 +37,7 @@ for y in range(h):
         r, g, b = src[x, y]
         lum = 0.299 * r + 0.587 * g + 0.114 * b
         t = (PAPER_LUM - lum) / PAPER_LUM
-        a = smoothstep(0.055, 0.14, t) ** 0.8
+        a = smoothstep(0.05, 0.12, t) ** 0.7
         if a <= 0.0:
             dst[x, y] = (0, 0, 0, 0)
             continue
