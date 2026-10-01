@@ -63,7 +63,7 @@ export default function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                className={`text-[10px] uppercase tracking-wide2 ${mutedText} hover:text-gold transition-colors duration-300`}
+                className={`text-[10px] font-semibold uppercase tracking-wide2 ${mutedText} hover:text-gold transition-colors duration-300`}
               >
                 {link.label}
               </Link>
@@ -76,7 +76,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setSignUpOpen(true)}
-                className={`hidden sm:inline-block text-[10px] uppercase tracking-wide2 ${mutedText} hover:text-gold transition-colors duration-300`}
+                className={`hidden sm:inline-block text-[10px] font-semibold uppercase tracking-wide2 ${mutedText} hover:text-gold transition-colors duration-300`}
               >
                 Account
               </button>
@@ -84,8 +84,7 @@ export default function Header() {
               <div className="relative hidden sm:block">
                 <button
                   type="button"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className={`text-[10px] uppercase tracking-wide2 ${inkText} hover:text-gold transition-colors duration-300`}
+                  onClick={() => setDropdownOpen(!dropdownOpen)}                    className={`text-[10px] font-semibold uppercase tracking-wide2 ${inkText} hover:text-gold transition-colors duration-300`}
                 >
                   {customer.name.split(' ')[0]}
                 </button>
@@ -117,7 +116,7 @@ export default function Header() {
               className={`relative ${inkText} hover:text-gold transition-colors duration-300`}
               aria-label="Shopping bag"
             >
-              <span className="text-[10px] uppercase tracking-wide2">Bag</span>
+              <span className="text-[10px] font-semibold uppercase tracking-wide2">Bag</span>
               {cartItemsCount > 0 && (
                 <span className="absolute -top-2.5 -right-4 text-[9px] text-gold">
                   ({cartItemsCount})
