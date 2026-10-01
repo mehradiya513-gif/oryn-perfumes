@@ -1,18 +1,18 @@
 """One-off: extract the emblem from the ivory plate as a transparent PNG.
 
-v4 — DARK ink treatment: the emblem is rendered in the site's dark palette so
-it reads clearly against the lighter warm backdrop.
+v5 — WHITE/ivory treatment for maximum clarity on the warm brown backdrop.
 - Alpha: smoothstep between t=0.05 and t=0.12, gamma 0.7 (near-solid strokes).
-- Color: dark espresso -> near-black ink ramp (site ink is #2a231d).
-- Output under a NEW filename to bust any cached lighter version.
+- Color: white -> warm ivory ramp (site ivory #f4efe6), kept with the soft
+  dark drop-shadow in the hero so the light mark separates cleanly.
+- Output under a NEW filename to bust any cached version.
 """
 from PIL import Image
 
 SRC = "public/images/oryn-brand-plate.png"
-OUT = "public/images/oryn-emblem-ink.png"
+OUT = "public/images/oryn-emblem-white.png"
 
-LIGHT_GOLD = (58, 42, 26)      # lightest stroke tone (dark espresso)
-DEEP_BRONZE = (20, 13, 7)      # deepest strokes (near-black ink)
+LIGHT_GOLD = (255, 253, 249)   # brightest strokes (white)
+DEEP_BRONZE = (235, 229, 217)  # deepest strokes (warm ivory)
 PAPER_LUM = 238.0
 T_MAX = 0.34                   # highest tone-distance found in the plate
 
