@@ -114,19 +114,17 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* The brand plate — where the bottle stood */}
+          {/* The brand emblem — floating free, edges dissolved into the hero */}
           <div className="order-1 lg:order-2 relative flex items-center justify-center min-h-[64svh] lg:min-h-full px-6 py-16 lg:py-24">
-            <div className="hero-rise hero-rise-2 relative w-60 sm:w-72 lg:w-[21rem] aspect-[4/5] border border-gold/40 p-2">
-              <div className="relative h-full w-full overflow-hidden">
-                <Image
-                  src="/images/oryn-brand-plate.png"
-                  alt="ORYN — brand emblem"
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 60vw, (max-width: 1024px) 40vw, 25vw"
-                  className="object-cover"
-                />
-              </div>
+            <div className="hero-rise hero-rise-2 relative w-64 sm:w-80 lg:w-[23rem] aspect-square">
+              <Image
+                src="/images/oryn-emblem.png"
+                alt="ORYN — brand emblem"
+                fill
+                priority
+                sizes="(max-width: 640px) 64vw, (max-width: 1024px) 42vw, 26vw"
+                className="object-contain"
+              />
             </div>
           </div>
         </div>
