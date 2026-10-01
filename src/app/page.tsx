@@ -72,7 +72,7 @@ export default function HomePage() {
   return (
     <div className="bg-ivory text-ink">
       {/* ═══════════════ HERO — faded bottle backdrop, brand plate ═══════════════ */}
-      <section className="relative bg-[#16110d] overflow-hidden">
+      <section className="relative bg-[#241a11] overflow-hidden">
         {/* The bottle photograph, faded into the ground as a full-bleed backdrop */}
         <div className="absolute inset-0" aria-hidden="true">
           <Image
@@ -81,11 +81,12 @@ export default function HomePage() {
             priority
             fill
             sizes="100vw"
-            className="object-cover opacity-25"
+            className="object-cover opacity-60"
           />
-          {/* Veils keep the copy legible over the photograph */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#16110d] via-[#16110d]/70 to-[#16110d]/20" />
-          <div className="lg:hidden absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#16110d] to-transparent" />
+          {/* Warm amber cast + a soft scrim on the copy side only */}
+          <div className="absolute inset-0 bg-[#8a5a24]/10 mix-blend-overlay" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#241a11]/90 via-[#241a11]/35 to-transparent" />
+          <div className="lg:hidden absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#241a11]/80 to-transparent" />
         </div>
 
         <div className="relative mx-auto max-w-[1400px] grid lg:grid-cols-2 lg:min-h-[100svh]">
