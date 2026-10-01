@@ -71,9 +71,24 @@ export default function HomePage() {
 
   return (
     <div className="bg-ivory text-ink">
-      {/* ═══════════════ HERO — the campaign image ═══════════════ */}
+      {/* ═══════════════ HERO — faded bottle backdrop, brand plate ═══════════════ */}
       <section className="relative bg-[#16110d] overflow-hidden">
-        <div className="mx-auto max-w-[1400px] grid lg:grid-cols-2 lg:min-h-[100svh]">
+        {/* The bottle photograph, faded into the ground as a full-bleed backdrop */}
+        <div className="absolute inset-0" aria-hidden="true">
+          <Image
+            src="/images/black-oud-dark.png"
+            alt=""
+            priority
+            fill
+            sizes="100vw"
+            className="object-cover opacity-25"
+          />
+          {/* Veils keep the copy legible over the photograph */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#16110d] via-[#16110d]/70 to-[#16110d]/20" />
+          <div className="lg:hidden absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#16110d] to-transparent" />
+        </div>
+
+        <div className="relative mx-auto max-w-[1400px] grid lg:grid-cols-2 lg:min-h-[100svh]">
           {/* Copy — left, on warm near-black */}
           <div className="order-2 lg:order-1 flex items-center px-6 md:px-10 pt-14 pb-20 lg:py-0 lg:pl-10 xl:pl-16">
             <div className="max-w-3xl">
@@ -98,19 +113,20 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* The real photograph — uncropped, bleeding to the right edge */}
-          <div className="order-1 lg:order-2 relative min-h-[78svh] lg:min-h-full">
-            <Image
-              src="/images/black-oud-dark.png"
-              alt="ORYN Black Oud — eau de parfum, photographed in low warm light"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
-            {/* Melt the photo's left edge into the section ground */}
-            <div className="hidden lg:block absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-[#16110d] to-transparent" />
-            <div className="lg:hidden absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#16110d] to-transparent" />
+          {/* The brand plate — where the bottle stood */}
+          <div className="order-1 lg:order-2 relative flex items-center justify-center min-h-[64svh] lg:min-h-full px-6 py-16 lg:py-24">
+            <div className="hero-rise hero-rise-2 relative w-60 sm:w-72 lg:w-[21rem] aspect-[7/9] border border-gold/40 p-2">
+              <div className="relative h-full w-full overflow-hidden">
+                <Image
+                  src="/images/IMG-20260802-WA0019.jpg"
+                  alt="ORYN — brand emblem"
+                  fill
+                  priority
+                  sizes="(max-width: 640px) 60vw, (max-width: 1024px) 40vw, 25vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
