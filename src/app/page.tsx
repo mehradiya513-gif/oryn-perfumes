@@ -123,7 +123,7 @@ export default function HomePage() {
                 fill
                 priority
                 sizes="(max-width: 640px) 64vw, (max-width: 1024px) 42vw, 26vw"
-                className="object-contain"
+                className="object-contain drop-shadow-[0_10px_32px_rgba(22,15,7,0.55)]"
               />
             </div>
           </div>
