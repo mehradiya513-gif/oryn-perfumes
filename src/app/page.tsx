@@ -1,60 +1,70 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import products, { Product } from '@/lib/products'
 import { useCart } from '@/context/CartContext'
+import Reveal from '@/components/Reveal'
 
-/* Reveal-on-scroll: gentle fade/translate, no parallax, no gimmicks */
-function Reveal({
-  children,
-  className = '',
-  delay = 0,
+/* ————— Product card — fixed image frame, identical internal structure ————— */
+function ProductCard({
+  product,
+  onOpen,
+  onAdd,
+  priority = false,
 }: {
-  children: React.ReactNode
-  className?: string
-  delay?: number
+  product: Product
+  onOpen: (p: Product) => void
+  onAdd: (p: Product) => void
+  priority?: boolean
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => el.classList.add('is-visible'), delay)
-            observer.unobserve(el)
-          }
-        })
-      },
-      { threshold: 0.12 },
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [delay])
+  const shortName = product.name.replace(/^Oryn\s/, '')
 
   return (
-    <div ref={ref} className={`reveal ${className}`}>
-      {children}
-    </div>
-  )
-}
+    <div className="group flex h-full flex-col">
+      {/* Fixed frame — every bottle sits in an identical 4:5 photograph */}
+      <button
+        type="button"
+        onClick={() => onOpen(product)}
+        className="relative block aspect-[4/5] w-full overflow-hidden bg-beige"
+        aria-label={`View ${product.name}`}
+      >
+        <Image
+          src={product.image}
+          alt={`${product.name} — eau de parfum bottle`}
+          fill
+          priority={priority}
+          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 44vw, 380px"
+          className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
+        />
+      </button>
 
-/* Editorial product photo tile: the real photograph, uncropped, on its own paper */
-function ProductPhoto({ product, priority = false }: { product: Product; priority?: boolean }) {
-  return (
-    <div className="relative aspect-[4/5] overflow-hidden">
-      <Image
-        src={product.image}
-        alt={`${product.name} — eau de parfum bottle`}
-        fill
-        priority={priority}
-        sizes="(max-width: 640px) 86vw, (max-width: 1024px) 44vw, 30vw"
-        className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
-      />
+      <div className="flex flex-1 flex-col pt-5">
+        <div className="flex items-baseline justify-between gap-4">
+          <h3 className="font-serif text-xl font-semibold text-ink">{shortName}</h3>
+          <span className="text-[15px] font-semibold text-ink">₹{product.price}</span>
+        </div>
+        <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-stone">
+          {product.fragrance}
+        </p>
+        <p className="mt-3 text-[14.5px] leading-relaxed text-ink-soft line-clamp-2">
+          {product.description}
+        </p>
+
+        <div className="mt-auto pt-5">
+          <button
+            type="button"
+            onClick={() => onAdd(product)}
+            className="inline-flex items-center gap-2 border-b border-ink/20 pb-1 text-[11px] font-bold uppercase tracking-[0.2em] text-ink transition-colors duration-300 hover:border-gold hover:text-gold"
+          >
+            Add to bag
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M2 8h11M9 3.5 13.5 8 9 12.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
@@ -63,221 +73,220 @@ export default function HomePage() {
   const { addToCart } = useCart()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
+  const featured = products[5] // Oryn Black Oud — the signature composition
+
   const scrollToCollection = () => {
     document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const featured = products[5] // Oryn Black Oud — the deepest composition
+  /* Close the product dialogue with Escape */
+  useEffect(() => {
+    if (!selectedProduct) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedProduct(null)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [selectedProduct])
 
   return (
     <div className="bg-ivory text-ink">
-      {/* ═══════════════ HERO — faded bottle backdrop, brand plate ═══════════════ */}
-      <section className="relative bg-[#241a11] overflow-hidden">
-        {/* The bottle photograph, faded into the ground as a full-bleed backdrop */}
-        <div className="absolute inset-0" aria-hidden="true">
-          <Image
-            src="/images/black-oud-dark.png"
-            alt=""
-            priority
-            fill
-            sizes="100vw"
-            className="object-cover opacity-75 brightness-[1.9] saturate-[1.15]"
-          />
-          {/* Warm amber cast + a soft scrim on the copy side only */}
-          <div className="absolute inset-0 bg-[#8a5a24]/10 mix-blend-overlay" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#241a11]/85 via-[#241a11]/30 to-transparent" />
-          <div className="lg:hidden absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#241a11]/80 to-transparent" />
-        </div>
-
-        <div className="relative mx-auto max-w-[1400px] grid lg:grid-cols-2 lg:min-h-[100svh]">
-          {/* Copy — left, on warm near-black */}
-          <div className="order-2 lg:order-1 flex items-center px-6 md:px-10 pt-14 pb-20 lg:py-0 lg:pl-10 xl:pl-16">
-            <div className="max-w-3xl">
-              <p className="hero-rise hero-rise-1 text-[10px] uppercase tracking-[0.35em] text-ivory/50 mb-8">
-                A new fragrance house — Est. MMXXVI
-              </p>
-              <h1 className="hero-rise hero-rise-2 font-serif text-[2.75rem] sm:text-5xl lg:text-[2.9rem] xl:text-[3.8rem] leading-[1.12] text-ivory mb-8">
-                The scent you wear
+      {/* ═══════════ 1 · HERO — campaign photograph right, copy left ═══════════ */}
+      <section className="bg-ivory pt-20">
+        <div className="grid lg:min-h-[calc(100svh-5rem)] lg:grid-cols-12">
+          {/* Copy — vertically aligned with the photograph */}
+          <div className="order-1 flex items-center lg:col-span-5">
+            <div className="py-14 md:py-16 lg:py-0 lg:pr-12">
+              <p className="section-tag hero-rise hero-rise-1 mb-8">A new fragrance house</p>
+              <h1 className="hero-rise hero-rise-2 font-serif text-[2.6rem] font-semibold leading-[1.06] tracking-[-0.02em] text-ink sm:text-5xl lg:text-[3.9rem]">
+                Made to be
                 <br />
-                becomes part of
-                <br />
-                <span className="italic font-normal">your story.</span>
+                <span className="italic">remembered.</span>
               </h1>
-              <p className="hero-rise hero-rise-2 text-ivory/60 text-base md:text-lg font-light leading-relaxed max-w-md mb-10">
-                Six fragrances, composed with patience and restraint. Nothing more, nothing less.
+              <p className="hero-rise hero-rise-2 mt-7 max-w-md text-[16px] leading-[1.8] text-ink-soft md:text-[17px]">
+                Six fragrances, composed slowly and made to last — the first collection from Oryn.
               </p>
-              <div className="hero-rise hero-rise-3">
-                <button onClick={scrollToCollection} className="btn-light">
+              <div className="hero-rise hero-rise-3 mt-10 hidden lg:block">
+                <button type="button" onClick={scrollToCollection} className="btn-dark">
                   Discover Oryn
                 </button>
               </div>
             </div>
           </div>
 
-          {/* The brand emblem — floating free, edges dissolved into the hero */}
-          <div className="order-1 lg:order-2 relative flex items-center justify-center min-h-[64svh] lg:min-h-full px-6 py-16 lg:py-24">
-            <div className="hero-rise hero-rise-2 relative w-64 sm:w-80 lg:w-[23rem] aspect-square">
-              <Image
-                src="/images/oryn-emblem-white.png"
-                alt="ORYN — brand emblem"
-                fill
-                priority
-                sizes="(max-width: 640px) 64vw, (max-width: 1024px) 42vw, 26vw"
-                className="object-contain drop-shadow-[0_10px_32px_rgba(22,15,7,0.55)]"
-              />
-            </div>
+          {/* The photograph — the bottle is the focal point */}
+          <div className="relative order-2 min-h-[420px] w-full sm:aspect-[4/5] lg:order-2 lg:col-span-7 lg:aspect-auto lg:min-h-full">
+            {/* The brand line — one quiet anchor in the frame's empty corner */}
+            <span
+              aria-hidden="true"
+              className="hero-rise hero-rise-1 pointer-events-none absolute left-0 top-16 hidden select-none font-serif text-[8.5rem] font-semibold uppercase leading-none tracking-brand text-ivory/40 lg:block xl:text-[9.5rem]"
+            >
+              Oryn
+            </span>
+            <Image
+              src="/images/arabian-oud-purple.png"
+              alt="ORYN Arabian Oud — eau de parfum bottle"
+              priority
+              fill
+              sizes="(max-width: 1024px) 100vw, 58vw"
+              className="object-cover"
+            />
+          </div>
+
+          {/* Mobile CTA — copy, then image, then the call to action */}
+          <div className="order-3 py-12 lg:hidden">
+            <button type="button" onClick={scrollToCollection} className="btn-dark">
+              Discover Oryn
+            </button>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ INTRODUCING ORYN ═══════════════ */}
-      <section className="bg-ivory">
-        <div className="mx-auto max-w-3xl px-6 py-28 md:py-40 text-center">
-          <Reveal>
-            <p className="section-tag">Oryn</p>
-            <h2 className="font-serif text-3xl md:text-[2.75rem] leading-[1.25] mb-10">
-              A new fragrance house, built on a simple belief —
-              <span className="italic"> that one honest fragrance says more than fifty forgettable ones.</span>
-            </h2>
-            <p className="text-ink-soft font-light leading-relaxed text-base md:text-lg max-w-xl mx-auto">
-              Oryn exists because we believed fragrance had become noise. Ours is a quieter
-              argument: fewer fragrances, composed carefully, presented honestly. We are new —
-              and we think that is worth something. Every bottle we make carries the care of a
-              house with something to prove.
-            </p>
-          </Reveal>
+      {/* ═══════════ 2 · INTRODUCING ORYN ═══════════ */}
+      <section className="bg-cream">
+        <div className="shell py-24 md:py-32">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-7">
+              <p className="section-tag mb-6">Introducing Oryn</p>
+              <h2 className="font-serif text-3xl font-semibold leading-[1.18] tracking-[-0.01em] text-ink md:text-[2.6rem] md:leading-[1.16]">
+                One honest fragrance says more than{' '}
+                <span className="italic">fifty forgettable ones.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={120} className="lg:col-span-4 lg:col-start-9 lg:flex lg:flex-col lg:justify-end">
+              <p className="text-[15.5px] leading-[1.8] text-ink-soft">
+                Oryn exists because fragrance had become noise — thousands of launches a year, most
+                of them forgotten before the season turns.
+              </p>
+              <p className="mt-5 text-[15.5px] leading-[1.8] text-ink-soft">
+                We make the opposite. A small collection, composed carefully, presented honestly.
+                We are new — and we think that is worth something.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════ LAUNCH COLLECTION ═══════════════ */}
-      <section id="collection" className="bg-ivory-deep border-y border-ink/10 scroll-mt-16">
-        <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-24 md:py-32">
-          <Reveal className="text-center mb-16 md:mb-24">
-            <p className="section-tag">The First Collection</p>
-            <h2 className="font-serif text-4xl md:text-5xl mb-6">Six fragrances. No more.</h2>
-            <p className="text-ink-soft font-light max-w-xl mx-auto">
-              Our entire offering, composed to be lived in — from first spray to last trace on the skin.
-            </p>
+      {/* ═══════════ 3 · THE LAUNCH COLLECTION ═══════════ */}
+      <section id="collection" className="scroll-mt-24 bg-ivory">
+        <div className="shell py-24 md:py-32">
+          <Reveal className="mb-14 md:mb-20">
+            <div className="grid items-end gap-8 lg:grid-cols-12">
+              <div className="lg:col-span-8">
+                <p className="section-tag mb-6">The Launch Collection</p>
+                <h2 className="font-serif text-4xl font-semibold leading-[1.1] tracking-[-0.01em] text-ink md:text-5xl">
+                  Six fragrances. No more.
+                </h2>
+              </div>
+              <div className="lg:col-span-4">
+                <p className="text-[15px] leading-[1.8] text-ink-soft">
+                  Our entire offering, nothing held back — composed to be lived in, from the first
+                  spray to the last trace on the skin.
+                </p>
+              </div>
+            </div>
           </Reveal>
 
-          {/* Editorial staggered grid — photos breathe, no card boxes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 lg:gap-x-12 gap-y-16 md:gap-y-24">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-16">
             {products.map((product, i) => (
               <Reveal key={product.id} delay={(i % 3) * 90}>
-                <button
-                  onClick={() => setSelectedProduct(product)}
-                  className="group block w-full text-left cursor-pointer"
-                >
-                  <ProductPhoto product={product} />
-                  <div className="pt-5">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="font-serif text-xl md:text-2xl group-hover:text-gold transition-colors duration-500">
-                        {product.name.replace(/^Oryn\s/, '')}
-                      </h3>
-                      <span className="text-sm font-light text-ink-soft whitespace-nowrap">
-                        ₹{product.price}
-                      </span>
-                    </div>
-                    <p className="mt-1.5 text-[10px] uppercase tracking-[0.25em] text-stone">
-                      {product.fragrance}
-                    </p>
-                  </div>
-                </button>
+                <ProductCard
+                  product={product}
+                  onOpen={setSelectedProduct}
+                  onAdd={addToCart}
+                  priority={i < 3}
+                />
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ ORYN PHILOSOPHY ═══════════════ */}
-      <section id="philosophy" className="bg-ivory scroll-mt-16">
-        <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-24 md:py-32">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Sticky text column */}
-            <div className="lg:col-span-5 lg:sticky lg:top-28">
-              <Reveal>
-                <p className="section-tag">Philosophy</p>
-                <h2 className="font-serif text-4xl md:text-[2.9rem] leading-[1.15] mb-8">
-                  Fewer, better.
-                  <br />
-                  <span className="italic">Nothing that isn&rsquo;t meant to last.</span>
-                </h2>
-                <p className="text-ink-soft font-light leading-relaxed max-w-md">
-                  The fragrance industry releases thousands of launches a year, most of them
-                  forgotten before the season turns. We choose the opposite discipline: a small
-                  collection, refined until each fragrance deserves its place.
-                </p>
-              </Reveal>
-            </div>
+      {/* ═══════════ 4 · ORYN PHILOSOPHY ═══════════ */}
+      <section id="philosophy" className="scroll-mt-24 bg-blush">
+        <div className="shell py-24 md:py-32">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-6">
+              <p className="section-tag mb-6">Our Philosophy</p>
+              <h2 className="font-serif text-3xl font-semibold leading-[1.15] tracking-[-0.01em] text-ink md:text-[2.6rem]">
+                Fewer, better. Nothing that isn&rsquo;t meant to last.
+              </h2>
+            </Reveal>
 
-            {/* Numbered principles — typographic, not cards */}
-            <div className="lg:col-span-7">
-              {[
-                {
-                  n: 'I',
-                  title: 'Quality over quantity',
-                  copy: 'One collection, refined to its essentials. We would rather perfect six fragrances than ship sixty.',
-                },
-                {
-                  n: 'II',
-                  title: 'Timeless, not seasonal',
-                  copy: 'These compositions were not designed to chase a trend cycle. They are meant to be worn for years, not months.',
-                },
-                {
-                  n: 'III',
-                  title: 'Fragrance as identity',
-                  copy: 'A scent should feel like it belongs to you — close, personal, unmistakably yours rather than loudly everywhere.',
-                },
-                {
-                  n: 'IV',
-                  title: 'Thoughtful, considered design',
-                  copy: 'From the composition in the bottle to the paper around it, every detail is deliberate. Nothing is decoration for its own sake.',
-                },
-              ].map((item, i) => (
-                <Reveal key={item.n} delay={i * 60}>
-                  <div className="flex gap-8 md:gap-12 py-9 md:py-11 border-t border-ink/15 last:border-b">
-                    <span className="font-serif text-sm text-gold pt-1.5 w-8 shrink-0">{item.n}</span>
+            <Reveal delay={120} className="lg:col-span-5 lg:col-start-8">
+              <p className="text-[15.5px] leading-[1.8] text-ink-soft">
+                Most fragrance is designed for a season and gone by the next. Oryn is built on a
+                quieter discipline — fewer fragrances, refined until each one deserves its place.
+              </p>
+
+              <div className="mt-10">
+                {[
+                  {
+                    n: 'I',
+                    title: 'Quality over quantity',
+                    copy: 'Six fragrances, refined until each deserves its place.',
+                  },
+                  {
+                    n: 'II',
+                    title: 'Timeless, not seasonal',
+                    copy: 'Composed to be worn for years, not one trend cycle.',
+                  },
+                  {
+                    n: 'III',
+                    title: 'Fragrance as identity',
+                    copy: 'A scent should feel like it belongs to you, not the room.',
+                  },
+                  {
+                    n: 'IV',
+                    title: 'Considered design',
+                    copy: 'From the composition to the paper it arrives in, nothing is accidental.',
+                  },
+                ].map((item, i) => (
+                  <div
+                    key={item.n}
+                    className={`flex gap-6 py-6 md:gap-8 ${i === 0 ? 'border-t border-ink/15' : ''} ${
+                      i < 3 ? 'border-b border-ink/15' : ''
+                    }`}
+                  >
+                    <span className="w-8 shrink-0 pt-0.5 font-serif text-sm text-gold">{item.n}</span>
                     <div>
-                      <h3 className="font-serif text-xl md:text-2xl mb-3">{item.title}</h3>
-                      <p className="text-ink-soft font-light leading-relaxed max-w-lg">{item.copy}</p>
+                      <h3 className="text-[15px] font-bold tracking-[0.01em] text-ink">{item.title}</h3>
+                      <p className="mt-1.5 text-[14.5px] leading-relaxed text-ink-soft">{item.copy}</p>
                     </div>
                   </div>
-                </Reveal>
-              ))}
-            </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ FRAGRANCE AS IDENTITY ═══════════════ */}
-      <section id="identity" className="relative bg-ink text-ivory overflow-hidden scroll-mt-16">
-        <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-28 md:py-40">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Photo tile: the real Arabian Oud photograph, full-bleed on its studio ground */}
-            <Reveal>
-              <div className="relative aspect-[4/5] max-w-md mx-auto lg:mx-0 overflow-hidden">
+      {/* ═══════════ 5 · FRAGRANCE & IDENTITY ═══════════ */}
+      <section className="bg-ivory">
+        <div className="shell py-24 md:py-32">
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-20">
+            <Reveal className="lg:col-span-7">
+              <div className="relative aspect-[4/5] w-full overflow-hidden bg-beige sm:aspect-[3/2] lg:aspect-[4/5]">
                 <Image
-                  src="/images/arabian-oud-purple.png"
-                  alt="Oryn Arabian Oud bottle in deep violet glass"
+                  src="/images/IMG-20260802-WA0019.jpg"
+                  alt="A quiet still life from the Oryn studio"
                   fill
-                  sizes="(max-width: 1024px) 86vw, 42vw"
+                  sizes="(max-width: 1024px) 92vw, 58vw"
                   className="object-cover"
                 />
               </div>
             </Reveal>
 
-            <Reveal delay={120}>
-              <p className="section-tag">Identity</p>
-              <h2 className="font-serif text-4xl md:text-[2.9rem] leading-[1.15] mb-8">
-                You remember people
-                <br />
-                <span className="italic">by how they smelled.</span>
+            <Reveal delay={120} className="lg:col-span-5">
+              <p className="section-tag mb-6">Fragrance &amp; Identity</p>
+              <h2 className="font-serif text-3xl font-semibold leading-[1.15] tracking-[-0.01em] text-ink md:text-[2.6rem]">
+                You remember people <span className="italic">by how they smelled.</span>
               </h2>
-              <div className="space-y-6 text-ivory/70 font-light leading-relaxed max-w-md">
+              <div className="mt-8 space-y-6 text-[15.5px] leading-[1.8] text-ink-soft">
                 <p>
-                  Long after a conversation fades, a scent stays. Someone&rsquo;s perfume can
-                  return you to a room you left years ago — a particular evening, a particular
-                  person, a version of yourself you had almost forgotten.
+                  Long after a conversation fades, a scent stays. It can return you to a room you
+                  left years ago — a particular evening, a particular person, a version of yourself
+                  you had almost forgotten.
                 </p>
                 <p>
                   That is why we compose slowly. A fragrance is not a product you finish; it is
@@ -290,56 +299,58 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════ FEATURED / SIGNATURE FRAGRANCE ═══════════════ */}
-      <section id="signature" className="bg-sand scroll-mt-16">
-        <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-24 md:py-32">
-          <Reveal className="mb-14 md:mb-20">
-            <p className="section-tag">The Signature</p>
-            <h2 className="font-serif text-4xl md:text-5xl">Black Oud</h2>
-          </Reveal>
-
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      {/* ═══════════ 6 · FEATURED FRAGRANCE ═══════════ */}
+      <section id="signature" className="scroll-mt-24 bg-cream">
+        <div className="shell py-24 md:py-32">
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-7">
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-beige">
                 <Image
                   src={featured.image}
                   alt={`${featured.name} — ${featured.fragrance}`}
                   fill
                   sizes="(max-width: 1024px) 92vw, 58vw"
-                  className="object-cover object-[center_30%]"
+                  className="object-cover object-[center_35%]"
                 />
               </div>
             </Reveal>
 
             <Reveal delay={120} className="lg:col-span-5">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-gold mb-5">
-                {featured.concentration}
+              <p className="section-tag mb-6">The Signature</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone">
+                {featured.concentration.replace(' concentration)', ')')}
               </p>
-              <p className="font-light text-ink-soft leading-relaxed mb-10 max-w-md">
-                Smoked oud, dark spices, incense. The deepest composition in the collection —
-                composed for evenings that ask for something with weight and intent.
+              <h2 className="mt-3 font-serif text-3xl font-semibold text-ink md:text-4xl">
+                {featured.name.replace(/^Oryn\s/, '')}
+              </h2>
+              <p className="mt-6 max-w-md text-[15.5px] leading-[1.8] text-ink-soft">
+                Smoked oud, dark spices, incense. The deepest composition in the collection — made
+                for evenings that ask for something with weight and intent.
               </p>
 
-              {/* Notes — typographic table, no boxes */}
-              <div className="border-t border-ink/15 mb-10 max-w-md">
-                {[
-                  ['Top', featured.topNotes],
-                  ['Heart', featured.heartNotes],
-                  ['Base', featured.baseNotes],
-                ].map(([label, value]) => (
-                  <div key={label} className="flex gap-8 py-4 border-b border-ink/15">
-                    <span className="w-14 shrink-0 text-[10px] uppercase tracking-[0.25em] text-stone pt-1">
+              <div className="mt-10 max-w-md border-t border-ink/15">
+                {(
+                  [
+                    ['Top', featured.topNotes],
+                    ['Heart', featured.heartNotes],
+                    ['Base', featured.baseNotes],
+                  ] as const
+                ).map(([label, value]) => (
+                  <div key={label} className="flex gap-6 border-b border-ink/15 py-4 md:gap-8">
+                    <span className="w-14 shrink-0 pt-0.5 text-[10px] font-bold uppercase tracking-[0.25em] text-stone">
                       {label}
                     </span>
-                    <span className="text-sm font-light text-ink-soft">{value}</span>
+                    <span className="text-[14.5px] leading-relaxed text-ink-soft">{value}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="flex flex-wrap items-center gap-8">
-                <span className="font-serif text-2xl">₹{featured.price}</span>
-                <button onClick={() => setSelectedProduct(featured)} className="btn-dark">
-                  Explore the fragrance
+              <div className="mt-10 flex flex-wrap items-center gap-8">
+                <span className="font-serif text-[1.6rem] font-semibold text-ink">
+                  ₹{featured.price}
+                </span>
+                <button type="button" onClick={() => addToCart(featured)} className="btn-dark">
+                  Add to bag
                 </button>
               </div>
             </Reveal>
@@ -347,72 +358,75 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════ THE BEGINNING OF ORYN ═══════════════ */}
+      {/* ═══════════ 7 · THE BEGINNING OF ORYN ═══════════ */}
       <section className="bg-ivory">
-        <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-24 md:py-32">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            <Reveal>
-              <p className="section-tag">The Beginning</p>
-              <h2 className="font-serif text-4xl md:text-[2.9rem] leading-[1.15] mb-8">
-                Every house starts
-                <br />
-                <span className="italic">somewhere.</span>
+        <div className="shell py-24 md:py-32">
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-20">
+            <Reveal className="lg:col-span-5">
+              <p className="section-tag mb-6">The Beginning of Oryn</p>
+              <h2 className="font-serif text-3xl font-semibold leading-[1.15] tracking-[-0.01em] text-ink md:text-[2.6rem]">
+                This is where <span className="italic">Oryn begins.</span>
               </h2>
-              <p className="text-ink-soft font-light leading-relaxed max-w-md">
-                This is where Oryn begins — no archive, no history, nothing behind us but the
-                intention to make something worth keeping. What we can offer you today is small:
-                six fragrances, made carefully, presented honestly.
+              <p className="mt-8 max-w-md text-[15.5px] leading-[1.8] text-ink-soft">
+                No archive, no heritage to lean on — only a clear idea of what fragrance should be,
+                and the patience to make it properly. Six fragrances, made carefully, presented
+                honestly. That is the whole story, and we intend to keep it that way.
               </p>
-              <Link href="/about" className="inline-block mt-8 text-[11px] uppercase tracking-wide2 text-ink border-b border-gold pb-1 hover:text-gold transition-colors duration-300">
+              <Link
+                href="/about"
+                className="mt-10 inline-flex items-center gap-2 border-b border-gold pb-1 text-[11px] font-bold uppercase tracking-[0.2em] text-ink transition-colors duration-300 hover:text-gold"
+              >
                 Read our story
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M2 8h11M9 3.5 13.5 8 9 12.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </Link>
             </Reveal>
 
-            <Reveal delay={120}>
-              <div className="relative aspect-[16/10] lg:mt-16 overflow-hidden">
+            <Reveal delay={120} className="lg:col-span-6 lg:col-start-7">
+              <div className="relative aspect-square w-full overflow-hidden bg-beige">
                 <Image
-                  src="/images/strawberry-red.png"
-                  alt="An Oryn fragrance on its studio plinth"
+                  src="/images/oryn-plaque.jpg"
+                  alt="The Oryn mark"
                   fill
-                  sizes="(max-width: 1024px) 92vw, 46vw"
+                  sizes="(max-width: 1024px) 92vw, 50vw"
                   className="object-cover"
                 />
               </div>
-              <p className="mt-3 text-[10px] uppercase tracking-[0.25em] text-stone">
-                From the first Oryn studio sitting
+              <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.25em] text-stone">
+                The Oryn mark, as it appears on every bottle
               </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ DISCOVER THE COLLECTION — CLOSER ═══════════════ */}
-      <section className="bg-ivory">
-        <div className="border-t border-ink/15">
-          <div className="mx-auto max-w-3xl px-6 py-28 md:py-40 text-center">
-            <Reveal>
-              <h2 className="font-serif text-4xl md:text-6xl leading-[1.1] mb-6">
-                Begin with <span className="italic">one.</span>
-              </h2>
-              <p className="text-ink-soft font-light leading-relaxed max-w-md mx-auto mb-12">
-                Six fragrances. Find the one that becomes yours.
-              </p>
-              <Link href="#collection" className="btn-dark">
-                Shop the collection
-              </Link>
-            </Reveal>
-          </div>
+      {/* ═══════════ 8 · FINAL CALL — the page closes in charcoal ═══════════ */}
+      <section className="bg-ink text-ivory">
+        <div className="shell py-28 text-center md:py-36">
+          <Reveal>
+            <h2 className="mx-auto max-w-2xl font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.015em] text-ivory md:text-[3.5rem]">
+              Begin with <span className="italic">one.</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-md text-[15.5px] leading-[1.8] text-ivory/60">
+              Six fragrances. Find the one that becomes yours.
+            </p>
+            <div className="mt-12">
+              <button type="button" onClick={scrollToCollection} className="btn-light">
+                Shop the Collection
+              </button>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ═══════════════ PRODUCT DIALOGUE ═══════════════ */}
+      {/* ═══════════ PRODUCT DIALOGUE ═══════════ */}
       {selectedProduct && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-ink/60 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/60 backdrop-blur-sm animate-fade-in sm:items-center">
           <div className="absolute inset-0" onClick={() => setSelectedProduct(null)} />
 
-          <div className="relative z-10 bg-ivory w-full sm:max-w-4xl max-h-[92vh] sm:max-h-[86vh] overflow-y-auto flex flex-col sm:flex-row shadow-2xl">
-            {/* Photograph */}
-            <div className="relative sm:w-1/2 aspect-[4/5] sm:aspect-auto sm:min-h-[560px] bg-sand">
+          <div className="relative z-10 flex max-h-[92vh] w-full flex-col overflow-y-auto bg-ivory shadow-soft sm:max-h-[86vh] sm:max-w-4xl sm:flex-row">
+            <div className="relative aspect-[4/5] bg-beige sm:aspect-auto sm:min-h-[560px] sm:w-1/2">
               <Image
                 src={selectedProduct.image}
                 alt={`${selectedProduct.name} — eau de parfum`}
@@ -422,11 +436,10 @@ export default function HomePage() {
               />
             </div>
 
-            {/* Details */}
-            <div className="sm:w-1/2 p-8 md:p-12 flex flex-col">
+            <div className="flex flex-col p-8 sm:w-1/2 md:p-12">
               <button
                 onClick={() => setSelectedProduct(null)}
-                className="self-end text-stone hover:text-ink transition-colors mb-6 sm:absolute sm:top-5 sm:right-5"
+                className="mb-6 self-end text-stone transition-colors hover:text-ink sm:absolute sm:right-5 sm:top-5"
                 aria-label="Close"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -434,47 +447,44 @@ export default function HomePage() {
                 </svg>
               </button>
 
-              <p className="text-[10px] uppercase tracking-[0.3em] text-gold mb-4">
-                {selectedProduct.family} — {selectedProduct.concentration}
+              <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold">
+                {selectedProduct.family} — {selectedProduct.concentration.replace(' concentration)', ')')}
               </p>
-              <h2 className="font-serif text-3xl md:text-4xl mb-3">
+              <h2 className="mt-4 font-serif text-3xl font-semibold text-ink md:text-4xl">
                 {selectedProduct.name.replace(/^Oryn\s/, '')}
               </h2>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-stone mb-8">
+              <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.25em] text-stone">
                 {selectedProduct.fragrance}
               </p>
 
-              <p className="text-ink-soft font-light leading-relaxed mb-10">
+              <p className="mt-7 text-[15px] leading-[1.8] text-ink-soft">
                 {selectedProduct.description}
               </p>
 
-              {/* Notes */}
-              <div className="border-t border-ink/15 mb-10">
-                {[
-                  ['Top', selectedProduct.topNotes],
-                  ['Heart', selectedProduct.heartNotes],
-                  ['Base', selectedProduct.baseNotes],
-                ].map(([label, value]) => (
-                  <div key={label} className="flex gap-6 py-3.5 border-b border-ink/15">
-                    <span className="w-12 shrink-0 text-[10px] uppercase tracking-[0.25em] text-stone pt-0.5">
+              <div className="mt-8 border-t border-ink/15">
+                {(
+                  [
+                    ['Top', selectedProduct.topNotes],
+                    ['Heart', selectedProduct.heartNotes],
+                    ['Base', selectedProduct.baseNotes],
+                    ['Wears', `${selectedProduct.longevity} — ${selectedProduct.projection}`],
+                  ] as const
+                ).map(([label, value]) => (
+                  <div key={label} className="flex gap-6 border-b border-ink/15 py-3.5">
+                    <span className="w-12 shrink-0 pt-0.5 text-[10px] font-bold uppercase tracking-[0.25em] text-stone">
                       {label}
                     </span>
-                    <span className="text-sm font-light text-ink-soft">{value}</span>
+                    <span className="text-[14px] leading-relaxed text-ink-soft">{value}</span>
                   </div>
                 ))}
-                <div className="flex gap-6 py-3.5 border-b border-ink/15">
-                  <span className="w-12 shrink-0 text-[10px] uppercase tracking-[0.25em] text-stone pt-0.5">
-                    Wears
-                  </span>
-                  <span className="text-sm font-light text-ink-soft">
-                    {selectedProduct.longevity} — {selectedProduct.projection}
-                  </span>
-                </div>
               </div>
 
-              <div className="mt-auto flex items-center gap-8 pt-4">
-                <span className="font-serif text-2xl">₹{selectedProduct.price}</span>
+              <div className="mt-auto flex items-center gap-8 pt-8">
+                <span className="font-serif text-2xl font-semibold text-ink">
+                  ₹{selectedProduct.price}
+                </span>
                 <button
+                  type="button"
                   onClick={() => {
                     addToCart(selectedProduct)
                     setSelectedProduct(null)

@@ -1,44 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
-
-/* Gentle reveal, consistent with the homepage */
-function Reveal({
-  children,
-  className = '',
-  delay = 0,
-}: {
-  children: React.ReactNode
-  className?: string
-  delay?: number
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => el.classList.add('is-visible'), delay)
-            observer.unobserve(el)
-          }
-        })
-      },
-      { threshold: 0.12 },
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [delay])
-
-  return (
-    <div ref={ref} className={`reveal ${className}`}>
-      {children}
-    </div>
-  )
-}
+import Reveal from '@/components/Reveal'
 
 export default function AboutPage() {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -64,60 +28,62 @@ export default function AboutPage() {
     }
   }
 
+  const inputClass =
+    'w-full border-0 border-b border-ink/25 bg-transparent py-2.5 text-[15px] text-ink outline-none transition-colors placeholder:text-stone/70 focus:border-ink'
+
+  const labelClass = 'mb-3 block text-[10px] font-bold uppercase tracking-[0.25em] text-stone'
+
   return (
     <div className="bg-ivory text-ink">
-      {/* Opening — quiet, typographic */}
-      <section className="mx-auto max-w-3xl px-6 pt-40 md:pt-52 pb-20 md:pb-28 text-center">
+      {/* Opening */}
+      <section className="shell pb-20 pt-32 md:pb-28 md:pt-44">
         <Reveal>
-          <p className="section-tag">Our Story</p>
-          <h1 className="font-serif text-4xl md:text-6xl leading-[1.12] mb-8">
-            A house that begins
-            <br />
-            <span className="italic">with intention.</span>
+          <p className="section-tag mb-6">Our Story</p>
+          <h1 className="max-w-3xl font-serif text-4xl font-semibold leading-[1.1] tracking-[-0.015em] text-ink md:text-6xl">
+            A house that begins <span className="italic">with intention.</span>
           </h1>
-          <p className="text-ink-soft font-light leading-relaxed text-base md:text-lg">
-            Oryn is a new fragrance house. No archive, no heritage to lean on — only a clear idea
-            of what fragrance should be, and the patience to make it properly.
+          <p className="mt-8 max-w-2xl text-[16px] leading-[1.8] text-ink-soft md:text-[17px]">
+            Oryn is a new fragrance house. No archive, no heritage to lean on — only a clear idea of
+            what fragrance should be, and the patience to make it properly.
           </p>
         </Reveal>
       </section>
 
-      {/* The mark — the rose-gold Oryn plaque, cropped to the mark itself */}
-      <section className="mx-auto max-w-[1400px] px-6 md:px-10 pb-24 md:pb-32">
+      {/* The mark */}
+      <section className="shell pb-24 md:pb-32">
         <Reveal>
-          <div className="relative aspect-[20/21] max-w-xl mx-auto overflow-hidden">
+          <div className="relative mx-auto aspect-square w-full max-w-xl overflow-hidden bg-beige">
             <Image
-              src="/images/oryn-plaque.jpg"
-              alt="The Oryn rose-gold mark"
+              src="/images/oryn-brand-plate.png"
+              alt="The Oryn brand plate"
               fill
               sizes="(max-width: 768px) 92vw, 576px"
               className="object-cover"
             />
           </div>
-          <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-stone text-center">
-            The Oryn mark, as it appears on every bottle
+          <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.25em] text-stone">
+            The first Oryn brand plate
           </p>
         </Reveal>
       </section>
 
       {/* Why Oryn exists */}
-      <section className="bg-ivory-deep border-y border-ink/10">
-        <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-24 md:py-32">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+      <section className="bg-cream">
+        <div className="shell py-24 md:py-32">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <p className="section-tag">Why Oryn Exists</p>
-              <h2 className="font-serif text-3xl md:text-4xl leading-[1.2] mb-8">
-                Fragrance had become
-                <span className="italic"> noise.</span>
+              <p className="section-tag mb-6">Why Oryn Exists</p>
+              <h2 className="font-serif text-3xl font-semibold leading-[1.18] tracking-[-0.01em] text-ink md:text-[2.4rem]">
+                Fragrance had become <span className="italic">noise.</span>
               </h2>
-              <p className="text-ink-soft font-light leading-relaxed max-w-md">
+              <p className="mt-8 max-w-md text-[15.5px] leading-[1.8] text-ink-soft">
                 Thousands of launches a year. Scents designed for a season and forgotten by the
-                next. We started Oryn because we believed there was room for the opposite: a
-                small collection, composed with care, meant to be worn for years.
+                next. We started Oryn because we believed there was room for the opposite: a small
+                collection, composed with care, meant to be worn for years.
               </p>
             </Reveal>
 
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-6 lg:col-start-7">
               {[
                 {
                   n: 'I',
@@ -126,7 +92,7 @@ export default function AboutPage() {
                 },
                 {
                   n: 'II',
-                  title: 'Concentrated to be worn, not noticed from across a room',
+                  title: 'Made to be worn, not noticed from across a room',
                   copy: 'Our fragrances sit close to the skin. They are meant for the person wearing them, and the people who get close.',
                 },
                 {
@@ -135,12 +101,18 @@ export default function AboutPage() {
                   copy: 'We make six fragrances. We say what is in them, what they cost, and why. That is the whole story — there is no other version of it.',
                 },
               ].map((item, i) => (
-                <Reveal key={item.n} delay={i * 60}>
-                  <div className="flex gap-8 md:gap-12 py-9 border-t border-ink/15 last:border-b">
-                    <span className="font-serif text-sm text-gold pt-1.5 w-8 shrink-0">{item.n}</span>
+                <Reveal key={item.n} delay={i * 80}>
+                  <div
+                    className={`flex gap-8 py-9 md:gap-12 ${i === 0 ? 'border-t border-ink/15' : ''} border-b border-ink/15`}
+                  >
+                    <span className="w-8 shrink-0 pt-1.5 font-serif text-sm text-gold">{item.n}</span>
                     <div>
-                      <h3 className="font-serif text-xl md:text-2xl mb-3">{item.title}</h3>
-                      <p className="text-ink-soft font-light leading-relaxed max-w-lg">{item.copy}</p>
+                      <h3 className="font-serif text-xl font-semibold text-ink md:text-2xl">
+                        {item.title}
+                      </h3>
+                      <p className="mt-3 max-w-lg text-[15px] leading-[1.8] text-ink-soft">
+                        {item.copy}
+                      </p>
                     </div>
                   </div>
                 </Reveal>
@@ -150,103 +122,107 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* What we believe — pull-quote section */}
+      {/* What we believe */}
       <section className="bg-ivory">
-        <div className="mx-auto max-w-3xl px-6 py-24 md:py-36 text-center">
+        <div className="shell py-24 md:py-36">
           <Reveal>
-            <p className="section-tag">What We Believe</p>
-            <blockquote className="font-serif text-2xl md:text-4xl leading-[1.35] italic">
-              &ldquo;A fragrance should not announce you. It should remain —
-              in a room, in a memory, on a collar — after you have gone.&rdquo;
+            <p className="section-tag mb-10 text-center">What We Believe</p>
+            <blockquote className="mx-auto max-w-3xl text-center font-serif text-2xl font-medium italic leading-[1.4] text-ink md:text-[2.1rem]">
+              &ldquo;A fragrance should not announce you. It should remain — in a room, in a memory,
+              on a collar — after you have gone.&rdquo;
             </blockquote>
           </Reveal>
         </div>
       </section>
 
-      {/* Contact — direct, human */}
-      <section className="bg-sand border-t border-ink/10">
-        <div className="mx-auto max-w-2xl px-6 py-24 md:py-32">
-          <Reveal>
-            <p className="section-tag">Write to Us</p>
-            <h2 className="font-serif text-3xl md:text-4xl mb-4">Talk to Oryn</h2>
-            <p className="text-ink-soft font-light leading-relaxed mb-12 max-w-lg">
-              A question about the fragrances, a note, a beginning — we read everything and answer
-              personally.
-            </p>
-          </Reveal>
+      {/* Write to us */}
+      <section className="bg-blush">
+        <div className="shell py-24 md:py-32">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-5">
+              <p className="section-tag mb-6">Write to Us</p>
+              <h2 className="font-serif text-3xl font-semibold text-ink md:text-[2.4rem]">
+                Talk to Oryn
+              </h2>
+              <p className="mt-6 max-w-md text-[15.5px] leading-[1.8] text-ink-soft">
+                A question about the fragrances, a note, a beginning — we read everything and answer
+                personally.
+              </p>
+            </Reveal>
 
-          <Reveal delay={100}>
-            <form onSubmit={handleContactSubmit} className="space-y-8">
-              <div className="grid sm:grid-cols-2 gap-8">
+            <Reveal delay={100} className="lg:col-span-6 lg:col-start-7">
+              <form onSubmit={handleContactSubmit} className="space-y-8">
+                <div className="grid gap-8 sm:grid-cols-2">
+                  <label className="block">
+                    <span className={labelClass}>Name</span>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className={inputClass}
+                      placeholder="Your name"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className={labelClass}>Email</span>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className={inputClass}
+                      placeholder="you@example.com"
+                    />
+                  </label>
+                </div>
+
                 <label className="block">
-                  <span className="block text-[10px] uppercase tracking-[0.25em] text-stone mb-3">Name</span>
+                  <span className={labelClass}>
+                    Phone <span className="normal-case tracking-normal text-stone/70">(optional)</span>
+                  </span>
                   <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-transparent border-0 border-b border-ink/25 focus:border-ink outline-none py-2.5 text-ink placeholder:text-stone/60 transition-colors"
-                    placeholder="Your name"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className={inputClass}
+                    placeholder="+91"
                   />
                 </label>
+
                 <label className="block">
-                  <span className="block text-[10px] uppercase tracking-[0.25em] text-stone mb-3">Email</span>
-                  <input
-                    type="email"
+                  <span className={labelClass}>Message</span>
+                  <textarea
                     required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-transparent border-0 border-b border-ink/25 focus:border-ink outline-none py-2.5 text-ink placeholder:text-stone/60 transition-colors"
-                    placeholder="you@example.com"
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className={`${inputClass} resize-none`}
+                    placeholder="What would you like to know?"
                   />
                 </label>
-              </div>
 
-              <label className="block">
-                <span className="block text-[10px] uppercase tracking-[0.25em] text-stone mb-3">
-                  Phone <span className="normal-case tracking-normal text-stone/70">(optional)</span>
-                </span>
-                <input
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full bg-transparent border-0 border-b border-ink/25 focus:border-ink outline-none py-2.5 text-ink placeholder:text-stone/60 transition-colors"
-                  placeholder="+91"
-                />
-              </label>
+                <button
+                  type="submit"
+                  disabled={formStatus === 'submitting'}
+                  className="btn-dark w-full disabled:opacity-50 sm:w-auto"
+                >
+                  {formStatus === 'submitting' ? 'Sending…' : 'Send message'}
+                </button>
 
-              <label className="block">
-                <span className="block text-[10px] uppercase tracking-[0.25em] text-stone mb-3">Message</span>
-                <textarea
-                  required
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full bg-transparent border-0 border-b border-ink/25 focus:border-ink outline-none py-2.5 text-ink placeholder:text-stone/60 resize-none transition-colors"
-                  placeholder="What would you like to know?"
-                />
-              </label>
-
-              <button
-                type="submit"
-                disabled={formStatus === 'submitting'}
-                className="btn-dark w-full sm:w-auto disabled:opacity-50"
-              >
-                {formStatus === 'submitting' ? 'Sending…' : 'Send message'}
-              </button>
-
-              {formStatus === 'success' && (
-                <p className="text-sm text-ink-soft border-l-2 border-gold pl-4">
-                  Received — thank you. We will reply personally, and soon.
-                </p>
-              )}
-              {formStatus === 'error' && (
-                <p className="text-sm text-ink-soft border-l-2 border-gold pl-4">
-                  Something went wrong. Please try again in a moment.
-                </p>
-              )}
-            </form>
-          </Reveal>
+                {formStatus === 'success' && (
+                  <p className="border-l-2 border-gold pl-4 text-sm leading-relaxed text-ink-soft">
+                    Received — thank you. We will reply personally, and soon.
+                  </p>
+                )}
+                {formStatus === 'error' && (
+                  <p className="border-l-2 border-gold pl-4 text-sm leading-relaxed text-ink-soft">
+                    Something went wrong. Please try again in a moment.
+                  </p>
+                )}
+              </form>
+            </Reveal>
+          </div>
         </div>
       </section>
     </div>

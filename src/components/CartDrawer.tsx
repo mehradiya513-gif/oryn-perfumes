@@ -25,7 +25,7 @@ export default function CartDrawer() {
     if (cartOpen) {
       document.body.style.overflow = 'hidden'
       gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power2.out' })
-      gsap.fromTo(drawerRef.current, { x: '100%' }, { x: '0%', duration: 0.45, ease: 'power3.out' })
+        gsap.fromTo(drawerRef.current, { x: '100%' }, { x: '0%', duration: 0.45, ease: 'power3.out' })
     } else {
       document.body.style.overflow = 'unset'
     }
@@ -56,7 +56,7 @@ export default function CartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between px-8 py-7 border-b border-ink/15">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-gold mb-1">Your selection</p>
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-gold">Your selection</p>
             <h2 className="font-serif text-2xl">Bag</h2>
           </div>
           <button
@@ -86,7 +86,7 @@ export default function CartDrawer() {
           ) : (
             cart.map((item) => (
               <div key={item.id} className="flex gap-5 items-start border-b border-ink/10 pb-8">
-                <div className="relative h-24 w-20 shrink-0 overflow-hidden bg-sand">
+                <div className="relative h-24 w-20 shrink-0 overflow-hidden bg-beige">
                   {item.image && (
                     <Image src={item.image} alt={item.name} fill sizes="80px" className="object-cover" />
                   )}
@@ -131,7 +131,7 @@ export default function CartDrawer() {
 
         {/* Summary */}
         {cart.length > 0 && (
-          <div className="border-t border-ink/15 px-8 py-7 space-y-5 bg-ivory-deep">
+          <div className="border-t border-ink/15 space-y-5 bg-cream px-8 py-7">
             <div className="flex items-center justify-between text-sm font-light text-ink-soft">
               <span>Shipping</span>
               <span className="text-[10px] uppercase tracking-[0.2em] text-gold">Complimentary</span>

@@ -1,14 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   color-scheme: light;
-  --ivory: #f4efe6;
-  --ink: #2a231d;
-  --gold: #a98545;
 }
 
 * {
@@ -22,23 +17,25 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #f4efe6;
-  color: #2a231d;
-  font-family: 'Work Sans', 'Avenir Next', system-ui, sans-serif;
+  background-color: #f8f4ed;
+  color: #26221b;
+  font-family: var(--font-body, 'Manrope'), system-ui, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
+/* One typographic voice for every heading on the site */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: 'Playfair Display', 'Times New Roman', serif;
-  font-weight: 500;
+  font-family: var(--font-display, 'Fraunces'), Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 button,
@@ -49,51 +46,38 @@ textarea {
 }
 
 ::selection {
-  background: #2a231d;
-  color: #f4efe6;
+  background: #eae1ce;
+  color: #26221b;
 }
 
-/* ————— Buttons: quiet, architectural ————— */
-.btn-dark {
-  @apply inline-flex items-center justify-center bg-ink text-ivory px-10 py-4 text-[11px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 hover:bg-gold;
+:focus-visible {
+  outline: 2px solid #a5814e;
+  outline-offset: 3px;
 }
 
-.btn-outline {
-  @apply inline-flex items-center justify-center border border-ink/30 text-ink px-10 py-4 text-[11px] font-normal uppercase tracking-[0.28em] transition-all duration-500 hover:border-ink hover:bg-ink hover:text-ivory;
-}
+@layer components {
+  /* ————— The grid: every section on the site lives inside .shell ————— */
+  .shell {
+    @apply mx-auto w-full max-w-[1240px] px-6 md:px-10;
+  }
 
-.btn-light {
-  @apply inline-flex items-center justify-center bg-ivory text-ink px-10 py-4 text-[11px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 hover:bg-gold hover:text-ivory;
-}
+  /* Eyebrow label above headings */
+  .section-tag {
+    @apply block text-[11px] font-bold uppercase tracking-[0.3em] text-gold;
+  }
 
-/* ————— Shared page primitives (inner pages) ————— */
-.page-shell {
-  @apply bg-ivory text-ink;
-}
+  /* ————— Buttons: quiet, architectural ————— */
+  .btn-dark {
+    @apply inline-flex items-center justify-center bg-ink text-ivory px-9 py-4 text-[11px] font-bold uppercase tracking-[0.22em] transition-colors duration-300 hover:bg-[#57503f];
+  }
 
-.section-tag {
-  @apply block text-[10px] font-normal uppercase tracking-[0.35em] text-gold mb-6;
-}
+  .btn-outline {
+    @apply inline-flex items-center justify-center border border-ink/25 text-ink px-9 py-4 text-[11px] font-bold uppercase tracking-[0.22em] transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-ivory;
+  }
 
-.hairline {
-  @apply border-0 border-t border-ink/15;
-}
-
-.frame-line {
-  @apply pointer-events-none absolute border border-gold/30;
-}
-
-/* ————— Editorial figure (photo + caption) ————— */
-.oryn-figure {
-  @apply relative;
-}
-
-.oryn-figure img {
-  @apply block w-full h-auto;
-}
-
-.oryn-figure figcaption {
-  @apply mt-3 text-[10px] uppercase tracking-[0.25em] text-stone;
+  .btn-light {
+    @apply inline-flex items-center justify-center bg-ivory text-ink px-9 py-4 text-[11px] font-bold uppercase tracking-[0.22em] transition-colors duration-300 hover:bg-gold;
+  }
 }
 
 /* ————— Motion: gentle reveal on scroll ————— */
@@ -101,25 +85,13 @@ textarea {
   opacity: 0;
   transform: translateY(24px);
   transition:
-    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  html {
-    scroll-behavior: auto;
-  }
 }
 
 /* Hero entrance */
@@ -139,20 +111,28 @@ textarea {
 }
 
 .hero-rise-1 {
-  animation-delay: 0.1s;
+  animation-delay: 0.05s;
 }
 .hero-rise-2 {
-  animation-delay: 0.25s;
+  animation-delay: 0.2s;
 }
 .hero-rise-3 {
-  animation-delay: 0.4s;
+  animation-delay: 0.35s;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal,
   .hero-rise,
   .hero-rise-1,
   .hero-rise-2,
   .hero-rise-3 {
+    opacity: 1;
+    transform: none;
+    transition: none;
     animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }

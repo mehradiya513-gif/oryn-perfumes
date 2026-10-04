@@ -174,7 +174,7 @@ export default function SignUpModal() {
       >
         <div className="flex items-start justify-between border-b border-ink/15 pb-6 mb-8">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-gold mb-2">Customer account</p>
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-gold">Customer account</p>
             <h2 className="font-serif text-3xl">{isSignUp ? 'Join Oryn' : 'Welcome back'}</h2>
           </div>
           <button

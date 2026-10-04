@@ -5,6 +5,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
 
+const navLinks = [
+  { label: 'Shop', href: '/#collection' },
+  { label: 'Collection', href: '/#collection' },
+  { label: 'Our Story', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+]
+
 export default function Header() {
   const pathname = usePathname()
   const { cart, cartOpen, setCartOpen, customer, setSignUpOpen, logoutCustomer } = useCart()
@@ -12,12 +19,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
-  const onHome = pathname === '/'
-  // Transparent over the homepage hero; quiet ivory once scrolled or on inner pages.
-  const transparent = onHome && !scrolled && !cartOpen
-
-  const inkText = transparent ? 'text-ivory' : 'text-ink'
-  const mutedText = transparent ? 'text-ivory/70' : 'text-stone'
+  // Quiet ivory over the page once scrolled (or always on inner pages).
+  const solid = scrolled || cartOpen || pathname !== '/'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -35,50 +38,33 @@ export default function Header() {
 
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0)
 
-  const navLinks = [
-    { 
-      label: 'The Collection', 
-      href: '/#collection', 
-      desktopClass: 'font-serif font-bold italic text-xl',
-      mobileClass: 'font-serif font-bold italic text-4xl'
-    },
-    { 
-      label: 'Our Story', 
-      href: '/about', 
-      desktopClass: 'font-sans font-bold uppercase tracking-widest text-sm',
-      mobileClass: 'font-sans font-bold uppercase tracking-widest text-2xl'
-    },
-    { 
-      label: 'Contact', 
-      href: '/contact', 
-      desktopClass: 'font-serif font-bold border-2 border-current px-4 py-1 hover:text-gold transition-colors',
-      mobileClass: 'font-serif font-bold text-3xl border-2 border-current px-6 py-2'
-    },
-  ]
-
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-700 ${
-          transparent ? 'bg-transparent' : 'bg-ivory/95 backdrop-blur-sm border-b border-ink/10'
+        className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
+          solid ? 'border-b border-ink/10 bg-ivory/95 backdrop-blur-sm' : 'bg-transparent'
         }`}
       >
-        <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-5 flex items-center justify-between">
+        <div className="shell relative flex h-20 items-center justify-between">
           {/* Wordmark */}
           <Link
             href="/"
-            className={`font-serif text-xl md:text-2xl font-medium tracking-brand uppercase ${inkText} transition-colors duration-700`}
+            aria-label="ORYN — home"
+            className="font-serif text-[1.35rem] font-semibold uppercase leading-none tracking-brand text-ink"
           >
             Oryn
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-10">
+          {/* Centered navigation — one baseline, generous spacing */}
+          <nav
+            aria-label="Primary"
+            className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-10 lg:flex"
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className={`${link.desktopClass} ${inkText} transition-colors duration-300 hover:text-gold`}
+                className="text-[12px] font-bold uppercase tracking-[0.18em] text-ink transition-colors duration-300 hover:text-gold"
               >
                 {link.label}
               </Link>
@@ -86,12 +72,12 @@ export default function Header() {
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-5 md:gap-7">
             {!customer ? (
               <button
                 type="button"
                 onClick={() => setSignUpOpen(true)}
-                className={`hidden sm:inline-block text-sm font-bold uppercase tracking-wide ${inkText} hover:text-gold transition-colors duration-300`}
+                className="hidden text-[12px] font-bold uppercase tracking-[0.18em] text-ink transition-colors duration-300 hover:text-gold sm:inline-block"
               >
                 Account
               </button>
@@ -100,15 +86,17 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className={`text-sm font-bold uppercase tracking-wide ${inkText} hover:text-gold transition-colors duration-300`}
+                  className="text-[12px] font-bold uppercase tracking-[0.18em] text-ink transition-colors duration-300 hover:text-gold"
                 >
                   {customer.name.split(' ')[0]}
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-5 w-56 bg-ivory border border-ink/15 shadow-xl z-50">
-                    <div className="px-5 py-4 border-b border-ink/10">
-                      <p className="text-[9px] uppercase tracking-wide2 text-stone mb-1">Signed in as</p>
-                      <p className="text-sm text-ink truncate">{customer.email}</p>
+                  <div className="absolute right-0 top-full z-50 mt-4 w-56 border border-ink/10 bg-ivory shadow-soft">
+                    <div className="border-b border-ink/10 px-5 py-4">
+                      <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-stone">
+                        Signed in as
+                      </p>
+                      <p className="truncate text-sm text-ink">{customer.email}</p>
                     </div>
                     <button
                       type="button"
@@ -116,7 +104,7 @@ export default function Header() {
                         logoutCustomer()
                         setDropdownOpen(false)
                       }}
-                      className="w-full text-left px-5 py-4 text-[10px] uppercase tracking-wide2 text-ink hover:text-gold transition-colors"
+                      className="w-full px-5 py-4 text-left text-[11px] font-bold uppercase tracking-[0.2em] text-ink transition-colors hover:text-gold"
                     >
                       Log out
                     </button>
@@ -125,34 +113,45 @@ export default function Header() {
               </div>
             )}
 
-            {/* Cart */}
+            {/* Bag */}
             <button
               type="button"
               onClick={() => setCartOpen(!cartOpen)}
-              className={`relative flex items-center gap-1.5 ${inkText} hover:text-gold transition-colors duration-300`}
+              className="relative flex items-center gap-2 text-ink transition-colors duration-300 hover:text-gold"
               aria-label="Shopping bag"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                 <line x1="3" y1="6" x2="21" y2="6"></line>
                 <path d="M16 10a4 4 0 0 1-8 0"></path>
               </svg>
-              <span className="text-sm font-bold uppercase tracking-wide hidden sm:inline-block">Bag</span>
+              <span className="hidden text-[12px] font-bold uppercase tracking-[0.18em] sm:inline-block">
+                Bag
+              </span>
               {cartItemsCount > 0 && (
-                <span className="absolute -top-1 -right-2.5 text-[10px] font-bold text-ivory bg-gold rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="absolute -right-3 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-gold text-[10px] font-bold text-ivory">
                   {cartItemsCount}
                 </span>
               )}
             </button>
 
-            {/* Mobile menu button */}
+            {/* Mobile menu */}
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              className={`md:hidden ${inkText} transition-colors duration-300`}
+              className="text-ink lg:hidden"
               aria-label="Open menu"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
                 <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
               </svg>
             </button>
@@ -160,30 +159,32 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile menu — full-screen editorial */}
+      {/* Mobile menu — full screen, ivory, calm */}
       {menuOpen && (
-        <div className="fixed inset-0 z-50 bg-ivory flex flex-col animate-fade-in md:hidden">
-          <div className="flex items-center justify-between px-6 py-5">
-            <span className="font-serif text-xl font-medium tracking-brand uppercase text-ink">Oryn</span>
+        <div className="fixed inset-0 z-50 flex flex-col bg-ivory animate-fade-in lg:hidden">
+          <div className="shell flex h-20 items-center justify-between">
+            <span className="font-serif text-[1.35rem] font-semibold uppercase leading-none tracking-brand text-ink">
+              Oryn
+            </span>
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
               className="text-ink"
               aria-label="Close menu"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
                 <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
               </svg>
             </button>
           </div>
-          <nav className="flex-1 flex flex-col items-center justify-center gap-10 px-6">
+          <nav className="flex flex-1 flex-col justify-center gap-9 px-8" aria-label="Mobile">
             {navLinks.map((link, i) => (
               <Link
                 key={link.label}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`${link.mobileClass} text-ink hero-rise`}
-                style={{ animationDelay: `${0.1 + i * 0.1}s` }}
+                className="hero-rise font-serif text-4xl font-semibold text-ink"
+                style={{ animationDelay: `${0.04 + i * 0.07}s` }}
               >
                 {link.label}
               </Link>
@@ -194,12 +195,13 @@ export default function Header() {
                 setMenuOpen(false)
                 setSignUpOpen(true)
               }}
-              className="text-[10px] uppercase tracking-wide2 text-stone mt-4"
+              className="hero-rise mt-4 self-start text-[12px] font-bold uppercase tracking-[0.2em] text-ink-soft"
+              style={{ animationDelay: '0.3s' }}
             >
               {customer ? `Account — ${customer.name.split(' ')[0]}` : 'Account'}
             </button>
           </nav>
-          <p className="text-center text-[9px] uppercase tracking-[0.3em] text-stone pb-10">
+          <p className="shell pb-10 text-[10px] font-bold uppercase tracking-[0.3em] text-stone">
             A new fragrance house
           </p>
         </div>

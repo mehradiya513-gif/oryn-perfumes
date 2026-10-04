@@ -5,22 +5,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // ORYN floral & soft palette — rose, pearl, soft grays
-        ivory: '#fdfbfb', // pearl white — page background
-        'ivory-deep': '#f5efef', // soft blush — alternate sections
-        sand: '#ebdada', // rose quartz — panels, contrast
-        ink: '#2d2929', // deep charcoal — text & dark sections
-        'ink-soft': '#574f4f', // soft charcoal — secondary text
-        stone: '#8a7f7f', // warm gray — tertiary text, captions
-        gold: '#c97f8b', // dusty rose / rose gold — accents and links
+        // ————— ORYN soft palette —————
+        ivory: '#F8F4ED', // warm ivory — the page ground
+        cream: '#F2EBDC', // soft cream — alternate sections
+        beige: '#EAE1CE', // light beige — panels, image grounds
+        blush: '#ECDDD4', // muted dusty blush — one quiet section
+        lavender: '#E7E3EB', // extremely subtle — reserved for fine accents
+        sand: '#EAE1CE', // legacy alias of beige (admin + drawer)
+        // ————— Ink —————
+        ink: '#26221B', // deep warm charcoal — text, footer
+        'ink-soft': '#6E6456', // warm taupe — secondary text
+        stone: '#9C9284', // muted stone — captions, meta
+        gold: '#A5814E', // muted antique gold — small accents only
       },
       fontFamily: {
-        serif: ['"Playfair Display"', '"Times New Roman"', 'serif'],
-        sans: ['"Work Sans"', '"Avenir Next"', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-display)', 'Fraunces', 'Georgia', 'serif'],
+        sans: ['var(--font-body)', 'Manrope', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
-        brand: '0.42em',
-        wide2: '0.28em',
+        brand: '0.38em',
+      },
+      boxShadow: {
+        soft: '0 24px 70px -30px rgba(38, 34, 27, 0.35)',
       },
       keyframes: {
         fadeIn: {
@@ -29,7 +35,7 @@ const config: Config = {
         },
       },
       animation: {
-        'fade-in': 'fadeIn 0.8s ease-out both',
+        'fade-in': 'fadeIn 0.5s ease-out both',
       },
     },
   },
