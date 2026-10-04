@@ -36,9 +36,24 @@ export default function Header() {
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0)
 
   const navLinks = [
-    { label: 'The Collection', href: '/#collection' },
-    { label: 'Our Story', href: '/about' },
-    { label: 'Contact', href: '/contact' },
+    { 
+      label: 'The Collection', 
+      href: '/#collection', 
+      desktopClass: 'font-serif font-bold italic text-xl',
+      mobileClass: 'font-serif font-bold italic text-4xl'
+    },
+    { 
+      label: 'Our Story', 
+      href: '/about', 
+      desktopClass: 'font-sans font-bold uppercase tracking-widest text-sm',
+      mobileClass: 'font-sans font-bold uppercase tracking-widest text-2xl'
+    },
+    { 
+      label: 'Contact', 
+      href: '/contact', 
+      desktopClass: 'font-serif font-bold border-2 border-current px-4 py-1 hover:text-gold transition-colors',
+      mobileClass: 'font-serif font-bold text-3xl border-2 border-current px-6 py-2'
+    },
   ]
 
   return (
@@ -63,7 +78,7 @@ export default function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                className={`text-[10px] font-semibold uppercase tracking-wide2 ${mutedText} hover:text-gold transition-colors duration-300`}
+                className={`${link.desktopClass} ${inkText} transition-colors duration-300 hover:text-gold`}
               >
                 {link.label}
               </Link>
@@ -76,7 +91,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setSignUpOpen(true)}
-                className={`hidden sm:inline-block text-[10px] font-semibold uppercase tracking-wide2 ${mutedText} hover:text-gold transition-colors duration-300`}
+                className={`hidden sm:inline-block text-sm font-bold uppercase tracking-wide ${inkText} hover:text-gold transition-colors duration-300`}
               >
                 Account
               </button>
@@ -84,7 +99,8 @@ export default function Header() {
               <div className="relative hidden sm:block">
                 <button
                   type="button"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}                    className={`text-[10px] font-semibold uppercase tracking-wide2 ${inkText} hover:text-gold transition-colors duration-300`}
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className={`text-sm font-bold uppercase tracking-wide ${inkText} hover:text-gold transition-colors duration-300`}
                 >
                   {customer.name.split(' ')[0]}
                 </button>
@@ -113,13 +129,18 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setCartOpen(!cartOpen)}
-              className={`relative ${inkText} hover:text-gold transition-colors duration-300`}
+              className={`relative flex items-center gap-1.5 ${inkText} hover:text-gold transition-colors duration-300`}
               aria-label="Shopping bag"
             >
-              <span className="text-[10px] font-semibold uppercase tracking-wide2">Bag</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+              <span className="text-sm font-bold uppercase tracking-wide hidden sm:inline-block">Bag</span>
               {cartItemsCount > 0 && (
-                <span className="absolute -top-2.5 -right-4 text-[9px] text-gold">
-                  ({cartItemsCount})
+                <span className="absolute -top-1 -right-2.5 text-[10px] font-bold text-ivory bg-gold rounded-full w-4 h-4 flex items-center justify-center">
+                  {cartItemsCount}
                 </span>
               )}
             </button>
@@ -161,7 +182,7 @@ export default function Header() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="font-serif text-3xl text-ink hero-rise"
+                className={`${link.mobileClass} text-ink hero-rise`}
                 style={{ animationDelay: `${0.1 + i * 0.1}s` }}
               >
                 {link.label}
