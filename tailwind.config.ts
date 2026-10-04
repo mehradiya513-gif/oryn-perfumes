@@ -5,14 +5,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // ORYN editorial palette — warm, tactile, quiet
-        ivory: '#f4efe6', // warm paper — page background
-        'ivory-deep': '#ece5d8', // alternate sections, deeper tone
-        sand: '#e4dccd', // panels, quiet contrast
-        ink: '#2a231d', // warm near-black — text & dark sections
-        'ink-soft': '#4a4238', // secondary text
-        stone: '#8d8272', // tertiary text, captions
-        gold: '#a98545', // antique gold — hairlines & small accents only
+        // ORYN floral & soft palette — rose, pearl, soft grays
+        ivory: '#fdfbfb', // pearl white — page background
+        'ivory-deep': '#f5efef', // soft blush — alternate sections
+        sand: '#ebdada', // rose quartz — panels, contrast
+        ink: '#2d2929', // deep charcoal — text & dark sections
+        'ink-soft': '#574f4f', // soft charcoal — secondary text
+        stone: '#8a7f7f', // warm gray — tertiary text, captions
+        gold: '#c97f8b', // dusty rose / rose gold — accents and links
       },
       fontFamily: {
         serif: ['"Playfair Display"', '"Times New Roman"', 'serif'],
