@@ -10,6 +10,30 @@
   box-sizing: border-box;
 }
 
+/* ————— Subtle film grain —————
+   One inline SVG turbulence tile, repeated at low opacity.
+   Applied via .grain or .grain-dark overlays; pointer-events none. */
+.grain::after,
+.grain-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.035;
+}
+
+.grain-dark::after {
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+
+/* Thin gold divider used between sections */
+.gold-divider {
+  @apply mx-auto h-px w-16 border-0 bg-gold;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -17,9 +41,9 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #f8f4ed;
-  color: #26221b;
-  font-family: var(--font-body, 'Manrope'), system-ui, sans-serif;
+  background-color: #f7f2ea;
+  color: #0e0e0e;
+  font-family: var(--font-body, 'Inter'), system-ui, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,7 +57,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-display, 'Fraunces'), Georgia, serif;
+  font-family: var(--font-display, 'Playfair Display'), Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.015em;
 }
@@ -46,12 +70,12 @@ textarea {
 }
 
 ::selection {
-  background: #eae1ce;
-  color: #26221b;
+  background: #c8a45d;
+  color: #0e0e0e;
 }
 
 :focus-visible {
-  outline: 2px solid #a5814e;
+  outline: 2px solid #c8a45d;
   outline-offset: 3px;
 }
 
@@ -68,7 +92,7 @@ textarea {
 
   /* ————— Buttons: quiet, architectural ————— */
   .btn-dark {
-    @apply inline-flex items-center justify-center bg-ink text-ivory px-9 py-4 text-[11px] font-bold uppercase tracking-[0.22em] transition-colors duration-300 hover:bg-[#57503f];
+    @apply inline-flex items-center justify-center bg-ink text-ivory px-9 py-4 text-[11px] font-bold uppercase tracking-[0.22em] transition-colors duration-300 hover:bg-gold hover:text-ink;
   }
 
   .btn-outline {

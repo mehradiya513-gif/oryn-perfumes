@@ -1,84 +1,106 @@
-# Outfit Perfume
+# ORYN — Accessible Indian Luxury Perfumes
 
-A luxurious Next.js website for Outfit Perfume—a premium fragrance brand inspired by fine spirits. Built with Next.js, TypeScript, Tailwind CSS, Three.js, and GSAP for an elegant, interactive experience.
+A production-ready, mobile-first e-commerce landing site for ORYN: premium fragrances
+under ₹800. Quiet-luxury design, single-page structure, working cart + checkout,
+and full SEO/schema markup.
 
-## About Outfit Perfume
+Built with **Next.js 14 (App Router) · TypeScript · Tailwind CSS · Framer Motion**.
 
-Outfit Perfumes are more than just fragrances—they're liquid expressions of sophistication, crafted with the essence of premium spirits. Each fragrance is inspired by whiskey, vodka, cognac, and premium liqueurs, transformed into wearable luxury that captures the soul and spirit of fine spirits.
+## Quick start
 
-### Our Collection
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
 
-- **Whiskey Spirit** ($125) - Aged whiskey essence with amber woods and leather
-- **Vodka Mist** ($110) - Pure and crystalline vodka notes with white florals
-- **Cognac Luxe** ($135) - Refined cognac heart with dark chocolate and spiced oak
+Production:
 
-## Features
+```bash
+npm run build
+npm start
+```
 
-- 🌟 **Luxurious Design** - Premium aesthetic with modern typography and refined color palette
-- 🎨 **Interactive 3D Visualization** - Three.js powered perfume bottle animation
-- ✨ **Smooth Animations** - GSAP animations for engaging page interactions
-- 🛒 **Full E-commerce** - Product browsing, cart management, and checkout
-- 📊 **Admin Dashboard** - Seller login to view recent orders
-- 📄 **About Page** - Detailed story about our spirits-inspired fragrances
-- 🔐 **Seller Portal** - Secure login with order management
-- 📱 **Fully Responsive** - Beautiful design on all device sizes
+Other useful routes that ship with the site: `/about`, `/contact`,
+`/shipping`, `/refund`, `/privacy`, `/terms`, and an `/admin` order board
+(seller login: `seller` / `outfit123`).
 
-## Prerequisites
+## Page structure (single page, in order)
 
-- Node.js 18 or newer
-- npm available in your shell
+1. Announcement bar — free shipping / COD
+2. Sticky header — transparent over hero, solid charcoal on scroll, search + cart + hamburger
+3. Hero — full-screen cinematic image, "Luxury You Can Actually Wear" (₹800 sub-line), 2 CTAs, scroll cue
+4. Trust strip — Long-lasting · Premium Ingredients · COD · Easy Returns
+5. Shop by Category — For Him / For Her / Unisex / Gift Sets tiles
+6. Bestsellers — swipe carousel (mobile) / 4-column grid (desktop), MRP strike + discount badges + hover image swap
+7. Scent Finder — 3-question quiz that recommends a product
+8. Brand Story — split image/copy
+9. Scent Notes Explainer — top / heart / base with icons
+10. Social Proof — review cards + UGC grid (#WearORYN)
+11. Offer Banner — "Buy 2, Get 10% off" with live countdown (resets daily at 00:00 IST)
+12. FAQ — accessible accordion (aria-expanded, keyboard operable)
+13. Newsletter — email + WhatsApp capture → `/api/leads`
+14. Footer — links, payment marks (UPI/VISA/MC/RuPay/COD), policies
 
-## Setup
+Extras: floating WhatsApp order button, mobile sticky add-to-cart bar,
+mini cart drawer + checkout modal (shared with the whole site), product JSON-LD,
+Open Graph/Twitter meta.
 
-1. Open a terminal in the project folder:
-   - `cd "c:\Users\Diya\New folder"`
-2. Install dependencies:
-   - `npm install`
-3. Start the development server:
-   - `npm run dev`
-4. Open the app in your browser:
-   - `http://localhost:3000`
+## Editing products
 
-## Production
+All catalog data lives in **`src/lib/products.ts`** — names, prices, MRP,
+categories, notes, bestseller flags, and image paths.
+Images live in `public/images/` (replace the placeholders with real
+photography; keep the same file names and everything updates automatically).
 
-- Build the app:
-  - `npm run build`
-- Start the production server:
-  - `npm start`
+Rule of the brand: every product stays **under ₹800**.
 
-## Seller Login
+## Key files
 
-Access the admin panel with the following demo credentials:
-- **Username:** `seller`
-- **Password:** `outfit123`
+```
+src/lib/products.ts           ← product catalog (edit me)
+src/app/page.tsx              ← assembles all sections + JSON-LD
+src/app/layout.tsx            ← fonts (Playfair Display + Inter), SEO/OG metadata
+src/components/landing/       ← all 14 section components (one concern each)
+src/components/CartDrawer.tsx ← slide-in mini cart
+src/components/CheckoutModal.tsx ← COD / UPI checkout
+src/context/CartContext.tsx   ← cart state (localStorage-persisted)
+src/app/globals.css           ← palette hooks, grain texture, motion tokens
+```
+
+## Design tokens
+
+| Token | Value | Use |
+|---|---|---|
+| `charcoal` | `#0E0E0E` | header, footer, hero scrim |
+| `ivory` | `#F7F2EA` | page ground |
+| `gold` | `#C8A45D` | accents, dividers, badges |
+| `blush` | `#EFDCD4` | highlight sections |
+
+Headings: Playfair Display (serif) · Body: Inter (sans).
+
+## Accessibility & performance
+
+- WCAG AA contrast targets; focus-visible outlines everywhere
+- Keyboard operable: FAQ accordion, quiz, menus, cart drawer
+- `prefers-reduced-motion` respected in all Framer Motion primitives
+- `next/image` everywhere, lazy-loading below the fold, priority only on hero/first cards
+- Horizontal overflow verified at 390px; carousel uses CSS scroll-snap
+
+## Visual audit
+
+`node scripts/oryn-audit.js` drives headless Chrome at 390px and 1440px and
+checks: console errors, section presence, horizontal overflow, hero CTAs,
+FAQ toggle, quiz click-through, carousel behavior, and header state.
+Full-page screenshots land in `scripts/screenshots/`.
 
 ## Deployment
 
-### Vercel (Recommended)
-
-1. Create an account at https://vercel.com
-2. Import the repository and use the project root
-3. Set build command to `npm run build` and output directory to `.next`
-4. Vercel will deploy automatically on push
-
-### Netlify
-
-1. Create an account at https://app.netlify.com
-2. Connect your Git repository
-3. Set build command to `npm run build`
-4. Set publish directory to `.next`
-
-## Tech Stack
-
-- **Framework:** Next.js 14+ with TypeScript
-- **Styling:** Tailwind CSS with custom configuration
-- **3D Graphics:** Three.js
-- **Animations:** GSAP (GreenSock Animation Platform)
-- **Fonts:** Playfair Display (serif), Inter (sans-serif)
-- Seller login button and simple admin order board
+Vercel (recommended): import the repo, build `npm run build`, output `.next`.
 
 ## Notes
 
-- The order API is an in-memory route under `src/app/api/orders/route.ts`.
-- The seller login button opens a secure modal. Use credentials `seller` / `outfit123` for admin access.
-- Replace placeholder product details, branding, and copy with your final assets.
+- The WhatsApp number placeholder (`919000000000`) appears in
+  `src/components/landing/WhatsAppFloat.tsx` and `Newsletter.tsx` — replace
+  with the store's real number.
+- Orders persist via the existing `/api/orders` MongoDB route; leads via `/api/leads`.
+- Replace placeholder product photography in `public/images/` before launch.
