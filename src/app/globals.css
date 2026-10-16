@@ -10,9 +10,22 @@
   box-sizing: border-box;
 }
 
-/* ————— Subtle film grain —————
-   One inline SVG turbulence tile, repeated at low opacity.
-   Applied via .grain or .grain-dark overlays; pointer-events none. */
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF6F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #DFCBC5;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C5857B;
+}
+
+/* ————— Subtle atmospheric velvet grain ————— */
 .grain::after,
 .grain-dark::after {
   content: '';
@@ -21,33 +34,42 @@
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
   mix-blend-mode: multiply;
-  opacity: 0.035;
+  opacity: 0.025;
 }
 
-.grain-dark::after {
-  mix-blend-mode: screen;
-  opacity: 0.05;
+.gold-gradient-text,
+.rose-gradient-text {
+  background: linear-gradient(135deg, #8E443C 0%, #C5857B 50%, #E8B8B0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Thin gold divider used between sections */
+.gold-aura,
+.rose-aura {
+  background: radial-gradient(circle at center, rgba(197, 133, 123, 0.16) 0%, rgba(250, 246, 245, 0) 70%);
+}
+
 .gold-divider {
-  @apply mx-auto h-px w-16 border-0 bg-gold;
+  @apply mx-auto h-px w-24 border-0;
+  background: linear-gradient(90deg, transparent, #C5857B, transparent);
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: #FAF6F5;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #f7f2ea;
-  color: #0e0e0e;
+  background-color: #FAF6F5;
+  color: #23171B;
   font-family: var(--font-body, 'Inter'), system-ui, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 /* One typographic voice for every heading on the site */
@@ -60,6 +82,7 @@ h6 {
   font-family: var(--font-display, 'Playfair Display'), Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.015em;
+  color: #23171B;
 }
 
 button,
@@ -70,37 +93,62 @@ textarea {
 }
 
 ::selection {
-  background: #c8a45d;
-  color: #0e0e0e;
+  background: #E8B8B0;
+  color: #23171B;
 }
 
 :focus-visible {
-  outline: 2px solid #c8a45d;
+  outline: 2px solid #C5857B;
   outline-offset: 3px;
 }
 
 @layer components {
   /* ————— The grid: every section on the site lives inside .shell ————— */
   .shell {
-    @apply mx-auto w-full max-w-[1240px] px-6 md:px-10;
+    @apply mx-auto w-full max-w-[1280px] px-6 md:px-10;
   }
 
   /* Eyebrow label above headings */
   .section-tag {
-    @apply block text-[11px] font-bold uppercase tracking-[0.3em] text-gold;
+    @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.32em] text-[#A86359];
+  }
+  .section-tag::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 1px;
+    background-color: #C5857B;
   }
 
-  /* ————— Buttons: quiet, architectural ————— */
+  /* ————— Luxury Button System: Satin Rose Gold & Velvet Plum ————— */
+  .btn-gold {
+    @apply inline-flex items-center justify-center bg-gradient-to-r from-[#D79F97] via-[#C5857B] to-[#A86359] text-white px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:shadow-gold hover:brightness-105 active:scale-[0.98];
+  }
+
   .btn-dark {
-    @apply inline-flex items-center justify-center bg-ink text-ivory px-9 py-4 text-[11px] font-bold uppercase tracking-[0.22em] transition-colors duration-300 hover:bg-gold hover:text-ink;
+    @apply inline-flex items-center justify-center border border-[#C5857B]/40 bg-[#23171B] text-[#FAF6F5] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C5857B] hover:bg-[#C5857B] hover:text-white hover:shadow-gold-sm active:scale-[0.98];
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center border border-ink/25 text-ink px-9 py-4 text-[11px] font-bold uppercase tracking-[0.22em] transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-ivory;
+    @apply inline-flex items-center justify-center border border-[#C5857B]/60 text-[#A86359] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C5857B] hover:bg-[#C5857B] hover:text-white hover:shadow-gold-sm active:scale-[0.98];
   }
 
   .btn-light {
-    @apply inline-flex items-center justify-center bg-ivory text-ink px-9 py-4 text-[11px] font-bold uppercase tracking-[0.22em] transition-colors duration-300 hover:bg-gold;
+    @apply inline-flex items-center justify-center border border-[#EBDCD7] bg-white text-[#23171B] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:bg-[#F5EBE6] hover:border-[#C5857B] hover:shadow-gold-sm active:scale-[0.98];
+  }
+
+  /* Velvet Rose frosted glass card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(197, 133, 123, 0.22);
+    box-shadow: 0 10px 30px -5px rgba(92, 53, 62, 0.06);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(197, 133, 123, 0.45);
+    box-shadow: 0 15px 40px -5px rgba(197, 133, 123, 0.16);
   }
 }
 
@@ -122,7 +170,7 @@ textarea {
 @keyframes hero-rise {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(22px);
   }
   to {
     opacity: 1;

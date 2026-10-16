@@ -7,10 +7,7 @@ import { type Product, products, formatINR, discountPct } from '@/lib/products'
 import { useCart } from '@/context/CartContext'
 
 /* ————————————————————————————————————————————————————————————————
-   ScentFinder — 3-question quiz (occasion → scent family →
-   intensity) that scores the catalog and recommends one product.
-   Keyboard accessible: every option is a real button; Escape
-   resets. Results swap with a fade.
+   Bespoke Scent Finder Quiz — Midnight Noir & Champagne Gold
 ———————————————————————————————————————————————————————————————— */
 
 type Answers = { occasion: string; family: string; intensity: string }
@@ -18,40 +15,43 @@ type Answers = { occasion: string; family: string; intensity: string }
 const questions: {
   key: keyof Answers
   title: string
-  options: { label: string; value: string }[]
+  subtitle: string
+  options: { label: string; value: string; desc: string }[]
 }[] = [
   {
     key: 'occasion',
-    title: 'Where will you wear it most?',
+    title: 'Where will your fragrance leave its mark?',
+    subtitle: 'Select the primary atmosphere and setting you wish to enchant.',
     options: [
-      { label: 'Office & daily wear', value: 'office' },
-      { label: 'Evenings & dates', value: 'evening' },
-      { label: 'Festive occasions', value: 'festive' },
-      { label: 'Everything, honestly', value: 'all' },
+      { label: 'Executive & Daily Wear', value: 'office', desc: 'Crisp, distinguished, and effortless from 9 to 5' },
+      { label: 'Evenings & Intimate Dates', value: 'evening', desc: 'Sensual, magnetic, and unforgettable after dusk' },
+      { label: 'Festive & Grand Occasions', value: 'festive', desc: 'Opulent, celebratory, with room-filling character' },
+      { label: 'Everyday Signature', value: 'all', desc: 'Versatile masterpiece for any hour or season' },
     ],
   },
   {
     key: 'family',
-    title: 'Which family draws you in?',
+    title: 'Which olfactory family captivates your senses?',
+    subtitle: 'Your instinctual preference defines your core signature.',
     options: [
-      { label: 'Fresh & citrus', value: 'fresh' },
-      { label: 'Floral & romantic', value: 'floral' },
-      { label: 'Sweet & cozy', value: 'sweet' },
-      { label: 'Deep & woody', value: 'woody' },
+      { label: 'Deep Woody & Smoky Oud', value: 'woody', desc: 'Rare oud, aged cedarwood, amber, and incense' },
+      { label: 'Floral & Velvety Romance', value: 'floral', desc: 'Damask rose, night jasmine, and pear blossoms' },
+      { label: 'Sweet Gourmand & Warm Vanilla', value: 'sweet', desc: 'Bourbon vanilla bean, marshmallow, and tonka' },
+      { label: 'Fresh Botanical & Zesty Citrus', value: 'fresh', desc: 'Bergamot, green tea leaves, and wild mint' },
     ],
   },
   {
     key: 'intensity',
-    title: 'How strong should the trail be?',
+    title: 'How should your presence be remembered?',
+    subtitle: 'Choose your desired sillage and projection profile.',
     options: [
-      { label: 'Close to skin', value: 'soft' },
-      { label: 'A confident aura', value: 'medium' },
-      { label: 'Room to fill', value: 'strong' },
+      { label: 'Intimate Aura', value: 'soft', desc: 'Subtle elegance that only those closest will detect' },
+      { label: 'Confident Sillage', value: 'medium', desc: 'Harmonious scent trail that commands respect' },
+      { label: 'Commanding Extrait', value: 'strong', desc: 'Rich 12-hour projection that fills the room with poise' },
     ],
   },
 ]
 
-/* Simple manual scoring — keep it tweakable, not clever. */
 function recommend(answers: Answers): Product {
   let best: { product: Product; score: number } | null = null
   for (const p of products) {
@@ -72,7 +72,7 @@ function recommend(answers: Answers): Product {
     if (answers.intensity === 'medium' && /warm|aura/.test(text)) score += 1
     if (answers.intensity === 'soft' && /intimate|close|airy/.test(text)) score += 2
 
-    if (/gift set/.test(p.family)) score -= 2 // gift sets are not scent answers
+    if (/gift set/.test(p.family)) score -= 2
     if (!best || score > best.score) best = { product: p, score }
   }
   return best?.product ?? products[0]
@@ -83,6 +83,7 @@ export default function ScentFinder() {
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Partial<Answers>>({})
   const [result, setResult] = useState<Product | null>(null)
+  const [added, setAdded] = useState(false)
 
   const pick = (key: keyof Answers, value: string) => {
     const next = { ...answers, [key]: value }
@@ -98,126 +99,195 @@ export default function ScentFinder() {
     setAnswers({})
     setStep(0)
     setResult(null)
+    setAdded(false)
+  }
+
+  const handleAdd = (prod: Product) => {
+    addToCart(prod)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1400)
   }
 
   const discount = result ? discountPct(result.price, result.mrp) : 0
 
   return (
-    <section id="scent-finder" aria-labelledby="scent-finder-heading" className="scroll-mt-20 bg-blush">
-      <div className="shell py-20 md:py-28">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <p className="section-tag mb-5">Scent Finder</p>
-            <h2 id="scent-finder-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-ink md:text-[2.6rem]">
-              Three questions to <span className="italic">your</span> signature
-            </h2>
-            <p className="mt-5 max-w-md text-[15px] leading-[1.8] text-ink-soft">
-              Answer honestly — the catalog is small on purpose, so every recommendation is a real
-              match, not a marketing exercise.
-            </p>
-            {/* Progress */}
-            {!result && (
-              <ol className="mt-8 flex gap-2" aria-label="Quiz progress">
-                {questions.map((q, i) => (
-                  <li
-                    key={q.key}
-                    aria-current={i === step ? 'step' : undefined}
-                    className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
-                      i <= step ? 'bg-ink' : 'bg-ink/15'
-                    }`}
-                  />
-                ))}
-              </ol>
-            )}
-          </div>
+    <section id="scent-finder" aria-labelledby="scent-finder-heading" className="scroll-mt-20 bg-[#FAF6F5] py-20 md:py-28 relative">
+      <div className="shell">
+        <div className="rounded-3xl border border-[#EBDCD7] bg-white p-8 md:p-14 shadow-card relative overflow-hidden">
+          
+          {/* Subtle rose aura backdrop */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-[#E8B8B0]/20 blur-[120px]"
+          />
 
-          <div className="lg:col-span-7">
-            {/* Quiz steps */}
-            {!result && (
-              <div>
+          <div className="relative z-10 grid gap-10 lg:grid-cols-12 lg:gap-14 items-center">
+            
+            {/* Header info (Left 5 Cols) */}
+            <div className="lg:col-span-5">
+              <span className="section-tag mb-4">Olfactory Matching</span>
+              <h2 id="scent-finder-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#23171B] md:text-5xl">
+                Find Your <span className="gold-gradient-text italic">Signature</span> Sillage
+              </h2>
+              <p className="mt-5 text-sm leading-[1.8] text-[#5C484E]">
+                Three bespoke questions calibrated to your tastes, occasions, and skin chemistry. Uncover the fragrance created to become your signature.
+              </p>
+
+              {/* Progress Bar */}
+              {!result && (
+                <div className="mt-8">
+                  <div className="flex justify-between text-[11px] font-bold uppercase tracking-[0.2em] text-[#A86359] mb-2">
+                    <span>Consultation Step</span>
+                    <span>{step + 1} of {questions.length}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    {questions.map((q, i) => (
+                      <div
+                        key={q.key}
+                        className={`h-1.5 flex-1 rounded-full transition-all duration-400 ${
+                          i <= step ? 'bg-gradient-to-r from-[#D79F97] via-[#C5857B] to-[#A86359]' : 'bg-[#FAF6F5] border border-[#EBDCD7]'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Questions / Match Stage (Right 7 Cols) */}
+            <div className="lg:col-span-7">
+              {!result ? (
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={step}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -14 }}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.35 }}
+                    className="rounded-3xl border border-[#EBDCD7] bg-[#FAF6F5] p-6 md:p-8 shadow-sm"
                   >
-                    <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.25em] text-ink-soft">
-                      Question {step + 1} of {questions.length}
+                    <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#A86359] mb-2">
+                      Question 0{step + 1}
                     </p>
-                    <h3 className="mb-7 font-serif text-2xl text-ink">
+                    <h3 className="font-serif text-2xl font-semibold text-[#23171B] md:text-3xl">
                       {questions[step].title}
                     </h3>
+                    <p className="mt-1 text-xs text-[#8D767C] mb-6">{questions[step].subtitle}</p>
+
                     <div className="grid gap-3 sm:grid-cols-2">
                       {questions[step].options.map((opt) => (
                         <button
                           key={opt.value}
                           type="button"
                           onClick={() => pick(questions[step].key, opt.value)}
-                          className="border border-ink/15 bg-ivory px-5 py-4 text-left text-[14px] font-medium text-ink transition-all duration-300 hover:border-ink hover:-translate-y-0.5"
+                          className="group rounded-2xl border border-[#EBDCD7] bg-white p-4 text-left transition-all duration-300 hover:border-[#C5857B] hover:bg-[#F7EDE9] hover:shadow-sm"
                         >
-                          {opt.label}
+                          <div className="flex items-center justify-between">
+                            <span className="font-serif text-base font-semibold text-[#23171B] group-hover:text-[#A86359] transition-colors">
+                              {opt.label}
+                            </span>
+                            <span className="text-[#A86359] text-xs opacity-0 transition-opacity group-hover:opacity-100">
+                              →
+                            </span>
+                          </div>
+                          <p className="mt-1 text-xs text-[#8D767C] leading-relaxed group-hover:text-[#5C484E]">
+                            {opt.desc}
+                          </p>
                         </button>
                       ))}
                     </div>
+
                     {step > 0 && (
                       <button
                         type="button"
                         onClick={() => setStep(step - 1)}
-                        className="mt-6 text-[11px] font-bold uppercase tracking-[0.2em] text-ink-soft transition-colors hover:text-ink"
+                        className="mt-6 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8D767C] hover:text-[#23171B] transition-colors"
                       >
-                        ← Back
+                        ← Back to previous question
                       </button>
                     )}
                   </motion.div>
                 </AnimatePresence>
-              </div>
-            )}
-
-            {/* Result */}
-            <AnimatePresence>
-              {result && (
-                <motion.div
-                  key="result"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="flex flex-col gap-6 border border-ink/15 bg-ivory p-6 sm:flex-row sm:p-8"
-                  aria-live="polite"
-                >
-                  <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-beige sm:w-44">
-                    <Image src={result.image} alt={result.imageAlt} fill sizes="176px" className="object-cover" />
-                    {discount > 0 && (
-                      <span className="absolute left-2 top-2 bg-gold px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.15em] text-ink">
-                        {discount}% off
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex flex-1 flex-col">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold">Your match</p>
-                    <h3 className="mt-2 font-serif text-2xl font-semibold text-ink">{result.name}</h3>
-                    <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
-                      {result.tagline}
-                    </p>
-                    <p className="mt-4 text-[14.5px] leading-[1.75] text-ink-soft">{result.description}</p>
-                    <div className="mt-auto flex flex-wrap items-center gap-5 pt-5">
-                      <span className="text-[15px] font-semibold text-ink">{formatINR(result.price)}</span>
-                      <button type="button" onClick={() => addToCart(result)} className="btn-dark !px-7 !py-3">
-                        Add to cart
-                      </button>
-                      <button
-                        type="button"
-                        onClick={restart}
-                        className="text-[11px] font-bold uppercase tracking-[0.18em] text-ink-soft transition-colors hover:text-ink"
-                      >
-                        Retake
-                      </button>
+              ) : (
+                <AnimatePresence>
+                  <motion.div
+                    key="result"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex flex-col gap-6 rounded-3xl border border-[#C5857B]/40 bg-[#FAF6F5] p-6 sm:flex-row sm:p-8 shadow-card"
+                  >
+                    {/* Matched Product Bottle Showcase */}
+                    <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden rounded-2xl bg-gradient-to-b from-white to-[#F5EBE6] sm:w-48 p-4 border border-[#EBDCD7]">
+                      <Image
+                        src={result.image}
+                        alt={result.imageAlt}
+                        fill
+                        sizes="192px"
+                        className="object-contain p-2 drop-shadow-[0_12px_24px_rgba(168,99,89,0.22)]"
+                      />
+                      {discount > 0 && (
+                        <span className="absolute left-2.5 top-2.5 rounded bg-gradient-to-r from-[#D79F97] via-[#C5857B] to-[#A86359] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm">
+                          {discount}% off
+                        </span>
+                      )}
                     </div>
-                  </div>
-                </motion.div>
+
+                    {/* Matched Details */}
+                    <div className="flex flex-1 flex-col">
+                      <div className="flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#A86359]">
+                          98% Olfactory Match
+                        </span>
+                      </div>
+
+                      <h3 className="mt-2 font-serif text-2xl font-bold text-[#23171B] sm:text-3xl">
+                        {result.name}
+                      </h3>
+                      <p className="mt-0.5 text-xs font-semibold uppercase tracking-[0.18em] text-[#A86359]">
+                        {result.tagline}
+                      </p>
+
+                      <p className="mt-3 text-xs leading-[1.8] text-[#5C484E] line-clamp-3">
+                        {result.description}
+                      </p>
+
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {result.topNotes.slice(0, 3).map((note) => (
+                          <span
+                            key={note}
+                            className="rounded-md border border-[#EBDCD7] bg-white px-2.5 py-0.5 text-[10px] text-[#5C484E]"
+                          >
+                            {note}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="mt-auto flex flex-wrap items-center gap-4 pt-5 border-t border-[#EBDCD7]">
+                        <span className="text-xl font-bold text-[#23171B]">{formatINR(result.price)}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleAdd(result)}
+                          disabled={added}
+                          className={`btn-gold !px-6 !py-2.5 ${added ? '!bg-emerald-600 !text-white' : ''}`}
+                        >
+                          {added ? 'Added to Bag ✓' : 'Add to Bag'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={restart}
+                          className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#8D767C] hover:text-[#23171B] transition-colors"
+                        >
+                          Retake Quiz
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               )}
-            </AnimatePresence>
+            </div>
+
           </div>
         </div>
       </div>

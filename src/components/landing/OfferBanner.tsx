@@ -3,14 +3,11 @@
 import { useEffect, useState } from 'react'
 
 /* ————————————————————————————————————————————————————————————————
-   OfferBanner — "Buy 2, Get 10% Off" with a countdown to midnight
-   IST. Pure client timer; no server dependency.
+   OfferBanner — Limited Curated Offer with Midnight Countdown
 ———————————————————————————————————————————————————————————————— */
 
-/* Countdown ends at the next 00:00 IST, so it never appears expired */
 function nextMidnightIST(): number {
   const now = new Date()
-  /* IST = UTC+5:30 */
   const istNow = new Date(now.getTime() + (5.5 * 60 - -now.getTimezoneOffset()) * 60000)
   istNow.setHours(24, 0, 0, 0)
   return istNow.getTime()
@@ -41,43 +38,60 @@ export default function OfferBanner() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <section aria-labelledby="offer-heading" className="bg-charcoal text-ivory">
-      <div className="grain-dark relative overflow-hidden">
-        <div className="shell relative z-10 py-16 text-center md:py-20">
-          <p className="section-tag mb-5">Limited Offer</p>
-          <h2 id="offer-heading" className="mx-auto max-w-2xl font-serif text-3xl font-semibold leading-[1.1] md:text-[2.6rem]">
-            Buy 2, get <span className="italic text-gold">10% off</span> — today only
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-[14.5px] leading-[1.75] text-ivory/70">
-            Add any two fragrances to your cart and the discount applies automatically. Stacks with
-            free shipping above ₹499.
-          </p>
-
-          {/* Countdown */}
+    <section aria-labelledby="offer-heading" className="bg-[#FAF6F5] py-16 md:py-24 relative">
+      <div className="shell">
+        <div className="relative overflow-hidden rounded-3xl border border-[#EBDCD7] bg-gradient-to-b from-[#F7EDE9] via-white to-[#F5EBE6] px-6 py-14 text-center md:py-20 md:px-12 shadow-card">
+          
+          {/* Radial Rose Aura */}
           <div
-            className="mx-auto mt-8 flex items-center justify-center gap-2 md:gap-3"
-            role="timer"
-            aria-label="Offer ends tonight at midnight IST"
-          >
-            {[
-              [h, 'hrs'],
-              [m, 'min'],
-              [s, 'sec'],
-            ].map(([value, label]) => (
-              <span key={label} className="flex w-16 flex-col items-center md:w-20">
-                <span className="w-full border border-gold/50 bg-ivory/5 py-2.5 font-serif text-2xl font-semibold tabular-nums md:text-3xl">
-                  {value}
-                </span>
-                <span className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-ivory/50">
-                  {label}
-                </span>
-              </span>
-            ))}
-          </div>
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#E8B8B0]/25 blur-[110px]"
+          />
 
-          <button type="button" onClick={() => scrollTo('bestsellers')} className="btn-light mt-9">
-            Pick your two
-          </button>
+          <div className="relative z-10">
+            <span className="section-tag mb-4">Limited Allocation</span>
+            
+            <h2 id="offer-heading" className="mx-auto max-w-3xl font-serif text-3xl font-semibold leading-[1.15] text-[#23171B] md:text-5xl">
+              Select Any 2 Fragrances, Receive an Instant <span className="gold-gradient-text italic">10% Privilege</span>
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#5C484E]">
+              Discount applies automatically at checkout. Seamlessly combinable with complimentary express delivery above ₹499 and pan-India Cash on Delivery.
+            </p>
+
+            {/* Countdown Flip Clock Boxes */}
+            <div
+              className="mx-auto mt-8 flex items-center justify-center gap-3 md:gap-4"
+              role="timer"
+              aria-label="Offer ends tonight at midnight IST"
+            >
+              {[
+                [h, 'Hours'],
+                [m, 'Minutes'],
+                [s, 'Seconds'],
+              ].map(([value, label]) => (
+                <div key={label} className="flex flex-col items-center">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#C5857B]/40 bg-white font-serif text-2xl font-bold tabular-nums text-[#23171B] shadow-sm md:h-20 md:w-20 md:text-3xl">
+                    {value}
+                  </div>
+                  <span className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#A86359]">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div className="mt-9">
+              <button
+                type="button"
+                onClick={() => scrollTo('bestsellers')}
+                className="btn-gold"
+              >
+                Curate Your Pair
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,122 +1,151 @@
 'use client'
 
 import Image from 'next/image'
-import Reveal from './Reveal'
+import { motion } from 'framer-motion'
 
 /* ————————————————————————————————————————————————————————————————
-   SocialProof — customer reviews with star ratings, plus an
-   Instagram-style UGC grid. Review/UGC content lives here in the
-   component; move to a data file once volume grows.
+   SocialProof — Verified Customer Reviews & Community Gallery
 ———————————————————————————————————————————————————————————————— */
 
 const reviews = [
   {
     name: 'Ananya S.',
     city: 'Mumbai',
+    scent: 'Passport Extrait',
     stars: 5,
-    text: 'Ordered Passport for daily office wear — 10 hours later my kurta still smells of vanilla. At ₹450 this is unreal value.',
+    text: 'Ordered Passport for daily office wear — 10 hours later my kurta still radiates warm vanilla and orchid. At ₹450 this value is unmatched in Indian fragrance.',
   },
   {
     name: 'Rohan M.',
-    city: 'Delhi',
+    city: 'New Delhi',
+    scent: 'Arabian Oud',
     stars: 5,
-    text: 'Arabian Oud gets compliments every single time I wear it out. People refuse to believe it costs less than ₹800.',
+    text: 'Arabian Oud garners compliments every single time I wear it to meetings and dinner dates. Colleagues are stunned that it costs under ₹800.',
   },
   {
     name: 'Priya K.',
     city: 'Bengaluru',
-    stars: 4,
-    text: 'Bought the Discovery Duo as a gift and ended up ordering a full bottle for myself the next week. Beautiful packaging.',
+    scent: 'Wild Strawberry',
+    stars: 5,
+    text: 'Bought the Discovery Duo as a wedding gift and ended up ordering full bottles for myself the following week. Impeccable luxury feel from box to base.',
   },
   {
     name: 'Vikram J.',
     city: 'Pune',
+    scent: 'Black Oud',
     stars: 5,
-    text: 'Black Oud is my winter signature now. Deep, smoky, and it lasts my whole shift. COD made trying it risk-free.',
+    text: 'Black Oud is my undisputed signature now. Deep, smoky, and projects through my whole 12-hour day. Cash on delivery made trying it zero risk.',
   },
 ]
 
 const ugc = [
-  { src: '/images/strawberry-red.png', alt: 'ORYN Wild Strawberry bottle on a dressing table' },
-  { src: '/images/arabian-oud-purple.png', alt: 'ORYN Arabian Oud held against evening light' },
-  { src: '/images/passport-pink.png', alt: 'ORYN Passport pack shot on pink silk' },
-  { src: '/images/shanaya-green.png', alt: 'ORYN Shanaya with green tea leaves' },
-  { src: '/images/gucci-flora-blue.png', alt: 'ORYN Flora beside fresh peonies' },
-  { src: '/images/black-oud-dark.png', alt: 'ORYN Black Oud on a dark moody backdrop' },
+  { src: '/images/strawberry-red.png', alt: 'ORYN Wild Strawberry on dressing table', name: 'Wild Strawberry' },
+  { src: '/images/arabian-oud-purple.png', alt: 'ORYN Arabian Oud in dusk light', name: 'Arabian Oud' },
+  { src: '/images/passport-pink.png', alt: 'ORYN Passport on pink velvet', name: 'Passport' },
+  { src: '/images/shanaya-green.png', alt: 'ORYN Shanaya botanical shot', name: 'Shanaya' },
+  { src: '/images/gucci-flora-blue.png', alt: 'ORYN Flora beside peonies', name: 'Flora' },
+  { src: '/images/black-oud-dark.png', alt: 'ORYN Black Oud moody atmosphere', name: 'Black Oud' },
 ]
 
-function Stars({ count, label }: { count: number; label: string }) {
+function Stars({ count }: { count: number }) {
   return (
-    <span className="flex items-center gap-1" role="img" aria-label={label}>
+    <div className="flex items-center gap-1">
       {[1, 2, 3, 4, 5].map((n) => (
-        <svg key={n} width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path
-            d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"
-            fill={n <= count ? '#C8A45D' : 'none'}
-            stroke="#C8A45D"
-            strokeWidth="1.4"
-            strokeLinejoin="round"
-          />
+        <svg key={n} width="14" height="14" viewBox="0 0 24 24" fill={n <= count ? '#C5857B' : 'none'} stroke="#C5857B" strokeWidth="1.5">
+          <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z" strokeLinejoin="round" />
         </svg>
       ))}
-    </span>
+    </div>
   )
 }
 
 export default function SocialProof() {
   return (
-    <section id="reviews" aria-labelledby="reviews-heading" className="scroll-mt-20 bg-ivory">
-      <div className="shell py-20 md:py-28">
-        <Reveal className="mb-10 flex flex-wrap items-end justify-between gap-6 md:mb-14">
+    <section id="reviews" aria-labelledby="reviews-heading" className="scroll-mt-20 bg-[#FAF6F5] py-20 md:py-28 relative">
+      <div className="shell">
+        {/* Section Header */}
+        <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <p className="section-tag mb-5">Reviews</p>
-            <h2 id="reviews-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-ink md:text-[2.6rem]">
-              Worn & <span className="italic">re-ordered</span> across India
+            <span className="section-tag mb-4">Customer Commendations</span>
+            <h2 id="reviews-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#23171B] md:text-5xl">
+              Worn &amp; <span className="gold-gradient-text italic">Re-ordered</span> Across India
             </h2>
           </div>
-          <div className="flex items-center gap-3">
-            <Stars count={5} label="Rated 4.9 out of 5" />
-            <span className="text-[13px] text-ink-soft">4.9 · 2,300+ orders</span>
+          <div className="flex items-center gap-3 rounded-full border border-[#C5857B]/30 bg-[#F7EDE9] px-5 py-2.5 shadow-sm">
+            <Stars count={5} />
+            <span className="text-xs font-bold text-[#23171B]">4.9 · 2,400+ Verified Orders</span>
           </div>
-        </Reveal>
+        </div>
 
-        {/* Review cards */}
-        <ul className="grid gap-4 pb-16 sm:grid-cols-2 md:gap-5 lg:grid-cols-4">
+        {/* Review Cards Grid */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {reviews.map((review, i) => (
-            <Reveal key={review.name} delay={i * 80} className="h-full">
-              <li className="flex h-full flex-col border border-ink/10 bg-cream p-6">
-                <Stars count={review.stars} label={`${review.stars} out of 5 stars`} />
-                <p className="mt-4 flex-1 text-[14.5px] leading-[1.75] text-ink-soft">
-                  &ldquo;{review.text}&rdquo;
-                </p>
-                <p className="mt-5 text-[12px] font-bold uppercase tracking-[0.18em] text-ink">
-                  {review.name} <span className="font-medium normal-case tracking-normal text-ink-soft">· {review.city}</span>
-                </p>
-              </li>
-            </Reveal>
-          ))}
-        </ul>
+            <motion.div
+              key={review.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, delay: i * 0.08 }}
+              className="flex h-full flex-col rounded-3xl border border-[#EBDCD7] bg-white p-6 shadow-sm transition-all duration-300 hover:border-[#C5857B] hover:shadow-card"
+            >
+              <div className="flex items-center justify-between">
+                <Stars count={review.stars} />
+                <span className="text-[10px] font-semibold text-[#A86359] uppercase tracking-wider">
+                  Verified Buyer
+                </span>
+              </div>
 
-        {/* UGC grid */}
-        <Reveal>
-          <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.25em] text-ink-soft">
-            #WearORYN — from the community
-          </p>
-          <ul className="grid grid-cols-3 gap-2 md:grid-cols-6 md:gap-3">
+              <p className="mt-4 flex-1 text-sm leading-[1.8] text-[#5C484E] italic">
+                &ldquo;{review.text}&rdquo;
+              </p>
+
+              <div className="mt-6 border-t border-[#EBDCD7] pt-4">
+                <p className="text-xs font-bold text-[#23171B] uppercase tracking-wider">
+                  {review.name} <span className="font-normal text-[#8D767C]">· {review.city}</span>
+                </p>
+                <p className="text-[11px] font-medium text-[#A86359] mt-0.5">
+                  Favorite: {review.scent}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* UGC Community Gallery */}
+        <div className="mt-16 pt-12 border-t border-[#EBDCD7]">
+          <div className="mb-6 flex items-center justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#A86359]">
+              #WearORYN · The Community Lookbook
+            </span>
+            <span className="text-xs text-[#8D767C]">Tagged by 8,000+ creators on Instagram</span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
             {ugc.map((item) => (
-              <li key={item.src} className="group relative aspect-square overflow-hidden bg-beige">
+              <div
+                key={item.src}
+                className="group relative aspect-square overflow-hidden rounded-2xl border border-[#EBDCD7] bg-white shadow-sm"
+              >
                 <Image
                   src={item.src}
                   alt={item.alt}
                   fill
                   loading="lazy"
-                  sizes="(max-width: 768px) 33vw, 16vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                  sizes="(max-width: 768px) 50vw, 16vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
-              </li>
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-[#23171B]/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-80"
+                />
+                <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <p className="text-[11px] font-bold text-white">{item.name}</p>
+                </div>
+              </div>
             ))}
-          </ul>
-        </Reveal>
+          </div>
+        </div>
+
       </div>
     </section>
   )

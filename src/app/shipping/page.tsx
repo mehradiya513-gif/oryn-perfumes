@@ -1,46 +1,38 @@
 export default function ShippingPage() {
   return (
-    <div className="bg-ivory text-ink">
-      <section className="mx-auto max-w-3xl px-6 pt-40 md:pt-48 pb-28 md:pb-32">
-        <p className="section-tag">Orders</p>
-        <h1 className="font-serif text-4xl md:text-5xl mb-10">Shipping Policy</h1>
-        <p className="text-[10px] uppercase tracking-[0.25em] text-stone mb-14">
+    <div className="bg-obsidian text-pearl min-h-screen">
+      <section className="mx-auto max-w-3xl px-6 pt-32 md:pt-40 pb-28 md:pb-32">
+        <span className="section-tag mb-4">Orders &amp; Dispatch</span>
+        <h1 className="font-serif text-4xl md:text-5xl font-semibold mb-6">Shipping &amp; Delivery</h1>
+        <p className="text-[10px] uppercase tracking-[0.25em] text-gold/80 mb-12">
           Last updated {new Date().toLocaleDateString()}
         </p>
 
-        <div className="space-y-12 text-ink-soft font-light leading-relaxed">
+        <div className="space-y-10 text-sand text-sm leading-[1.8] rounded-3xl border border-white/10 bg-[#12121A] p-8 md:p-12">
           <section>
-            <h2 className="font-serif text-2xl text-ink mb-4">1. Order Processing Times</h2>
-            <p className="mb-4">
-              All orders are processed within 1-3 business days. Orders are not shipped or
-              delivered on weekends or holidays.
+            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">1. Order Processing Times</h2>
+            <p className="mb-3">
+              All orders are hand-packaged and prepared within 24–48 business hours. Orders placed over weekends or national holidays are dispatched on the subsequent business morning.
             </p>
             <p>
-              If we are experiencing a high volume of orders, shipments may be delayed by a few
-              days. Please allow additional days in transit for delivery.
+              Each parcel is sealed in tamper-evident cushioning to safeguard the glass flacon during transit.
             </p>
           </section>
 
-          <section>
-            <h2 className="font-serif text-2xl text-ink mb-4">2. Shipping Rates &amp; Delivery Estimates</h2>
-            <p className="mb-4">Shipping charges for your order will be calculated and displayed at checkout.</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Standard shipping: 3-5 business days</li>
-              <li>Express shipping: 1-2 business days</li>
+          <section className="border-t border-white/10 pt-8">
+            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">2. Shipping Tariffs &amp; Estimates</h2>
+            <p className="mb-4">Shipping is complimentary across India on all orders exceeding ₹499.</p>
+            <ul className="list-disc pl-6 space-y-2 text-smoke">
+              <li>Metro Cities (Mumbai, Delhi, Bengaluru, etc.): 2–4 business days</li>
+              <li>Tier 2 &amp; Regional Centers: 3–6 business days</li>
+              <li>Cash on Delivery: Available pan-India at no extra fee</li>
             </ul>
-            <p className="mt-4">
-              Delivery delays can occasionally occur, especially during peak seasons or due to
-              unforeseen logistical issues.
-            </p>
           </section>
 
-          <section>
-            <h2 className="font-serif text-2xl text-ink mb-4">3. International Shipping</h2>
+          <section className="border-t border-white/10 pt-8">
+            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">3. Tracking &amp; Delivery Guarantees</h2>
             <p>
-              Because our products contain alcohol, there are specific regulations governing
-              international shipments. Currently, we offer shipping to select international
-              destinations. Customs, duties, and taxes are not included in the item price or
-              shipping cost and are the responsibility of the customer.
+              A tracking identifier is dispatched via SMS and email upon courier handoff. For urgent assistance or delivery queries, contact our concierge directly via WhatsApp.
             </p>
           </section>
         </div>

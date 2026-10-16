@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
-      <body className="bg-ivory font-sans text-ink antialiased">
+      <body className="bg-obsidian font-sans text-pearl antialiased selection:bg-gold selection:text-obsidian">
         <CartProvider>
           <AnnouncementBar />
           <Header />

@@ -1,46 +1,35 @@
 export default function RefundPage() {
   return (
-    <div className="bg-ivory text-ink">
-      <section className="mx-auto max-w-3xl px-6 pt-40 md:pt-48 pb-28 md:pb-32">
-        <p className="section-tag">Orders</p>
-        <h1 className="font-serif text-4xl md:text-5xl mb-10">Cancellation &amp; Refund Policy</h1>
-        <p className="text-[10px] uppercase tracking-[0.25em] text-stone mb-14">
+    <div className="bg-obsidian text-pearl min-h-screen">
+      <section className="mx-auto max-w-3xl px-6 pt-32 md:pt-40 pb-28 md:pb-32">
+        <span className="section-tag mb-4">Assurances</span>
+        <h1 className="font-serif text-4xl md:text-5xl font-semibold mb-6">Returns &amp; Refunds Policy</h1>
+        <p className="text-[10px] uppercase tracking-[0.25em] text-gold/80 mb-12">
           Last updated {new Date().toLocaleDateString()}
         </p>
 
-        <div className="space-y-12 text-ink-soft font-light leading-relaxed">
+        <div className="space-y-10 text-sand text-sm leading-[1.8] rounded-3xl border border-white/10 bg-[#12121A] p-8 md:p-12">
           <section>
-            <h2 className="font-serif text-2xl text-ink mb-4">1. Order Cancellations</h2>
+            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">1. Order Cancellations</h2>
             <p>
-              You may cancel your order for a full refund at any time before it has been
-              processed for shipping. Once an order has been dispatched, it cannot be cancelled,
-              but you may initiate a return upon receiving the item.
+              Orders may be cancelled for an immediate full refund at any point before courier dispatch. Once the parcel is in transit, cancellation cannot be accommodated, though a return may be initiated upon arrival.
             </p>
           </section>
 
-          <section>
-            <h2 className="font-serif text-2xl text-ink mb-4">2. Returns</h2>
-            <p className="mb-4">
-              Due to the intimate nature of our products and hygiene standards, we can only
-              accept returns on unopened, unused fragrances in their original, sealed packaging
-              within 14 days of delivery.
+          <section className="border-t border-white/10 pt-8">
+            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">2. 7-Day Unconditional Returns</h2>
+            <p className="mb-3">
+              Due to hygiene and cosmetic regulatory standards, we accept returns on unopened, unused flacons in original sealed packaging within 7 days of delivery.
             </p>
             <p>
-              If you wish to return an item, please contact our support team first to authorize
-              the return.
+              If a flacon arrives impaired or damaged, share a parcel photograph with our WhatsApp concierge within 48 hours for an instant complimentary replacement.
             </p>
           </section>
 
-          <section>
-            <h2 className="font-serif text-2xl text-ink mb-4">3. Refunds</h2>
-            <p className="mb-4">
-              Once your return is received and inspected, we will send you an email to notify you
-              that we have received your returned item, and notify you of the approval or
-              rejection of your refund.
-            </p>
+          <section className="border-t border-white/10 pt-8">
+            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">3. Refund Settlement</h2>
             <p>
-              If approved, your refund will be processed, and a credit will automatically be
-              applied to your original method of payment, within 5-10 business days.
+              Following inspection at our Mumbai atelier, approved refunds are remitted to your original payment method (or UPI account for COD orders) within 5–7 business days.
             </p>
           </section>
         </div>

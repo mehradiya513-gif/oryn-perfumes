@@ -1,73 +1,100 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
-import type { Product } from '@/lib/products'
-import { bestsellers } from '@/lib/products'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { products as allProducts } from '@/lib/products'
 import ProductCard from './ProductCard'
 
 /* ————————————————————————————————————————————————————————————————
-   Bestsellers — swipe carousel on mobile (scroll-snap), 4-col grid
-   on desktop. Dots reflect the active snap position on small
-   screens; on keyboard, cards stay tabbable in either layout.
+   Bestsellers & Collection Showcase with Interactive Category Tabs
 ———————————————————————————————————————————————————————————————— */
 
-export default function Bestsellers({ products = bestsellers }: { products?: Product[] }) {
-  const trackRef = useRef<HTMLUListElement | null>(null)
-  const [active, setActive] = useState(0)
+const filterCategories = ['All Fragrances', 'For Him', 'For Her', 'Unisex', 'Gift Sets'] as const
 
-  /* Track the visible snap point while swiping (mobile only visual) */
-  useEffect(() => {
-    const track = trackRef.current
-    if (!track) return
-    const onScroll = () => {
-      const cardWidth = track.scrollWidth / products.length
-      setActive(Math.min(products.length - 1, Math.round(track.scrollLeft / cardWidth)))
-    }
-    track.addEventListener('scroll', onScroll, { passive: true })
-    return () => track.removeEventListener('scroll', onScroll)
-  }, [products.length])
+export default function Bestsellers() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All Fragrances')
+
+  const filtered = selectedCategory === 'All Fragrances'
+    ? allProducts
+    : allProducts.filter((p) => p.category === selectedCategory)
 
   return (
-    <section id="bestsellers" aria-labelledby="bestsellers-heading" className="scroll-mt-20 bg-cream">
-      <div className="shell py-20 md:py-28">
-        <div className="mb-10 flex items-end justify-between gap-6 md:mb-14">
+    <section id="bestsellers" aria-labelledby="bestsellers-heading" className="scroll-mt-20 bg-[#FAF6F5] py-20 md:py-28 relative">
+      <div className="shell">
+        {/* Section Header */}
+        <div className="mb-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:mb-12">
           <div>
-            <p className="section-tag mb-5">Bestsellers</p>
-            <h2 id="bestsellers-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-ink md:text-[2.6rem]">
-              Most <span className="italic">re-ordered,</span> quietly
+            <span className="section-tag mb-4">Master Formulation</span>
+            <h2 id="bestsellers-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#23171B] md:text-5xl">
+              The Signature <span className="gold-gradient-text italic">Collection</span>
             </h2>
           </div>
-          <p className="hidden max-w-xs text-right text-[14px] leading-[1.7] text-ink-soft md:block">
-            Every fragrance under ₹800. Free shipping above ₹499, COD available.
+          <p className="max-w-sm text-sm leading-[1.8] text-[#5C484E]">
+            Crafted without compromises. Long-wearing extrait formulas composed in small batches, always under ₹800.
           </p>
         </div>
 
-        {/* Mobile: horizontal snap carousel. Desktop: 4-col grid. */}
-        <ul
-          ref={trackRef}
-          className="free-scroll -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4"
-          aria-label="Bestselling products"
-        >
-          {products.map((product, i) => (
-            <li
-              key={product.id}
-              className="w-[72vw] shrink-0 snap-start sm:w-[46vw] md:w-auto"
-            >
-              <ProductCard product={product} priority={i < 2} stickyId={product.id} />
-            </li>
-          ))}
-        </ul>
+        {/* Interactive Category Filter Pills */}
+        <div className="mb-10 flex flex-wrap items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none" role="tablist">
+          {filterCategories.map((category) => {
+            const isActive = selectedCategory === category
+            return (
+              <button
+                key={category}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setSelectedCategory(category)}
+                className={`relative rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
+                  isActive
+                    ? 'border border-[#C5857B] bg-[#F7EDE9] text-[#A86359] shadow-sm'
+                    : 'border border-[#EBDCD7] bg-white text-[#8D767C] hover:border-[#C5857B]/40 hover:text-[#23171B]'
+                }`}
+              >
+                {category}
+                {isActive && (
+                  <motion.span
+                    layoutId="activeFilterPill"
+                    className="absolute -bottom-1 left-1/2 h-1 w-4 -translate-x-1/2 rounded-full bg-[#C5857B]"
+                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                  />
+                )}
+              </button>
+            )
+          })}
+        </div>
 
-        {/* Dots — mobile only */}
-        <div className="mt-5 flex justify-center gap-2 md:hidden" aria-hidden="true">
-          {products.map((_, i) => (
-            <span
-              key={i}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === active ? 'w-5 bg-ink' : 'w-1.5 bg-ink/25'
-              }`}
-            />
-          ))}
+        {/* Product Grid */}
+        <motion.div layout className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <AnimatePresence>
+            {filtered.map((product, i) => (
+              <motion.div
+                key={product.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+              >
+                <ProductCard product={product} priority={i < 2} stickyId={product.id} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Bottom guarantee strip */}
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-6 rounded-2xl border border-[#EBDCD7] bg-white px-6 py-4 text-center shadow-sm">
+          <span className="text-xs font-semibold text-[#23171B]">
+            ✦ Complimentary Shipping on all orders above ₹499
+          </span>
+          <span className="hidden text-[#C5857B] md:inline">·</span>
+          <span className="text-xs font-semibold text-[#23171B]">
+            ✦ Settle via Cash on Delivery or Instant UPI
+          </span>
+          <span className="hidden text-[#C5857B] md:inline">·</span>
+          <span className="text-xs font-semibold text-[#23171B]">
+            ✦ 100% Satisfaction or Effortless 7-Day Exchange
+          </span>
         </div>
       </div>
     </section>

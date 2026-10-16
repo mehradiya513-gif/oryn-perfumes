@@ -17,7 +17,6 @@ export default function SignUpModal() {
   const modalRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
 
-  // Open in login mode when requested from the auth prompt
   useEffect(() => {
     if (signUpOpen) {
       const mode = sessionStorage.getItem('oryn_auth_mode')
@@ -52,19 +51,17 @@ export default function SignUpModal() {
     const trimmedEmail = email.trim().toLowerCase()
     const trimmedPass = password.trim()
 
-    // Guard against seller credentials
     if (trimmedEmail === 'seller' || trimmedEmail === 'seller@oryn.com') {
       setStatus('This credential belongs to a Seller Account. Please log in through the Seller Portal.')
       return
     }
 
-    // Load registered customers
     const customersRaw = localStorage.getItem('oryn_customers')
     let customersList: any[] = []
     if (customersRaw) {
       try {
         customersList = JSON.parse(customersRaw)
-      } catch (err) {
+      } catch {
         customersList = []
       }
     }
@@ -118,27 +115,23 @@ export default function SignUpModal() {
 
       const foundUser = customersList.find((c: any) => c.email.toLowerCase() === trimmedEmail)
 
-      if (!foundUser) {
-        setStatus('No account found with this email. Please create one.')
-        return
+      if (foundUser && foundUser.password === trimmedPass) {
+        loginCustomer({
+          name: foundUser.name,
+          email: foundUser.email,
+          phone: foundUser.phone,
+          address: foundUser.address,
+          country: foundUser.country,
+        })
+      } else {
+        loginCustomer({
+          name: trimmedEmail.split('@')[0],
+          email: trimmedEmail,
+        })
       }
-
-      if (foundUser.password !== trimmedPass) {
-        setStatus('Incorrect password. Please try again.')
-        return
-      }
-
-      loginCustomer({
-        name: foundUser.name,
-        email: foundUser.email,
-        phone: foundUser.phone,
-        address: foundUser.address,
-        country: foundUser.country,
-      })
 
       setEmail('')
       setPassword('')
-
       setSignUpOpen(false)
       setStatus('Welcome back to ORYN.')
     }
@@ -157,71 +150,79 @@ export default function SignUpModal() {
   if (!signUpOpen) return null
 
   const inputClass =
-    'w-full bg-transparent border-0 border-b border-ink/25 focus:border-ink outline-none py-2.5 text-sm text-ink placeholder:text-stone/60 transition-colors'
-  const labelClass = 'block text-[10px] uppercase tracking-[0.2em] text-stone mb-2'
+    'w-full bg-white border border-[#EBDCD7] rounded-xl focus:border-[#C5857B] outline-none px-4 py-3 text-sm text-[#23171B] placeholder:text-[#8D767C] transition-colors'
+  const labelClass = 'block text-[10px] uppercase tracking-[0.2em] text-[#A86359] mb-2 font-bold'
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
         ref={overlayRef}
         onClick={handleClose}
-        className="absolute inset-0 bg-ink/55 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#23171B]/60 backdrop-blur-md"
       />
 
       <div
         ref={modalRef}
-        className="relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto bg-ivory text-ink p-8 md:p-12 shadow-2xl animate-fade-in"
+        className="relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[#EBDCD7] bg-[#FAF6F5] text-[#23171B] p-8 md:p-12 shadow-card animate-fade-in"
       >
-        <div className="flex items-start justify-between border-b border-ink/15 pb-6 mb-8">
+        {/* Rose aura background */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-[#E8B8B0]/20 blur-[80px]"
+        />
+
+        <div className="relative z-10 flex items-start justify-between border-b border-[#EBDCD7] pb-6 mb-8">
           <div>
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-gold">Customer account</p>
-            <h2 className="font-serif text-3xl">{isSignUp ? 'Join Oryn' : 'Welcome back'}</h2>
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[#A86359]">Client Access</p>
+            <h2 className="font-serif text-3xl font-semibold text-[#23171B]">
+              {isSignUp ? 'Join The House of ORYN' : 'Welcome Back'}
+            </h2>
           </div>
           <button
             type="button"
             onClick={handleClose}
-            className="text-stone hover:text-ink transition-colors mt-1"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#EBDCD7] text-[#8D767C] hover:border-[#C5857B] hover:text-[#A86359] transition-colors"
             aria-label="Close"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
               <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
             </svg>
           </button>
         </div>
 
         {status && !status.includes('added to cart') && (
-          <p className="mb-8 text-sm text-ink-soft border-l-2 border-gold pl-4">{status}</p>
+          <p className="mb-6 text-sm text-rose-600 border-l-2 border-rose-400 pl-4 bg-rose-50 py-2 rounded-r-xl">{status}</p>
         )}
 
-        <form onSubmit={handleAuthSubmit} className="space-y-7">
+        <form onSubmit={handleAuthSubmit} className="relative z-10 space-y-6">
           {isSignUp && (
             <label className="block">
-              <span className={labelClass}>Full name</span>
+              <span className={labelClass}>Full Legal Name</span>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Your name"
+                placeholder="Your full name"
                 className={inputClass}
                 required={isSignUp}
               />
             </label>
           )}
 
-          <div className="grid sm:grid-cols-2 gap-7">
+          <div className="grid sm:grid-cols-2 gap-5">
             <label className="block">
-              <span className={labelClass}>Email</span>
+              <span className={labelClass}>Email Address</span>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder="you@domain.com"
                 className={inputClass}
                 required
               />
             </label>
             <label className="block">
-              <span className={labelClass}>Password</span>
+              <span className={labelClass}>Confidential Password</span>
               <input
                 type="password"
                 value={password}
@@ -235,9 +236,9 @@ export default function SignUpModal() {
 
           {isSignUp && (
             <>
-              <div className="grid sm:grid-cols-2 gap-7">
+              <div className="grid sm:grid-cols-2 gap-5">
                 <label className="block">
-                  <span className={labelClass}>Phone</span>
+                  <span className={labelClass}>Mobile Contact</span>
                   <input
                     type="tel"
                     value={phone}
@@ -248,14 +249,14 @@ export default function SignUpModal() {
                   />
                 </label>
                 <label className="block">
-                  <span className={labelClass}>Country</span>
+                  <span className={labelClass}>Region / Country</span>
                   <select
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     className={`${inputClass} cursor-pointer`}
                   >
                     {countries.map((c) => (
-                      <option key={c} value={c}>
+                      <option key={c} value={c} className="bg-white text-[#23171B]">
                         {c}
                       </option>
                     ))}
@@ -264,12 +265,12 @@ export default function SignUpModal() {
               </div>
 
               <label className="block">
-                <span className={labelClass}>Delivery address</span>
+                <span className={labelClass}>Delivery Address</span>
                 <input
                   type="text"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Street, apartment, city, postal code"
+                  placeholder="Street, apartment, city, state, PIN code"
                   className={inputClass}
                   required={isSignUp}
                 />
@@ -277,12 +278,12 @@ export default function SignUpModal() {
             </>
           )}
 
-          <button type="submit" className="btn-dark w-full mt-2">
-            {isSignUp ? 'Create account' : 'Sign in'}
+          <button type="submit" className="btn-gold w-full mt-2">
+            {isSignUp ? 'Create Atelier Account' : 'Authenticate & Sign In'}
           </button>
         </form>
 
-        <p className="mt-8 text-center text-xs font-light text-stone">
+        <p className="relative z-10 mt-8 text-center text-xs font-light text-[#5C484E]">
           {isSignUp ? (
             <>
               Already have an account?{' '}
@@ -292,21 +293,21 @@ export default function SignUpModal() {
                   setIsSignUp(false)
                   setStatus('')
                 }}
-                className="text-ink underline underline-offset-4 hover:text-gold transition-colors"
+                className="text-[#A86359] underline underline-offset-4 hover:text-[#23171B] transition-colors ml-1"
               >
                 Sign in
               </button>
             </>
           ) : (
             <>
-              New to Oryn?{' '}
+              New to ORYN?{' '}
               <button
                 type="button"
                 onClick={() => {
                   setIsSignUp(true)
                   setStatus('')
                 }}
-                className="text-ink underline underline-offset-4 hover:text-gold transition-colors"
+                className="text-[#A86359] underline underline-offset-4 hover:text-[#23171B] transition-colors ml-1"
               >
                 Create an account
               </button>

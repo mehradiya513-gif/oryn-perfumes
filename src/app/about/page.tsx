@@ -23,97 +23,95 @@ export default function AboutPage() {
       } else {
         setFormStatus('error')
       }
-    } catch (err) {
+    } catch {
       setFormStatus('error')
     }
   }
 
   const inputClass =
-    'w-full border-0 border-b border-ink/25 bg-transparent py-2.5 text-[15px] text-ink outline-none transition-colors placeholder:text-stone/70 focus:border-ink'
+    'w-full rounded-xl border border-white/10 bg-[#14141E] px-4 py-3 text-sm text-pearl outline-none transition-colors placeholder:text-smoke focus:border-gold'
 
-  const labelClass = 'mb-3 block text-[10px] font-bold uppercase tracking-[0.25em] text-stone'
+  const labelClass = 'mb-2 block text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80'
 
   return (
-    <div className="bg-ivory text-ink">
-      {/* Opening */}
-      <section className="shell pb-20 pt-32 md:pb-28 md:pt-44">
+    <div className="bg-obsidian text-pearl min-h-screen">
+      {/* Opening Hero */}
+      <section className="shell pb-20 pt-28 md:pb-28 md:pt-36">
         <Reveal>
-          <p className="section-tag mb-6">Our Story</p>
-          <h1 className="max-w-3xl font-serif text-4xl font-semibold leading-[1.1] tracking-[-0.015em] text-ink md:text-6xl">
-            A house that begins <span className="italic">with intention.</span>
+          <span className="section-tag mb-6">Atelier Genesis</span>
+          <h1 className="max-w-3xl font-serif text-4xl font-semibold leading-[1.1] tracking-[-0.015em] text-pearl md:text-6xl">
+            A perfume house created <span className="gold-gradient-text italic">with intention.</span>
           </h1>
-          <p className="mt-8 max-w-2xl text-[16px] leading-[1.8] text-ink-soft md:text-[17px]">
-            Oryn is a new fragrance house. No archive, no heritage to lean on — only a clear idea of
-            what fragrance should be, and the patience to make it properly.
+          <p className="mt-8 max-w-2xl text-[16px] leading-[1.8] text-sand md:text-[17.5px]">
+            ORYN is an independent haute parfumerie. No archive, no borrowed heritage — only an uncompromising
+            conviction of what luxury fragrance must be, and the artisanal patience to compose it properly.
           </p>
         </Reveal>
       </section>
 
-      {/* The mark */}
+      {/* The Brand Plate */}
       <section className="shell pb-24 md:pb-32">
         <Reveal>
-          <div className="relative mx-auto aspect-square w-full max-w-xl overflow-hidden bg-beige">
+          <div className="relative mx-auto aspect-square w-full max-w-lg overflow-hidden rounded-3xl border border-gold/30 bg-[#14141E] shadow-card">
             <Image
               src="/images/oryn-brand-plate.png"
-              alt="The Oryn brand plate"
+              alt="The ORYN brand plate"
               fill
-              sizes="(max-width: 768px) 92vw, 576px"
+              sizes="(max-width: 768px) 92vw, 512px"
               className="object-cover"
             />
           </div>
-          <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.25em] text-stone">
-            The first Oryn brand plate
+          <p className="mt-5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-gold/70">
+            The ORYN Atelier Brand Plaque
           </p>
         </Reveal>
       </section>
 
-      {/* Why Oryn exists */}
-      <section className="bg-cream">
+      {/* Why ORYN Exists */}
+      <section className="border-y border-gold/15 bg-[#0A0A0F]">
         <div className="shell py-24 md:py-32">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <p className="section-tag mb-6">Why Oryn Exists</p>
-              <h2 className="font-serif text-3xl font-semibold leading-[1.18] tracking-[-0.01em] text-ink md:text-[2.4rem]">
-                Fragrance had become <span className="italic">noise.</span>
+              <span className="section-tag mb-6">Why ORYN Exists</span>
+              <h2 className="font-serif text-3xl font-semibold leading-[1.18] text-pearl md:text-5xl">
+                Fragrance had surrendered to <span className="gold-gradient-text italic">noise.</span>
               </h2>
-              <p className="mt-8 max-w-md text-[15.5px] leading-[1.8] text-ink-soft">
-                Thousands of launches a year. Scents designed for a season and forgotten by the
-                next. We started Oryn because we believed there was room for the opposite: a small
-                collection, composed with care, meant to be worn for years.
+              <p className="mt-7 max-w-md text-[15px] leading-[1.8] text-sand">
+                Thousands of mass synthetic releases each year. Scents engineered for a fleeting quarter,
+                hyped with millions in marketing, and forgotten by the next season. We built ORYN as the antithesis:
+                a focused collection, formulated with master French oils, made to be worn for decades.
               </p>
             </Reveal>
 
-            <div className="lg:col-span-6 lg:col-start-7">
+            <div className="lg:col-span-6 lg:col-start-7 flex flex-col gap-4">
               {[
                 {
                   n: 'I',
-                  title: 'Composed, not manufactured',
-                  copy: 'Each fragrance is built around a single clear idea — a mood, a material, a memory — and refined until nothing is accidental.',
+                  title: 'Composed Slowly, Never Rushed',
+                  copy: 'Each extrait is built around a singular evocative premise — a mood, a memory, a precious botanical — matured until perfectly harmonized.',
                 },
                 {
                   n: 'II',
-                  title: 'Made to be worn, not noticed from across a room',
-                  copy: 'Our fragrances sit close to the skin. They are meant for the person wearing them, and the people who get close.',
+                  title: 'Extrait Concentration for True Intimacy',
+                  copy: 'Our fragrances are dosed at up to 25% oil concentration. They become a second skin rather than an assault on a crowded room.',
                 },
                 {
                   n: 'III',
-                  title: 'Honest by design',
-                  copy: 'We make six fragrances. We say what is in them, what they cost, and why. That is the whole story — there is no other version of it.',
+                  title: 'Radical Honesty & Zero Luxury Tax',
+                  copy: 'We formulate in small batches. We disclose note pyramids and hold prices strictly under ₹800. That is the entire philosophy.',
                 },
               ].map((item, i) => (
                 <Reveal key={item.n} delay={i * 80}>
-                  <div
-                    className={`flex gap-8 py-9 md:gap-12 ${i === 0 ? 'border-t border-ink/15' : ''} border-b border-ink/15`}
-                  >
-                    <span className="w-8 shrink-0 pt-1.5 font-serif text-sm text-gold">{item.n}</span>
-                    <div>
-                      <h3 className="font-serif text-xl font-semibold text-ink md:text-2xl">
+                  <div className="rounded-2xl border border-white/10 bg-[#12121A] p-7 transition-all hover:border-gold/30">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="font-serif text-lg font-bold text-gold">{item.n}</span>
+                      <h3 className="font-serif text-xl font-semibold text-pearl">
                         {item.title}
                       </h3>
-                      <p className="mt-3 max-w-lg text-[15px] leading-[1.8] text-ink-soft">
-                        {item.copy}
-                      </p>
                     </div>
+                    <p className="text-sm leading-[1.8] text-sand pl-7">
+                      {item.copy}
+                    </p>
                   </div>
                 </Reveal>
               ))}
@@ -122,102 +120,100 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* What we believe */}
-      <section className="bg-ivory">
+      {/* Philosophy Quote */}
+      <section className="bg-obsidian">
         <div className="shell py-24 md:py-36">
           <Reveal>
-            <p className="section-tag mb-10 text-center">What We Believe</p>
-            <blockquote className="mx-auto max-w-3xl text-center font-serif text-2xl font-medium italic leading-[1.4] text-ink md:text-[2.1rem]">
-              &ldquo;A fragrance should not announce you. It should remain — in a room, in a memory,
-              on a collar — after you have gone.&rdquo;
+            <span className="section-tag mb-8 block text-center justify-center">Haute Parfumerie Credo</span>
+            <blockquote className="mx-auto max-w-3xl text-center font-serif text-2xl font-medium italic leading-[1.4] text-pearl md:text-4xl">
+              &ldquo;A fragrance should not aggressively announce you. It should linger — in a room, in a memory,
+              on a collar — long after you have departed.&rdquo;
             </blockquote>
           </Reveal>
         </div>
       </section>
 
-      {/* Write to us */}
-      <section className="bg-blush">
+      {/* Contact Concierge Form */}
+      <section className="border-t border-gold/15 bg-[#0B0B10]">
         <div className="shell py-24 md:py-32">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <p className="section-tag mb-6">Write to Us</p>
-              <h2 className="font-serif text-3xl font-semibold text-ink md:text-[2.4rem]">
-                Talk to Oryn
+              <span className="section-tag mb-6">Concierge Dialogue</span>
+              <h2 className="font-serif text-3xl font-semibold text-pearl md:text-5xl">
+                Converse with <span className="gold-gradient-text italic">ORYN</span>
               </h2>
-              <p className="mt-6 max-w-md text-[15.5px] leading-[1.8] text-ink-soft">
-                A question about the fragrances, a note, a beginning — we read everything and answer
-                personally.
+              <p className="mt-6 max-w-md text-[15px] leading-[1.8] text-sand">
+                Inquiries regarding notes, custom allocations, or private gifting — our perfumer team reads every note
+                and responds with care.
               </p>
             </Reveal>
 
             <Reveal delay={100} className="lg:col-span-6 lg:col-start-7">
-              <form onSubmit={handleContactSubmit} className="space-y-8">
-                <div className="grid gap-8 sm:grid-cols-2">
+              <form onSubmit={handleContactSubmit} className="space-y-6 rounded-3xl border border-white/10 bg-[#12121A] p-8 md:p-10 shadow-card">
+                <div className="grid gap-6 sm:grid-cols-2">
                   <label className="block">
-                    <span className={labelClass}>Name</span>
+                    <span className={labelClass}>Your Name</span>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className={inputClass}
-                      placeholder="Your name"
+                      placeholder="Full name"
                     />
                   </label>
                   <label className="block">
-                    <span className={labelClass}>Email</span>
+                    <span className={labelClass}>Email Address</span>
                     <input
                       type="email"
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className={inputClass}
-                      placeholder="you@example.com"
+                      placeholder="you@domain.com"
                     />
                   </label>
                 </div>
 
                 <label className="block">
-                  <span className={labelClass}>
-                    Phone <span className="normal-case tracking-normal text-stone/70">(optional)</span>
-                  </span>
+                  <span className={labelClass}>Phone Contact (Optional)</span>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className={inputClass}
-                    placeholder="+91"
+                    placeholder="+91 Mobile"
                   />
                 </label>
 
                 <label className="block">
-                  <span className={labelClass}>Message</span>
+                  <span className={labelClass}>Inquiry or Note</span>
                   <textarea
                     required
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className={`${inputClass} resize-none`}
-                    placeholder="What would you like to know?"
+                    placeholder="How may our atelier assist you?"
                   />
                 </label>
 
                 <button
                   type="submit"
                   disabled={formStatus === 'submitting'}
-                  className="btn-dark w-full disabled:opacity-50 sm:w-auto"
+                  className="btn-gold w-full disabled:opacity-50"
                 >
-                  {formStatus === 'submitting' ? 'Sending…' : 'Send message'}
+                  {formStatus === 'submitting' ? 'Transmitting…' : 'Dispatch Message'}
                 </button>
 
                 {formStatus === 'success' && (
-                  <p className="border-l-2 border-gold pl-4 text-sm leading-relaxed text-ink-soft">
-                    Received — thank you. We will reply personally, and soon.
+                  <p className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-xs text-emerald-400">
+                    Transmitted successfully. Our perfumer concierge will respond to your dispatch shortly.
                   </p>
                 )}
                 {formStatus === 'error' && (
-                  <p className="border-l-2 border-gold pl-4 text-sm leading-relaxed text-ink-soft">
-                    Something went wrong. Please try again in a moment.
+                  <p className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs text-rose-400">
+                    Network error. Kindly re-attempt or reach us on WhatsApp.
                   </p>
                 )}
               </form>

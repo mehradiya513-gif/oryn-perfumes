@@ -1,15 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import Reveal from './Reveal'
+import { motion } from 'framer-motion'
 
 /* ————————————————————————————————————————————————————————————————
-   Newsletter — email OR WhatsApp signup, 10% first-order hook.
-   Posts to the existing /api/leads endpoint (falls back to a local
-   success state if the API is unreachable).
+   Newsletter — Private Fragrance Circle & 10% Welcome Privilege
 ———————————————————————————————————————————————————————————————— */
 
-const WHATSAPP_NUMBER = '919000000000' // ← replace with the real number
+const WHATSAPP_NUMBER = '919000000000'
 
 export default function Newsletter() {
   const [email, setEmail] = useState('')
@@ -32,70 +30,97 @@ export default function Newsletter() {
       })
       setStatus('done')
     } catch {
-      /* Still confirm locally — the point is capturing intent */
       setStatus('done')
     }
   }
 
   return (
-    <section id="newsletter" aria-labelledby="newsletter-heading" className="scroll-mt-20 bg-blush">
-      <div className="shell py-20 text-center md:py-24">
-        <Reveal>
-          <p className="section-tag mb-4">Newsletter</p>
-          <h2 id="newsletter-heading" className="mx-auto max-w-xl font-serif text-3xl font-semibold leading-[1.1] text-ink md:text-[2.4rem]">
-            Get <span className="italic text-gold">10% off</span> your first order
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-[14.5px] leading-[1.75] text-ink-soft">
-            One email a month — new launches, restocks, and subscriber-only offers. No spam, ever.
-          </p>
+    <section id="newsletter" aria-labelledby="newsletter-heading" className="scroll-mt-20 bg-[#FAF6F5] py-20 md:py-28 relative">
+      <div className="shell">
+        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-[#EBDCD7] bg-gradient-to-b from-[#F7EDE9] via-white to-[#F5EBE6] p-8 md:p-16 text-center shadow-card">
+          
+          {/* Subtle central rose aura */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#E8B8B0]/25 blur-[100px]"
+          />
 
-          {status === 'done' ? (
-            <p className="mx-auto mt-8 max-w-md border border-ink/15 bg-ivory px-6 py-5 text-[14.5px] text-ink" role="status">
-              You&rsquo;re in — check your inbox for the 10% code.
+          <div className="relative z-10">
+            <span className="section-tag mb-4">Private Society</span>
+            
+            <h2 id="newsletter-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#23171B] md:text-5xl">
+              Join The <span className="gold-gradient-text italic">Fragrance Circle</span>
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#5C484E]">
+              Receive a private 10% welcome privilege toward your first order, plus exclusive early allocations of seasonal batch extraits.
             </p>
-          ) : (
-            <form onSubmit={submit} className="mx-auto mt-8 grid max-w-lg gap-3 sm:grid-cols-[1fr_auto]">
-              <label className="sr-only" htmlFor="newsletter-email">Email address</label>
-              <input
-                id="newsletter-email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="border border-ink/20 bg-ivory px-5 py-3.5 text-[14.5px] text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-ink"
-              />
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                className="btn-dark disabled:opacity-60"
-              >
-                {status === 'sending' ? 'Joining…' : 'Get 10% off'}
-              </button>
 
-              <div className="flex items-center justify-center gap-2 sm:col-span-2">
-                <span className="text-[12px] text-ink-soft">Prefer WhatsApp?</span>
-                <label htmlFor="newsletter-phone" className="sr-only">WhatsApp number</label>
-                <input
-                  id="newsletter-phone"
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+91·"
-                  className="w-36 border border-ink/20 bg-ivory px-3 py-1.5 text-[13px] text-ink outline-none placeholder:text-ink-soft/50 focus:border-ink"
-                />
-                <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi ORYN! Send me the 10% first-order code.')}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="border-b border-gold pb-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-ink transition-colors hover:text-gold"
-                >
-                  Message us
-                </a>
-              </div>
-            </form>
-          )}
-        </Reveal>
+            {status === 'done' ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mx-auto mt-8 max-w-md rounded-2xl border border-[#C5857B]/40 bg-[#F7EDE9] p-6 text-sm text-[#23171B]"
+                role="status"
+              >
+                <span className="text-[#A86359] text-lg block mb-1">✦</span>
+                <p className="font-serif text-lg font-semibold text-[#23171B]">You are formally initiated.</p>
+                <p className="text-xs text-[#5C484E] mt-1">
+                  Check your inbox for your exclusive 10% privilege invitation code.
+                </p>
+              </motion.div>
+            ) : (
+              <form onSubmit={submit} className="mx-auto mt-8 max-w-lg space-y-4">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <label className="sr-only" htmlFor="newsletter-email">Email address</label>
+                  <input
+                    id="newsletter-email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email address…"
+                    className="flex-1 rounded-2xl border border-[#EBDCD7] bg-white px-5 py-3.5 text-sm text-[#23171B] placeholder:text-[#8D767C] outline-none transition-colors focus:border-[#C5857B]"
+                  />
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className="btn-gold !py-3.5 whitespace-nowrap"
+                  >
+                    {status === 'sending' ? 'Initiating…' : 'Claim 10% Off'}
+                  </button>
+                </div>
+
+                <div className="flex items-center justify-center gap-2 pt-2 text-xs text-[#8D767C]">
+                  <span>Prefer WhatsApp dispatch?</span>
+                  <label htmlFor="newsletter-phone" className="sr-only">WhatsApp number</label>
+                  <input
+                    id="newsletter-phone"
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+91 Mobile…"
+                    className="w-32 rounded-xl border border-[#EBDCD7] bg-white px-2.5 py-1 text-xs text-[#23171B] placeholder:text-[#8D767C] outline-none focus:border-[#C5857B]"
+                  />
+                  <a
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi ORYN! Send me the 10% first-order privilege code.')}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="border-b border-[#C5857B] text-[10px] font-bold uppercase tracking-wider text-[#A86359] hover:text-[#23171B] transition-colors"
+                  >
+                    Dispatch Privileges
+                  </a>
+                </div>
+              </form>
+            )}
+
+            <div className="mt-8 flex items-center justify-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8D767C]">
+              <span>✦ Pure French Oils</span>
+              <span>✦ Zero Spam Guarantee</span>
+              <span>✦ Monthly Releases Only</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
