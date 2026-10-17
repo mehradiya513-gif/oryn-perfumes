@@ -39,7 +39,7 @@ const items = [
 
 export default function TrustStrip() {
   return (
-    <section id="trust-strip" aria-label="Why shop with ORYN" className="border-y border-[#EBDCD7] bg-[#FAF6F5] relative z-20">
+    <section id="trust-strip" aria-label="Why shop with ORYN" className="border-y border-[#1E3A5F] bg-[#0D1B2E] relative z-20">
       <div className="shell py-10 md:py-12">
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-6">
           {items.map((item, i) => (
@@ -49,16 +49,16 @@ export default function TrustStrip() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.6, delay: i * 0.08 }}
-              className="flex items-center gap-4 rounded-2xl border border-[#EBDCD7] bg-white p-4 shadow-sm transition-all duration-300 hover:border-[#C5857B]/40 hover:shadow-card"
+              className="flex items-center gap-4 rounded-2xl border border-[#1E3A5F] bg-[#0F1E35] p-4 shadow-sm transition-all duration-300 hover:border-[#C9A84C]/40 hover:shadow-card"
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#C5857B]/30 bg-[#F7EDE9] text-[#A86359] shadow-sm">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#C9A84C]/30 bg-[#112240] text-[#C9A84C] shadow-sm">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
                   {item.icon}
                 </svg>
               </span>
               <div className="min-w-0">
-                <h4 className="text-[13px] font-bold text-[#23171B] tracking-wide">{item.label}</h4>
-                <p className="mt-0.5 text-[11.5px] leading-snug text-[#8D767C]">{item.sub}</p>
+                <h4 className="text-[13px] font-bold text-[#EAE6FF] tracking-wide">{item.label}</h4>
+                <p className="mt-0.5 text-[11.5px] leading-snug text-[#9BAEC8]">{item.sub}</p>
               </div>
             </motion.li>
           ))}

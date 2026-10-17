@@ -31,16 +31,16 @@ export default function ProductCard({
 
   return (
     <article
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[#EBDCD7] bg-white p-4 shadow-sm transition-all duration-500 hover:border-[#C5857B] hover:shadow-card hover:-translate-y-1.5"
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[#1E3A5F] bg-[#0F1E35] p-4 shadow-sm transition-all duration-500 hover:border-[#C9A84C] hover:shadow-card hover:-translate-y-1.5"
       data-sticky-product={stickyId}
     >
       {/* Image Showcase Frame */}
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gradient-to-b from-[#FAF6F5] via-[#F7EDE9]/60 to-[#F5EBE6] p-4">
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gradient-to-b from-[#112240] via-[#0D1B2E] to-[#0F1E35] p-4">
         
         {/* Subtle radial aura behind bottle */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-radial-gradient from-[#E8B8B0]/25 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 bg-radial-gradient from-[#C9A84C]/20 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100"
         />
 
         {/* Hover Crossfade Secondary Image */}
@@ -63,7 +63,7 @@ export default function ProductCard({
           priority={priority}
           loading={priority ? undefined : 'lazy'}
           sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 320px"
-          className={`object-contain p-2 drop-shadow-[0_12px_24px_rgba(168,99,89,0.22)] transition-all duration-700 ease-out group-hover:scale-105 ${
+          className={`object-contain p-2 drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)] transition-all duration-700 ease-out group-hover:scale-105 ${
             product.imageHover ? 'group-hover:opacity-0' : ''
           }`}
         />
@@ -71,19 +71,19 @@ export default function ProductCard({
         {/* Floating Top Badges */}
         <div className="absolute left-3 top-3 flex flex-col gap-1.5 z-10">
           {discount > 0 && (
-            <span className="rounded-md bg-gradient-to-r from-[#D79F97] via-[#C5857B] to-[#A86359] px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-sm">
+            <span className="rounded-md bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-[#0D1B2E] shadow-sm">
               {discount}% off
             </span>
           )}
           {product.bestseller && (
-            <span className="rounded-md border border-[#C5857B]/40 bg-white/90 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#A86359] backdrop-blur-sm shadow-sm">
+            <span className="rounded-md border border-[#C9A84C]/40 bg-[#0D1B2E]/90 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#C9A84C] backdrop-blur-sm shadow-sm">
               Bestseller
             </span>
           )}
         </div>
 
         {/* Longevity badge */}
-        <span className="absolute bottom-2.5 right-2.5 z-10 rounded-md border border-[#EBDCD7] bg-white/85 px-2 py-0.5 text-[9px] font-semibold text-[#8D767C] backdrop-blur-sm">
+        <span className="absolute bottom-2.5 right-2.5 z-10 rounded-md border border-[#1E3A5F] bg-[#0D1B2E]/85 px-2 py-0.5 text-[9px] font-semibold text-[#9BAEC8] backdrop-blur-sm">
           {product.longevity}
         </span>
       </div>
@@ -91,28 +91,28 @@ export default function ProductCard({
       {/* Product Information */}
       <div className="flex flex-1 flex-col pt-4">
         {/* Family tag */}
-        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-[#A86359]">
+        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">
           <span>{product.family}</span>
           <span>{product.category}</span>
         </div>
 
         {/* Title */}
-        <h3 className="mt-1.5 font-serif text-xl font-semibold text-[#23171B] transition-colors duration-300 group-hover:text-[#A86359]">
+        <h3 className="mt-1.5 font-serif text-xl font-semibold text-[#EAE6FF] transition-colors duration-300 group-hover:text-[#C9A84C]">
           {product.name}
         </h3>
 
         {/* Tagline Notes preview */}
-        <p className="mt-1 text-xs text-[#5C484E] line-clamp-1">
+        <p className="mt-1 text-xs text-[#9BAEC8] line-clamp-1">
           {product.tagline}
         </p>
 
         {/* Price & Savings */}
         <div className="mt-3 flex items-baseline gap-2.5">
-          <span className="text-lg font-bold text-[#23171B]">{formatINR(product.price)}</span>
-          <span className="text-xs text-[#8D767C] line-through">
+          <span className="text-lg font-bold text-[#EAE6FF]">{formatINR(product.price)}</span>
+          <span className="text-xs text-[#6B7FA3] line-through">
             {formatINR(product.mrp)}
           </span>
-          <span className="text-[10px] font-semibold text-[#A86359]">
+          <span className="text-[10px] font-semibold text-[#C9A84C]">
             Save {formatINR(product.mrp - product.price)}
           </span>
         </div>
@@ -126,7 +126,7 @@ export default function ProductCard({
           className={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl py-3 text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
             added
               ? 'bg-emerald-600 text-white shadow-sm'
-              : 'border border-[#C5857B]/50 bg-[#F7EDE9] text-[#A86359] hover:border-[#C5857B] hover:bg-gradient-to-r hover:from-[#D79F97] hover:via-[#C5857B] hover:to-[#A86359] hover:text-white hover:shadow-gold-sm active:scale-[0.98]'
+              : 'border border-[#C9A84C]/50 bg-[#112240] text-[#C9A84C] hover:border-[#C9A84C] hover:bg-gradient-to-r hover:from-[#C9A84C] hover:via-[#E8D5A3] hover:to-[#C9A84C] hover:text-[#0D1B2E] hover:shadow-gold-sm active:scale-[0.98]'
           }`}
         >
           {added ? (

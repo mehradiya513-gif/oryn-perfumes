@@ -3,29 +3,29 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* Custom smooth scrollbar */
+/* Custom smooth scrollbar — navy & gold */
 ::-webkit-scrollbar {
   width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF6F5;
+  background: #0D1B2E;
 }
 ::-webkit-scrollbar-thumb {
-  background: #DFCBC5;
+  background: #1E3A5F;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #C5857B;
+  background: #C9A84C;
 }
 
-/* ————— Subtle atmospheric velvet grain ————— */
+/* ————— Subtle atmospheric grain overlay ————— */
 .grain::after,
 .grain-dark::after {
   content: '';
@@ -33,37 +33,42 @@
   inset: 0;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
-  opacity: 0.025;
+  mix-blend-mode: overlay;
+  opacity: 0.03;
 }
 
+/* ————— Animated gold gradient text ————— */
 .gold-gradient-text,
 .rose-gradient-text {
-  background: linear-gradient(135deg, #8E443C 0%, #C5857B 50%, #E8B8B0 100%);
+  background: linear-gradient(135deg, #9E7A2C 0%, #C9A84C 40%, #F0D98F 65%, #C9A84C 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
 }
 
+/* ————— Gold aura radial glow ————— */
 .gold-aura,
 .rose-aura {
-  background: radial-gradient(circle at center, rgba(197, 133, 123, 0.16) 0%, rgba(250, 246, 245, 0) 70%);
+  background: radial-gradient(circle at center, rgba(201, 168, 76, 0.14) 0%, rgba(13, 27, 46, 0) 70%);
 }
 
+/* ————— Gold divider line ————— */
 .gold-divider {
   @apply mx-auto h-px w-24 border-0;
-  background: linear-gradient(90deg, transparent, #C5857B, transparent);
+  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #FAF6F5;
+  background-color: #0D1B2E;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #FAF6F5;
-  color: #23171B;
+  background-color: #0D1B2E;
+  color: #EAE6FF;
   font-family: var(--font-body, 'Inter'), system-ui, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -82,7 +87,7 @@ h6 {
   font-family: var(--font-display, 'Playfair Display'), Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.015em;
-  color: #23171B;
+  color: #EAE6FF;
 }
 
 button,
@@ -93,12 +98,12 @@ textarea {
 }
 
 ::selection {
-  background: #E8B8B0;
-  color: #23171B;
+  background: rgba(201, 168, 76, 0.35);
+  color: #F0D98F;
 }
 
 :focus-visible {
-  outline: 2px solid #C5857B;
+  outline: 2px solid #C9A84C;
   outline-offset: 3px;
 }
 
@@ -110,45 +115,48 @@ textarea {
 
   /* Eyebrow label above headings */
   .section-tag {
-    @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.32em] text-[#A86359];
+    @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.32em] text-[#C9A84C];
   }
   .section-tag::before {
     content: '';
     display: inline-block;
     width: 14px;
     height: 1px;
-    background-color: #C5857B;
+    background-color: #C9A84C;
   }
 
-  /* ————— Luxury Button System: Satin Rose Gold & Velvet Plum ————— */
+  /* ————— Luxury Button System: Champagne Gold & Midnight Navy ————— */
   .btn-gold {
-    @apply inline-flex items-center justify-center bg-gradient-to-r from-[#D79F97] via-[#C5857B] to-[#A86359] text-white px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:shadow-gold hover:brightness-105 active:scale-[0.98];
+    @apply inline-flex items-center justify-center px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#0D1B2E] transition-all duration-300 hover:brightness-110 active:scale-[0.98];
+    background: linear-gradient(135deg, #C9A84C 0%, #E8D5A3 50%, #C9A84C 100%);
+    background-size: 200% auto;
+    box-shadow: 0 4px 20px -4px rgba(201, 168, 76, 0.4);
   }
 
   .btn-dark {
-    @apply inline-flex items-center justify-center border border-[#C5857B]/40 bg-[#23171B] text-[#FAF6F5] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C5857B] hover:bg-[#C5857B] hover:text-white hover:shadow-gold-sm active:scale-[0.98];
+    @apply inline-flex items-center justify-center border border-[#1E3A5F] bg-[#0F1E35] text-[#EAE6FF] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#C9A84C] hover:text-[#0D1B2E] hover:shadow-gold active:scale-[0.98];
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center border border-[#C5857B]/60 text-[#A86359] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C5857B] hover:bg-[#C5857B] hover:text-white hover:shadow-gold-sm active:scale-[0.98];
+    @apply inline-flex items-center justify-center border border-[#C9A84C]/50 text-[#C9A84C] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#C9A84C] hover:text-[#0D1B2E] hover:shadow-gold active:scale-[0.98];
   }
 
   .btn-light {
-    @apply inline-flex items-center justify-center border border-[#EBDCD7] bg-white text-[#23171B] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:bg-[#F5EBE6] hover:border-[#C5857B] hover:shadow-gold-sm active:scale-[0.98];
+    @apply inline-flex items-center justify-center border border-[#1E3A5F] bg-[#112240] text-[#EAE6FF] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:bg-[#1E3A5F] hover:border-[#C9A84C]/50 hover:shadow-gold-sm active:scale-[0.98];
   }
 
-  /* Velvet Rose frosted glass card */
+  /* Deep navy frosted glass card */
   .glass-card {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(15, 30, 53, 0.75);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(197, 133, 123, 0.22);
-    box-shadow: 0 10px 30px -5px rgba(92, 53, 62, 0.06);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
   }
 
   .glass-card:hover {
-    border-color: rgba(197, 133, 123, 0.45);
-    box-shadow: 0 15px 40px -5px rgba(197, 133, 123, 0.16);
+    border-color: rgba(201, 168, 76, 0.4);
+    box-shadow: 0 15px 40px -5px rgba(201, 168, 76, 0.15);
   }
 }
 
@@ -192,6 +200,12 @@ textarea {
   animation-delay: 0.35s;
 }
 
+/* ————— Gold shimmer keyframe ————— */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .hero-rise,
@@ -208,3 +222,4 @@ textarea {
     scroll-behavior: auto;
   }
 }
+

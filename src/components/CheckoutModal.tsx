@@ -154,56 +154,56 @@ export default function CheckoutModal() {
   if (!orderOpen) return null
 
   const inputClass =
-    'w-full bg-white border border-[#EBDCD7] rounded-xl focus:border-[#C5857B] outline-none px-4 py-3 text-sm text-[#23171B] placeholder:text-[#8D767C] transition-colors'
+    'w-full bg-[#112240] border border-[#1E3A5F] rounded-xl focus:border-[#C9A84C] outline-none px-4 py-3 text-sm text-[#EAE6FF] placeholder:text-[#6B7FA3] transition-colors'
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div ref={overlayRef} onClick={handleClose} className="absolute inset-0 bg-[#23171B]/60 backdrop-blur-md" />
+      <div ref={overlayRef} onClick={handleClose} className="absolute inset-0 bg-[#070D17]/75 backdrop-blur-md" />
 
       <div
         ref={modalRef}
-        className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[#EBDCD7] bg-[#FAF6F5] text-[#23171B] shadow-card"
+        className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[#1E3A5F] bg-[#0D1B2E] text-[#EAE6FF] shadow-card"
       >
         {orderSuccess ? (
           /* Confirmation */
           <div className="text-center py-14 px-8 space-y-7 max-w-xl mx-auto">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#C5857B]/40 bg-[#F7EDE9] text-[#C5857B] mx-auto">
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#C9A84C]/40 bg-[#112240] text-[#C9A84C] mx-auto">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
-            <span className="text-[#C5857B] text-2xl">✦</span>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-[#A86359]">Order Confirmed</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-[#23171B]">
+            <span className="text-[#C9A84C] text-2xl">✦</span>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A84C]">Order Confirmed</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-[#EAE6FF]">
               Thank You for Your Patronage.
             </h2>
-            <p className="text-[#5C484E] font-light leading-relaxed max-w-md mx-auto text-sm">
+            <p className="text-[#9BAEC8] font-light leading-relaxed max-w-md mx-auto text-sm">
               Your flacon is being prepared in our Mumbai atelier. A formal dispatch confirmation
               has been relayed to your email.
             </p>
-            <div className="inline-block rounded-full border border-[#C5857B]/40 bg-[#F7EDE9] px-6 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#A86359]">
+            <div className="inline-block rounded-full border border-[#C9A84C]/40 bg-[#112240] px-6 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#C9A84C]">
               Order Reference #{orderSuccess.id}
             </div>
 
-            <div className="text-left rounded-2xl border border-[#EBDCD7] bg-white p-6 space-y-4 text-xs font-light shadow-sm">
+            <div className="text-left rounded-2xl border border-[#1E3A5F] bg-[#0F1E35] p-6 space-y-4 text-xs font-light shadow-sm">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#8D767C] mb-1">Recipient</p>
-                  <p className="text-[#23171B] font-medium">{orderSuccess.name}</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#6B7FA3] mb-1">Recipient</p>
+                  <p className="text-[#EAE6FF] font-medium">{orderSuccess.name}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#8D767C] mb-1">Contact</p>
-                  <p className="text-[#23171B] font-medium">{orderSuccess.phone}</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#6B7FA3] mb-1">Contact</p>
+                  <p className="text-[#EAE6FF] font-medium">{orderSuccess.phone}</p>
                 </div>
                 <div className="col-span-2">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#8D767C] mb-1">Delivery Address</p>
-                  <p className="text-[#23171B] font-medium whitespace-pre-wrap">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#6B7FA3] mb-1">Delivery Address</p>
+                  <p className="text-[#EAE6FF] font-medium whitespace-pre-wrap">
                     {orderSuccess.address}, {orderSuccess.country}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#8D767C] mb-1">Settlement</p>
-                  <p className="text-[#A86359] font-semibold">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#6B7FA3] mb-1">Settlement</p>
+                  <p className="text-[#C9A84C] font-semibold">
                     {orderSuccess.paymentMethod === 'cod'
                       ? 'Cash on Delivery'
                       : orderSuccess.paymentMethod === 'upi'
@@ -212,8 +212,8 @@ export default function CheckoutModal() {
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#8D767C] mb-1">Initiated On</p>
-                  <p className="text-[#23171B] font-medium">{orderSuccess.created}</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#6B7FA3] mb-1">Initiated On</p>
+                  <p className="text-[#EAE6FF] font-medium">{orderSuccess.created}</p>
                 </div>
               </div>
             </div>
@@ -225,15 +225,15 @@ export default function CheckoutModal() {
         ) : (
           /* Checkout Form */
           <div className="p-8 md:p-12">
-            <div className="flex items-start justify-between border-b border-[#EBDCD7] pb-6 mb-8">
+            <div className="flex items-start justify-between border-b border-[#1E3A5F] pb-6 mb-8">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] text-[#A86359] mb-1">Encrypted Checkout</p>
-                <h2 className="font-serif text-3xl font-semibold text-[#23171B]">Complete Your Allocation</h2>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A84C] mb-1">Encrypted Checkout</p>
+                <h2 className="font-serif text-3xl font-semibold text-[#EAE6FF]">Complete Your Allocation</h2>
               </div>
               <button
                 type="button"
                 onClick={handleClose}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#EBDCD7] text-[#8D767C] hover:border-[#C5857B] hover:text-[#A86359] transition-colors"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#1E3A5F] text-[#6B7FA3] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
                 aria-label="Close checkout"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -245,29 +245,29 @@ export default function CheckoutModal() {
             <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {/* Shipping Details */}
               <div className="space-y-5">
-                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#A86359]">Recipient Details</p>
+                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">Recipient Details</p>
 
                 <label className="block">
-                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#A86359] mb-2">Full Name</span>
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Full Name</span>
                   <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Full legal name" className={inputClass} />
                 </label>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <label className="block">
-                    <span className="block text-[10px] uppercase tracking-[0.2em] text-[#A86359] mb-2">Email</span>
+                    <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Email</span>
                     <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@domain.com" className={inputClass} />
                   </label>
                   <label className="block">
-                    <span className="block text-[10px] uppercase tracking-[0.2em] text-[#A86359] mb-2">Mobile Phone</span>
+                    <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Mobile Phone</span>
                     <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91" className={inputClass} />
                   </label>
                 </div>
 
                 <label className="block">
-                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#A86359] mb-2">Country</span>
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Country</span>
                   <select value={country} onChange={(e) => setCountry(e.target.value)} className={`${inputClass} cursor-pointer`}>
                     {countries.map((c) => (
-                      <option key={c} value={c} className="bg-white text-[#23171B]">
+                      <option key={c} value={c} className="bg-[#112240] text-[#EAE6FF]">
                         {c}
                       </option>
                     ))}
@@ -275,7 +275,7 @@ export default function CheckoutModal() {
                 </label>
 
                 <label className="block">
-                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#A86359] mb-2">Delivery Address</span>
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Delivery Address</span>
                   <textarea
                     required
                     rows={3}
@@ -287,7 +287,7 @@ export default function CheckoutModal() {
                 </label>
 
                 <div>
-                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#A86359] mb-3">Settlement Method</span>
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-3">Settlement Method</span>
                   <div className="grid grid-cols-2 gap-3">
                     {[
                       { id: 'cod', label: 'Cash on Delivery', desc: 'Pay courier on arrival' },
@@ -297,22 +297,22 @@ export default function CheckoutModal() {
                         key={method.id}
                         className={`rounded-xl border p-4 text-xs cursor-pointer transition-all duration-300 flex flex-col gap-1.5 ${
                           paymentMethod === method.id
-                            ? 'border-[#C5857B] bg-[#F7EDE9] text-[#23171B] shadow-gold-sm'
-                            : 'border-[#EBDCD7] bg-white text-[#5C484E] hover:border-[#C5857B]/40'
+                            ? 'border-[#C9A84C] bg-[#112240] text-[#EAE6FF] shadow-gold-sm'
+                            : 'border-[#1E3A5F] bg-[#0F1E35] text-[#9BAEC8] hover:border-[#C9A84C]/40'
                         }`}
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-semibold text-[#23171B]">{method.label}</span>
+                          <span className="font-semibold text-[#EAE6FF]">{method.label}</span>
                           <input
                             type="radio"
                             name="checkoutPaymentMethod"
                             value={method.id}
                             checked={paymentMethod === method.id}
                             onChange={() => setPaymentMethod(method.id)}
-                            className="accent-[#C5857B]"
+                            className="accent-[#C9A84C]"
                           />
                         </div>
-                        <span className="text-[11px] text-[#8D767C]">{method.desc}</span>
+                        <span className="text-[11px] text-[#6B7FA3]">{method.desc}</span>
                       </label>
                     ))}
                   </div>
@@ -320,60 +320,60 @@ export default function CheckoutModal() {
               </div>
 
               {/* Order Summary Column */}
-              <div className="flex flex-col rounded-2xl border border-[#EBDCD7] bg-white p-6 shadow-sm">
-                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#A86359] mb-6">Allocation Summary</p>
+              <div className="flex flex-col rounded-2xl border border-[#1E3A5F] bg-[#0F1E35] p-6 shadow-sm">
+                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C9A84C] mb-6">Allocation Summary</p>
 
                 <div className="space-y-4 flex-1 overflow-y-auto max-h-60 pr-1">
                   {cart.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between gap-3 border-b border-[#EBDCD7] pb-3">
+                    <div key={item.id} className="flex items-center justify-between gap-3 border-b border-[#1E3A5F] pb-3">
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-[#23171B] truncate">{item.name.replace(/^Oryn\s/, '')}</p>
-                        <p className="text-xs text-[#C5857B]">₹{item.price}</p>
+                        <p className="text-sm font-semibold text-[#EAE6FF] truncate">{item.name.replace(/^Oryn\s/, '')}</p>
+                        <p className="text-xs text-[#C9A84C]">₹{item.price}</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="h-6 w-6 rounded-lg border border-[#EBDCD7] text-xs text-[#5C484E] hover:border-[#C5857B] hover:text-[#A86359] transition-colors flex items-center justify-center"
+                          className="h-6 w-6 rounded-lg border border-[#1E3A5F] text-xs text-[#9BAEC8] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors flex items-center justify-center"
                         >
                           −
                         </button>
-                        <span className="text-xs font-semibold w-4 text-center text-[#23171B]">{item.quantity}</span>
+                        <span className="text-xs font-semibold w-4 text-center text-[#EAE6FF]">{item.quantity}</span>
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="h-6 w-6 rounded-lg border border-[#EBDCD7] text-xs text-[#5C484E] hover:border-[#C5857B] hover:text-[#A86359] transition-colors flex items-center justify-center"
+                          className="h-6 w-6 rounded-lg border border-[#1E3A5F] text-xs text-[#9BAEC8] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors flex items-center justify-center"
                         >
                           +
                         </button>
                       </div>
-                      <p className="text-sm font-bold text-[#23171B] w-14 text-right">₹{item.price * item.quantity}</p>
+                      <p className="text-sm font-bold text-[#EAE6FF] w-14 text-right">₹{item.price * item.quantity}</p>
                     </div>
                   ))}
 
                   {freebies.map((gift) => (
-                    <div key={gift.id} className="flex items-center justify-between gap-3 border-b border-[#EBDCD7] pb-3">
+                    <div key={gift.id} className="flex items-center justify-between gap-3 border-b border-[#1E3A5F] pb-3">
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-semibold text-[#23171B]">{gift.name}</p>
-                        <p className="text-[10px] text-[#8D767C] line-clamp-1">{gift.description}</p>
+                        <p className="text-xs font-semibold text-[#EAE6FF]">{gift.name}</p>
+                        <p className="text-[10px] text-[#6B7FA3] line-clamp-1">{gift.description}</p>
                       </div>
-                      <span className="text-[9px] uppercase tracking-wider text-[#A86359]">Complimentary</span>
+                      <span className="text-[9px] uppercase tracking-wider text-[#C9A84C]">Complimentary</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="border-t border-[#EBDCD7] mt-6 pt-5 space-y-2.5">
-                  <div className="flex items-center justify-between text-xs text-[#5C484E]">
+                <div className="border-t border-[#1E3A5F] mt-6 pt-5 space-y-2.5">
+                  <div className="flex items-center justify-between text-xs text-[#9BAEC8]">
                     <span>Subtotal</span>
                     <span>₹{cartTotal}</span>
                   </div>
-                  <div className="flex items-center justify-between text-xs text-[#5C484E]">
+                  <div className="flex items-center justify-between text-xs text-[#9BAEC8]">
                     <span>Express Dispatch</span>
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#A86359]">Complimentary</span>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#C9A84C]">Complimentary</span>
                   </div>
-                  <div className="flex items-center justify-between pt-3 border-t border-[#EBDCD7] text-base">
-                    <span className="font-serif font-semibold text-[#23171B]">Payable Total</span>
-                    <span className="font-serif font-bold text-xl text-[#23171B]">₹{cartTotal}</span>
+                  <div className="flex items-center justify-between pt-3 border-t border-[#1E3A5F] text-base">
+                    <span className="font-serif font-semibold text-[#EAE6FF]">Payable Total</span>
+                    <span className="font-serif font-bold text-xl text-[#EAE6FF]">₹{cartTotal}</span>
                   </div>
 
                   <button
@@ -385,7 +385,7 @@ export default function CheckoutModal() {
                   </button>
 
                   {status && (
-                    <p className="text-xs text-rose-600 border-l-2 border-rose-400 pl-3 pt-1 bg-rose-50 rounded-r-lg">{status}</p>
+                    <p className="text-xs text-amber-300 border-l-2 border-amber-400 pl-3 pt-1 bg-amber-950/40 rounded-r-lg">{status}</p>
                   )}
                 </div>
               </div>
@@ -395,12 +395,12 @@ export default function CheckoutModal() {
 
         {/* UPI Overlay Modal */}
         {showUpiModal && (
-          <div className="absolute inset-0 z-40 bg-[#23171B]/70 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="rounded-3xl border border-[#EBDCD7] bg-[#FAF6F5] w-full max-w-md p-8 space-y-6 shadow-card relative text-[#23171B]">
+          <div className="absolute inset-0 z-40 bg-[#070D17]/80 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="rounded-3xl border border-[#1E3A5F] bg-[#0D1B2E] w-full max-w-md p-8 space-y-6 shadow-card relative text-[#EAE6FF]">
               <button
                 type="button"
                 onClick={() => setShowUpiModal(false)}
-                className="absolute top-5 right-5 text-[#8D767C] hover:text-[#A86359] transition-colors"
+                className="absolute top-5 right-5 text-[#6B7FA3] hover:text-[#C9A84C] transition-colors"
                 aria-label="Close"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -411,9 +411,9 @@ export default function CheckoutModal() {
               {upiStep === 'select' ? (
                 <>
                   <div>
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-[#A86359] mb-1">Encrypted Gateway</p>
-                    <h3 className="font-serif text-2xl font-semibold text-[#23171B]">Choose Your UPI App</h3>
-                    <p className="text-xs text-[#5C484E] mt-1">To settle ₹{cartTotal}</p>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A84C] mb-1">Encrypted Gateway</p>
+                    <h3 className="font-serif text-2xl font-semibold text-[#EAE6FF]">Choose Your UPI App</h3>
+                    <p className="text-xs text-[#9BAEC8] mt-1">To settle ₹{cartTotal}</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2.5">
@@ -427,8 +427,8 @@ export default function CheckoutModal() {
                         }}
                         className={`rounded-xl border p-3.5 text-xs text-left transition-all ${
                           selectedUpiApp === app.id
-                            ? 'border-[#C5857B] bg-[#F7EDE9] text-[#A86359] shadow-gold-sm'
-                            : 'border-[#EBDCD7] bg-white text-[#5C484E] hover:border-[#C5857B]/40'
+                            ? 'border-[#C9A84C] bg-[#112240] text-[#C9A84C] shadow-gold-sm'
+                            : 'border-[#1E3A5F] bg-[#0F1E35] text-[#9BAEC8] hover:border-[#C9A84C]/40'
                         }`}
                       >
                         {app.name}
@@ -438,7 +438,7 @@ export default function CheckoutModal() {
 
                   {selectedUpiApp === 'other' && (
                     <label className="block">
-                      <span className="block text-[10px] uppercase tracking-[0.2em] text-[#A86359] mb-1.5">Enter UPI ID</span>
+                      <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-1.5">Enter UPI ID</span>
                       <input
                         type="text"
                         placeholder="yourname@okhdfcbank"
@@ -467,9 +467,9 @@ export default function CheckoutModal() {
                 </>
               ) : (
                 <div className="py-8 text-center space-y-4">
-                  <div className="h-10 w-10 mx-auto border-2 border-[#EBDCD7] border-t-[#C5857B] rounded-full animate-spin" />
-                  <h4 className="font-serif text-xl font-semibold text-[#23171B]">Authorizing Transaction</h4>
-                  <p className="text-xs text-[#5C484E] max-w-xs mx-auto leading-relaxed">
+                  <div className="h-10 w-10 mx-auto border-2 border-[#1E3A5F] border-t-[#C9A84C] rounded-full animate-spin" />
+                  <h4 className="font-serif text-xl font-semibold text-[#EAE6FF]">Authorizing Transaction</h4>
+                  <p className="text-xs text-[#9BAEC8] max-w-xs mx-auto leading-relaxed">
                     Connecting to {upiApps.find((a) => a.id === selectedUpiApp)?.name || 'UPI'}.
                     Kindly approve the transaction notification on your mobile handset.
                   </p>

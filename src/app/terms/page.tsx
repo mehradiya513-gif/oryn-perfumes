@@ -8,7 +8,7 @@ export default function TermsPage() {
           Last updated {new Date().toLocaleDateString()}
         </p>
 
-        <div className="space-y-10 text-sand text-sm leading-[1.8] rounded-3xl border border-white/10 bg-[#12121A] p-8 md:p-12">
+        <div className="space-y-10 text-sand text-sm leading-[1.8] rounded-3xl border border-[#1E3A5F] bg-[#0F1E35] p-8 md:p-12">
           <section>
             <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">1. Terms Acceptance</h2>
             <p>

@@ -34,17 +34,17 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0)
 
   return (
-    <section id="faq" aria-labelledby="faq-heading" className="scroll-mt-20 bg-[#FAF6F5] py-20 md:py-28 relative">
+    <section id="faq" aria-labelledby="faq-heading" className="scroll-mt-20 bg-[#0D1B2E] py-20 md:py-28 relative">
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           
           {/* Header (Left 4 Cols) */}
           <div className="lg:col-span-4">
             <span className="section-tag mb-4">Concierge Desk</span>
-            <h2 id="faq-heading" className="font-serif text-3xl font-semibold leading-[1.15] text-[#23171B] md:text-5xl">
+            <h2 id="faq-heading" className="font-serif text-3xl font-semibold leading-[1.15] text-[#EAE6FF] md:text-5xl">
               Clarity &amp; Answers, <span className="gold-gradient-text italic">Unveiled.</span>
             </h2>
-            <p className="mt-5 text-sm leading-[1.8] text-[#5C484E]">
+            <p className="mt-5 text-sm leading-[1.8] text-[#9BAEC8]">
               Have a custom fragrance query or corporate gifting inquiry? Our perfumery concierge is directly accessible via WhatsApp during working hours.
             </p>
             <div className="mt-8">
@@ -68,8 +68,8 @@ export default function FAQ() {
                   key={faq.q}
                   className={`rounded-3xl border transition-all duration-300 ${
                     isOpen
-                      ? 'border-[#C5857B] bg-white shadow-card'
-                      : 'border-[#EBDCD7] bg-white/70 hover:border-[#C5857B]/40 hover:bg-white'
+                      ? 'border-[#C9A84C] bg-[#0F1E35] shadow-card'
+                      : 'border-[#1E3A5F] bg-[#0F1E35]/70 hover:border-[#C9A84C]/40 hover:bg-[#0F1E35]'
                   }`}
                 >
                   <button
@@ -78,14 +78,14 @@ export default function FAQ() {
                     aria-expanded={isOpen}
                     className="flex w-full items-center justify-between gap-6 p-6 text-left transition-colors"
                   >
-                    <span className="font-serif text-base font-semibold text-[#23171B] md:text-lg">
+                    <span className="font-serif text-base font-semibold text-[#EAE6FF] md:text-lg">
                       {faq.q}
                     </span>
                     <span
                       className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-transform duration-300 ${
                         isOpen
-                          ? 'border-[#C5857B] bg-[#F7EDE9] text-[#A86359] rotate-45'
-                          : 'border-[#EBDCD7] text-[#8D767C]'
+                          ? 'border-[#C9A84C] bg-[#112240] text-[#C9A84C] rotate-45'
+                          : 'border-[#1E3A5F] text-[#6B7FA3]'
                       }`}
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -101,7 +101,7 @@ export default function FAQ() {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="overflow-hidden px-6 pb-6 text-sm leading-[1.8] text-[#5C484E] border-t border-[#EBDCD7] pt-4"
+                        className="overflow-hidden px-6 pb-6 text-sm leading-[1.8] text-[#9BAEC8] border-t border-[#1E3A5F] pt-4"
                       >
                         {faq.a}
                       </motion.div>

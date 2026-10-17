@@ -25,16 +25,16 @@ export default function AnnouncementBar() {
 
   return (
     <div
-      className="relative z-50 border-b border-[#EBDCD7] bg-[#F7EDE9] py-2 text-center text-[#23171B]"
+      className="relative z-50 border-b border-[#1E3A5F] bg-[#112240] py-2 text-center text-[#EAE6FF]"
       role="note"
       aria-label="Store announcements"
     >
       <div className="shell flex items-center justify-center gap-3">
-        <span className="text-[#C5857B] text-[10px]">✦</span>
-        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#5C484E] sm:text-[11px] transition-all duration-500">
+        <span className="text-[#C9A84C] text-[10px]">✦</span>
+        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#9BAEC8] sm:text-[11px] transition-all duration-500">
           {announcements[index]}
         </p>
-        <span className="text-[#C5857B] text-[10px]">✦</span>
+        <span className="text-[#C9A84C] text-[10px]">✦</span>
       </div>
     </div>
   )

@@ -8,7 +8,7 @@ export default function ShippingPage() {
           Last updated {new Date().toLocaleDateString()}
         </p>
 
-        <div className="space-y-10 text-sand text-sm leading-[1.8] rounded-3xl border border-white/10 bg-[#12121A] p-8 md:p-12">
+        <div className="space-y-10 text-sand text-sm leading-[1.8] rounded-3xl border border-[#1E3A5F] bg-[#0F1E35] p-8 md:p-12 shadow-card">
           <section>
             <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">1. Order Processing Times</h2>
             <p className="mb-3">
@@ -19,7 +19,7 @@ export default function ShippingPage() {
             </p>
           </section>
 
-          <section className="border-t border-white/10 pt-8">
+          <section className="border-t border-[#1E3A5F] pt-8">
             <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">2. Shipping Tariffs &amp; Estimates</h2>
             <p className="mb-4">Shipping is complimentary across India on all orders exceeding ₹499.</p>
             <ul className="list-disc pl-6 space-y-2 text-smoke">
@@ -29,7 +29,7 @@ export default function ShippingPage() {
             </ul>
           </section>
 
-          <section className="border-t border-white/10 pt-8">
+          <section className="border-t border-[#1E3A5F] pt-8">
             <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">3. Tracking &amp; Delivery Guarantees</h2>
             <p>
               A tracking identifier is dispatched via SMS and email upon courier handoff. For urgent assistance or delivery queries, contact our concierge directly via WhatsApp.

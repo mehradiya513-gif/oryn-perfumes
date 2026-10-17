@@ -52,14 +52,14 @@ export default function StickyAddToCart() {
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-x-0 bottom-0 z-40 border-t border-gold/25 bg-[#09090E]/95 backdrop-blur-xl md:hidden shadow-card"
+          className="fixed inset-x-0 bottom-0 z-40 border-t border-[#C9A84C]/25 bg-[#0D1B2E]/95 backdrop-blur-xl md:hidden shadow-card"
           role="complementary"
           aria-label="Quick add to cart"
         >
           <div className="flex items-center justify-between gap-4 px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
             <div className="flex min-w-0 items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={product.image} alt="" aria-hidden="true" className="h-10 w-9 shrink-0 rounded-lg object-contain bg-[#171620] p-1" />
+              <img src={product.image} alt="" aria-hidden="true" className="h-10 w-9 shrink-0 rounded-lg object-contain bg-[#112240] p-1 border border-[#1E3A5F]" />
               <div className="min-w-0">
                 <p className="truncate text-xs font-semibold text-pearl">{product.name}</p>
                 <p className="text-xs font-bold text-gold">{formatINR(product.price)}</p>

@@ -13,19 +13,19 @@ import { products, formatINR } from '@/lib/products'
 const heroScents = [
   {
     product: products.find((p) => p.id === 'oryn-arabian-oud') || products[0],
-    accent: '#C5857B',
+    accent: '#C9A84C',
     notes: ['Damask Rose', 'Deep Oud', 'Warm Amber'],
     vibe: 'Warm, magnetic & regal',
   },
   {
     product: products.find((p) => p.id === 'oryn-strawberry') || products[1],
-    accent: '#D79F97',
+    accent: '#E8D5A3',
     notes: ['Wild Berries', 'Sun Strawberry', 'Bourbon Vanilla'],
     vibe: 'Playful, sweet & addictive',
   },
   {
     product: products.find((p) => p.id === 'oryn-black-oud') || products[5],
-    accent: '#9A5850',
+    accent: '#9E7A2C',
     notes: ['Black Spices', 'Smoky Birch', 'Dark Leather'],
     vibe: 'Deep, smoky & commanding',
   },
@@ -43,16 +43,16 @@ export default function Hero() {
   return (
     <section
       aria-label="ORYN — luxury perfumes under ₹800"
-      className="relative min-h-[92vh] w-full overflow-hidden bg-[#FAF6F5] py-12 md:py-16 lg:py-24"
+      className="relative min-h-[92vh] w-full overflow-hidden bg-[#0D1B2E] py-12 md:py-16 lg:py-24"
     >
       {/* Ambient background glows */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/4 h-[550px] w-[550px] rounded-full bg-[#E8B8B0]/25 blur-[130px]"
+        className="pointer-events-none absolute -top-40 left-1/4 h-[550px] w-[550px] rounded-full bg-[#C9A84C]/10 blur-[130px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-20 right-10 h-[480px] w-[480px] rounded-full bg-[#F5EBE6] blur-[140px]"
+        className="pointer-events-none absolute -bottom-20 right-10 h-[480px] w-[480px] rounded-full bg-[#1E3A5F]/30 blur-[140px]"
       />
       <div aria-hidden="true" className="grain absolute inset-0 opacity-20 pointer-events-none" />
 
@@ -66,10 +66,10 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[#C5857B]/35 bg-[#F7EDE9] px-4 py-1.5 shadow-sm"
+              className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[#C9A84C]/35 bg-[#112240] px-4 py-1.5 shadow-sm"
             >
-              <span className="text-[#A86359] text-xs">✦</span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#A86359]">
+              <span className="text-[#C9A84C] text-xs">✦</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A84C]">
                 Haute Parfumerie · Bombay &amp; Grasse
               </span>
             </motion.div>
@@ -79,7 +79,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.02em] text-[#23171B] sm:text-5xl md:text-6xl lg:text-[4.2rem]"
+              className="font-serif text-4xl font-semibold leading-[1.08] tracking-[-0.02em] text-[#EAE6FF] sm:text-5xl md:text-6xl lg:text-[4.2rem]"
             >
               Sensual Luxury You Can{' '}
               <span className="gold-gradient-text block font-light italic">
@@ -92,7 +92,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="mt-6 max-w-xl text-[16px] leading-[1.8] text-[#5C484E] sm:text-[17.5px]"
+              className="mt-6 max-w-xl text-[16px] leading-[1.8] text-[#9BAEC8] sm:text-[17.5px]"
             >
               Blended slowly from rare French essences and bottled in Mumbai. High-concentration
               extraits with 8–12 hour sillage, honest prices, and zero middleman markup. Always under ₹800.
@@ -103,15 +103,15 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.28 }}
-              className="mt-7 flex flex-wrap items-center gap-2.5 text-xs text-[#5C484E]"
+              className="mt-7 flex flex-wrap items-center gap-2.5 text-xs text-[#9BAEC8]"
             >
-              <span className="rounded-lg border border-[#EBDCD7] bg-white/80 px-3.5 py-1.5 font-medium shadow-sm">
+              <span className="rounded-lg border border-[#1E3A5F] bg-[#0F1E35]/80 px-3.5 py-1.5 font-medium shadow-sm">
                 ✧ 100% Extrait Concentration
               </span>
-              <span className="rounded-lg border border-[#EBDCD7] bg-white/80 px-3.5 py-1.5 font-medium shadow-sm">
+              <span className="rounded-lg border border-[#1E3A5F] bg-[#0F1E35]/80 px-3.5 py-1.5 font-medium shadow-sm">
                 ✧ Under ₹800 Honest Luxury
               </span>
-              <span className="rounded-lg border border-[#EBDCD7] bg-white/80 px-3.5 py-1.5 font-medium shadow-sm">
+              <span className="rounded-lg border border-[#1E3A5F] bg-[#0F1E35]/80 px-3.5 py-1.5 font-medium shadow-sm">
                 ✧ Complimentary Express &amp; COD
               </span>
             </motion.div>
@@ -144,17 +144,17 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.45 }}
-              className="mt-10 flex items-center gap-6 border-t border-[#EBDCD7] pt-6"
+              className="mt-10 flex items-center gap-6 border-t border-[#1E3A5F] pt-6"
             >
               <div className="flex items-center gap-1.5">
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <span key={s} className="text-[#C5857B] text-xs">★</span>
+                  <span key={s} className="text-[#C9A84C] text-xs">★</span>
                 ))}
-                <span className="ml-1.5 text-xs font-bold text-[#23171B]">4.9 / 5</span>
+                <span className="ml-1.5 text-xs font-bold text-[#EAE6FF]">4.9 / 5</span>
               </div>
-              <span className="h-3 w-px bg-[#EBDCD7]" />
-              <p className="text-xs text-[#8D767C]">
-                Adored by <strong className="text-[#23171B] font-semibold">14,000+ fragrance connoisseurs</strong> across India
+              <span className="h-3 w-px bg-[#1E3A5F]" />
+              <p className="text-xs text-[#6B7FA3]">
+                Adored by <strong className="text-[#EAE6FF] font-semibold">14,000+ fragrance connoisseurs</strong> across India
               </p>
             </motion.div>
           </div>
@@ -168,20 +168,20 @@ export default function Hero() {
               className="relative mx-auto flex max-w-[440px] flex-col items-center"
             >
               {/* Bottle Aura Frame */}
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-[#EBDCD7] bg-gradient-to-b from-white via-[#FCF8F7] to-[#F7EDE9] p-6 shadow-card backdrop-blur-md">
+              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-[#1E3A5F] bg-gradient-to-b from-[#0F1E35] via-[#112240] to-[#0D1B2E] p-6 shadow-card backdrop-blur-md">
                 
-                {/* Radial Rose Spotlight Glow */}
+                {/* Radial Gold Spotlight Glow */}
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-radial-gradient from-[#E8B8B0]/30 via-transparent to-transparent opacity-80"
+                  className="pointer-events-none absolute inset-0 bg-radial-gradient from-[#C9A84C]/15 via-transparent to-transparent opacity-80"
                 />
 
                 {/* Badge on Card */}
                 <div className="relative z-10 flex items-center justify-between">
-                  <span className="rounded-full border border-[#C5857B]/35 bg-[#F7EDE9] px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[#A86359]">
+                  <span className="rounded-full border border-[#C9A84C]/35 bg-[#112240] px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">
                     Signature Extrait
                   </span>
-                  <span className="text-xs font-bold text-[#A86359]">
+                  <span className="text-xs font-bold text-[#C9A84C]">
                     {formatINR(activeScent.product.price)}
                   </span>
                 </div>
@@ -203,25 +203,25 @@ export default function Hero() {
                         fill
                         priority
                         sizes="(max-width: 640px) 80vw, 380px"
-                        className="object-contain drop-shadow-[0_20px_35px_rgba(168,99,89,0.25)]"
+                        className="object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.5)]"
                       />
                     </motion.div>
                   </AnimatePresence>
                 </div>
 
                 {/* Notes Tags Overlay */}
-                <div className="relative z-10 rounded-2xl border border-[#EBDCD7] bg-white/90 p-4 shadow-sm backdrop-blur-md">
+                <div className="relative z-10 rounded-2xl border border-[#1E3A5F] bg-[#0F1E35]/90 p-4 shadow-sm backdrop-blur-md">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-serif text-lg font-semibold text-[#23171B]">
+                      <h3 className="font-serif text-lg font-semibold text-[#EAE6FF]">
                         {activeScent.product.name}
                       </h3>
-                      <p className="text-[11px] text-[#8D767C] mt-0.5">{activeScent.vibe}</p>
+                      <p className="text-[11px] text-[#6B7FA3] mt-0.5">{activeScent.vibe}</p>
                     </div>
                     <button
                       type="button"
                       onClick={() => addToCart(activeScent.product)}
-                      className="rounded-xl bg-gradient-to-r from-[#D79F97] via-[#C5857B] to-[#A86359] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-white shadow-sm transition-all duration-300 hover:brightness-105 active:scale-95"
+                      className="rounded-xl bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#0D1B2E] shadow-sm transition-all duration-300 hover:brightness-105 active:scale-95"
                     >
                       Add +
                     </button>
@@ -232,7 +232,7 @@ export default function Hero() {
                     {activeScent.notes.map((note) => (
                       <span
                         key={note}
-                        className="rounded-md border border-[#EBDCD7] bg-[#F7EDE9] px-2.5 py-0.5 text-[10px] font-medium text-[#A86359]"
+                        className="rounded-md border border-[#1E3A5F] bg-[#112240] px-2.5 py-0.5 text-[10px] font-medium text-[#C9A84C]"
                       >
                         {note}
                       </span>
@@ -242,7 +242,7 @@ export default function Hero() {
               </div>
 
               {/* Interactive Scent Switcher Tabs */}
-              <div className="mt-4 flex w-full items-center justify-between gap-2 rounded-2xl border border-[#EBDCD7] bg-white/80 p-1.5 shadow-sm">
+              <div className="mt-4 flex w-full items-center justify-between gap-2 rounded-2xl border border-[#1E3A5F] bg-[#0F1E35]/80 p-1.5 shadow-sm">
                 {heroScents.map((item, idx) => (
                   <button
                     key={item.product.id}
@@ -250,13 +250,13 @@ export default function Hero() {
                     onClick={() => setActiveIndex(idx)}
                     className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-2 text-[11px] font-semibold transition-all duration-300 ${
                       idx === activeIndex
-                        ? 'bg-[#F7EDE9] text-[#A86359] border border-[#C5857B]/40 shadow-sm'
-                        : 'text-[#8D767C] hover:text-[#23171B]'
+                        ? 'bg-[#112240] text-[#C9A84C] border border-[#C9A84C]/40 shadow-sm'
+                        : 'text-[#6B7FA3] hover:text-[#EAE6FF]'
                     }`}
                   >
                     <span
                       className={`h-2 w-2 rounded-full ${
-                        idx === activeIndex ? 'bg-[#C5857B] animate-pulse' : 'bg-[#DFCBC5]'
+                        idx === activeIndex ? 'bg-[#C9A84C] animate-pulse' : 'bg-[#1E3A5F]'
                       }`}
                     />
                     <span className="truncate">{item.product.name}</span>

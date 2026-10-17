@@ -49,7 +49,7 @@ export default function AuthPromptPopup() {
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
       <div
         onClick={() => setAuthPromptOpen(false)}
-        className="absolute inset-0 bg-[#23171B]/60 backdrop-blur-md"
+        className="absolute inset-0 bg-[#070D17]/75 backdrop-blur-md"
         style={{ animation: 'fadeIn 0.3s ease' }}
       />
 
@@ -58,18 +58,18 @@ export default function AuthPromptPopup() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="auth-prompt-title"
-        className="relative z-10 w-full max-w-sm rounded-3xl border border-[#EBDCD7] bg-[#FAF6F5] p-8 md:p-10 shadow-card text-[#23171B]"
+        className="relative z-10 w-full max-w-sm rounded-3xl border border-[#1E3A5F] bg-[#0D1B2E] p-8 md:p-10 shadow-card text-[#EAE6FF]"
       >
-        {/* Ambient rose glow */}
+        {/* Ambient gold glow */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#E8B8B0]/25 blur-[60px]"
+          className="pointer-events-none absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C9A84C]/15 blur-[60px]"
         />
 
         <button
           onClick={() => setAuthPromptOpen(false)}
           aria-label="Close"
-          className="absolute top-5 right-5 flex h-8 w-8 items-center justify-center rounded-full border border-[#EBDCD7] text-[#8D767C] hover:border-[#C5857B] hover:text-[#A86359] transition-colors"
+          className="absolute top-5 right-5 flex h-8 w-8 items-center justify-center rounded-full border border-[#1E3A5F] text-[#6B7FA3] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
             <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
@@ -77,13 +77,13 @@ export default function AuthPromptPopup() {
         </button>
 
         <div className="relative z-10 text-center mb-8">
-          <div className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#C5857B]/40 bg-gradient-to-b from-[#C5857B]/20 to-transparent text-[#A86359] mb-4 mx-auto">
+          <div className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#C9A84C]/40 bg-gradient-to-b from-[#C9A84C]/20 to-transparent text-[#C9A84C] mb-4 mx-auto">
             <span className="font-serif text-base font-bold">O</span>
           </div>
-          <h2 id="auth-prompt-title" className="font-serif text-2xl font-semibold leading-snug mb-2 text-[#23171B]">
+          <h2 id="auth-prompt-title" className="font-serif text-2xl font-semibold leading-snug mb-2 text-[#EAE6FF]">
             Welcome to the Atelier
           </h2>
-          <p className="text-xs font-light text-[#5C484E] leading-relaxed max-w-[260px] mx-auto">
+          <p className="text-xs font-light text-[#9BAEC8] leading-relaxed max-w-[260px] mx-auto">
             Sign in or create an account to finalize your allocation and track your order.
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function AuthPromptPopup() {
           </button>
         </div>
 
-        <p className="relative z-10 mt-6 text-center text-[10px] uppercase tracking-[0.25em] text-[#8D767C]">
+        <p className="relative z-10 mt-6 text-center text-[10px] uppercase tracking-[0.25em] text-[#6B7FA3]">
           ✦ Complimentary express delivery above ₹499
         </p>
       </div>

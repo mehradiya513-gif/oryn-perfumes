@@ -12,7 +12,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="mt-12 rounded-3xl border border-gold/20 bg-[#12121A] p-6 md:p-10 shadow-card">
+        <div className="mt-12 rounded-3xl border border-[#1E3A5F] bg-[#0F1E35] p-6 md:p-10 shadow-card">
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSdfK82gOEqk26t393lPCH1G8PRjAg60u3f1bAjgTdg1vWiySw/viewform?embedded=true"
             width="100%"

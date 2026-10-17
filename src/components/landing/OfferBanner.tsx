@@ -38,24 +38,24 @@ export default function OfferBanner() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <section aria-labelledby="offer-heading" className="bg-[#FAF6F5] py-16 md:py-24 relative">
+    <section aria-labelledby="offer-heading" className="bg-[#0D1B2E] py-16 md:py-24 relative">
       <div className="shell">
-        <div className="relative overflow-hidden rounded-3xl border border-[#EBDCD7] bg-gradient-to-b from-[#F7EDE9] via-white to-[#F5EBE6] px-6 py-14 text-center md:py-20 md:px-12 shadow-card">
+        <div className="relative overflow-hidden rounded-3xl border border-[#1E3A5F] bg-gradient-to-b from-[#112240] via-[#0F1E35] to-[#0D1B2E] px-6 py-14 text-center md:py-20 md:px-12 shadow-card">
           
-          {/* Radial Rose Aura */}
+          {/* Radial Gold Aura */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#E8B8B0]/25 blur-[110px]"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C9A84C]/15 blur-[110px]"
           />
 
           <div className="relative z-10">
             <span className="section-tag mb-4">Limited Allocation</span>
             
-            <h2 id="offer-heading" className="mx-auto max-w-3xl font-serif text-3xl font-semibold leading-[1.15] text-[#23171B] md:text-5xl">
+            <h2 id="offer-heading" className="mx-auto max-w-3xl font-serif text-3xl font-semibold leading-[1.15] text-[#EAE6FF] md:text-5xl">
               Select Any 2 Fragrances, Receive an Instant <span className="gold-gradient-text italic">10% Privilege</span>
             </h2>
 
-            <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#5C484E]">
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#9BAEC8]">
               Discount applies automatically at checkout. Seamlessly combinable with complimentary express delivery above ₹499 and pan-India Cash on Delivery.
             </p>
 
@@ -71,10 +71,10 @@ export default function OfferBanner() {
                 [s, 'Seconds'],
               ].map(([value, label]) => (
                 <div key={label} className="flex flex-col items-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#C5857B]/40 bg-white font-serif text-2xl font-bold tabular-nums text-[#23171B] shadow-sm md:h-20 md:w-20 md:text-3xl">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#C9A84C]/40 bg-[#0D1B2E] font-serif text-2xl font-bold tabular-nums text-[#EAE6FF] shadow-sm md:h-20 md:w-20 md:text-3xl">
                     {value}
                   </div>
-                  <span className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#A86359]">
+                  <span className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">
                     {label}
                   </span>
                 </div>

@@ -150,38 +150,38 @@ export default function SignUpModal() {
   if (!signUpOpen) return null
 
   const inputClass =
-    'w-full bg-white border border-[#EBDCD7] rounded-xl focus:border-[#C5857B] outline-none px-4 py-3 text-sm text-[#23171B] placeholder:text-[#8D767C] transition-colors'
-  const labelClass = 'block text-[10px] uppercase tracking-[0.2em] text-[#A86359] mb-2 font-bold'
+    'w-full bg-[#112240] border border-[#1E3A5F] rounded-xl focus:border-[#C9A84C] outline-none px-4 py-3 text-sm text-[#EAE6FF] placeholder:text-[#6B7FA3] transition-colors'
+  const labelClass = 'block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2 font-bold'
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
         ref={overlayRef}
         onClick={handleClose}
-        className="absolute inset-0 bg-[#23171B]/60 backdrop-blur-md"
+        className="absolute inset-0 bg-[#070D17]/75 backdrop-blur-md"
       />
 
       <div
         ref={modalRef}
-        className="relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[#EBDCD7] bg-[#FAF6F5] text-[#23171B] p-8 md:p-12 shadow-card animate-fade-in"
+        className="relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[#1E3A5F] bg-[#0D1B2E] text-[#EAE6FF] p-8 md:p-12 shadow-card animate-fade-in"
       >
-        {/* Rose aura background */}
+        {/* Gold aura background */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-[#E8B8B0]/20 blur-[80px]"
+          className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-[#C9A84C]/15 blur-[80px]"
         />
 
-        <div className="relative z-10 flex items-start justify-between border-b border-[#EBDCD7] pb-6 mb-8">
+        <div className="relative z-10 flex items-start justify-between border-b border-[#1E3A5F] pb-6 mb-8">
           <div>
-            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[#A86359]">Client Access</p>
-            <h2 className="font-serif text-3xl font-semibold text-[#23171B]">
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">Client Access</p>
+            <h2 className="font-serif text-3xl font-semibold text-[#EAE6FF]">
               {isSignUp ? 'Join The House of ORYN' : 'Welcome Back'}
             </h2>
           </div>
           <button
             type="button"
             onClick={handleClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#EBDCD7] text-[#8D767C] hover:border-[#C5857B] hover:text-[#A86359] transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#1E3A5F] text-[#6B7FA3] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
             aria-label="Close"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -191,7 +191,7 @@ export default function SignUpModal() {
         </div>
 
         {status && !status.includes('added to cart') && (
-          <p className="mb-6 text-sm text-rose-600 border-l-2 border-rose-400 pl-4 bg-rose-50 py-2 rounded-r-xl">{status}</p>
+          <p className="mb-6 text-sm text-amber-300 border-l-2 border-amber-400 pl-4 bg-amber-950/40 py-2 rounded-r-xl">{status}</p>
         )}
 
         <form onSubmit={handleAuthSubmit} className="relative z-10 space-y-6">
@@ -256,7 +256,7 @@ export default function SignUpModal() {
                     className={`${inputClass} cursor-pointer`}
                   >
                     {countries.map((c) => (
-                      <option key={c} value={c} className="bg-white text-[#23171B]">
+                      <option key={c} value={c} className="bg-[#112240] text-[#EAE6FF]">
                         {c}
                       </option>
                     ))}
@@ -283,7 +283,7 @@ export default function SignUpModal() {
           </button>
         </form>
 
-        <p className="relative z-10 mt-8 text-center text-xs font-light text-[#5C484E]">
+        <p className="relative z-10 mt-8 text-center text-xs font-light text-[#9BAEC8]">
           {isSignUp ? (
             <>
               Already have an account?{' '}
@@ -293,7 +293,7 @@ export default function SignUpModal() {
                   setIsSignUp(false)
                   setStatus('')
                 }}
-                className="text-[#A86359] underline underline-offset-4 hover:text-[#23171B] transition-colors ml-1"
+                className="text-[#C9A84C] underline underline-offset-4 hover:text-[#EAE6FF] transition-colors ml-1"
               >
                 Sign in
               </button>
@@ -307,7 +307,7 @@ export default function SignUpModal() {
                   setIsSignUp(true)
                   setStatus('')
                 }}
-                className="text-[#A86359] underline underline-offset-4 hover:text-[#23171B] transition-colors ml-1"
+                className="text-[#C9A84C] underline underline-offset-4 hover:text-[#EAE6FF] transition-colors ml-1"
               >
                 Create an account
               </button>

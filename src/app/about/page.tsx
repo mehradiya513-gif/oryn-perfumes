@@ -29,7 +29,7 @@ export default function AboutPage() {
   }
 
   const inputClass =
-    'w-full rounded-xl border border-white/10 bg-[#14141E] px-4 py-3 text-sm text-pearl outline-none transition-colors placeholder:text-smoke focus:border-gold'
+    'w-full rounded-xl border border-[#1E3A5F] bg-[#0F1E35] px-4 py-3 text-sm text-pearl outline-none transition-colors placeholder:text-smoke focus:border-gold'
 
   const labelClass = 'mb-2 block text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80'
 
@@ -52,7 +52,7 @@ export default function AboutPage() {
       {/* The Brand Plate */}
       <section className="shell pb-24 md:pb-32">
         <Reveal>
-          <div className="relative mx-auto aspect-square w-full max-w-lg overflow-hidden rounded-3xl border border-gold/30 bg-[#14141E] shadow-card">
+          <div className="relative mx-auto aspect-square w-full max-w-lg overflow-hidden rounded-3xl border border-gold/30 bg-[#0F1E35] shadow-card">
             <Image
               src="/images/oryn-brand-plate.png"
               alt="The ORYN brand plate"
@@ -68,7 +68,7 @@ export default function AboutPage() {
       </section>
 
       {/* Why ORYN Exists */}
-      <section className="border-y border-gold/15 bg-[#0A0A0F]">
+      <section className="border-y border-gold/15 bg-[#112240]">
         <div className="shell py-24 md:py-32">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
@@ -102,7 +102,7 @@ export default function AboutPage() {
                 },
               ].map((item, i) => (
                 <Reveal key={item.n} delay={i * 80}>
-                  <div className="rounded-2xl border border-white/10 bg-[#12121A] p-7 transition-all hover:border-gold/30">
+                  <div className="rounded-2xl border border-[#1E3A5F] bg-[#0F1E35] p-7 transition-all hover:border-gold/30">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="font-serif text-lg font-bold text-gold">{item.n}</span>
                       <h3 className="font-serif text-xl font-semibold text-pearl">
@@ -134,7 +134,7 @@ export default function AboutPage() {
       </section>
 
       {/* Contact Concierge Form */}
-      <section className="border-t border-gold/15 bg-[#0B0B10]">
+      <section className="border-t border-gold/15 bg-[#112240]">
         <div className="shell py-24 md:py-32">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
@@ -149,7 +149,7 @@ export default function AboutPage() {
             </Reveal>
 
             <Reveal delay={100} className="lg:col-span-6 lg:col-start-7">
-              <form onSubmit={handleContactSubmit} className="space-y-6 rounded-3xl border border-white/10 bg-[#12121A] p-8 md:p-10 shadow-card">
+              <form onSubmit={handleContactSubmit} className="space-y-6 rounded-3xl border border-[#1E3A5F] bg-[#0F1E35] p-8 md:p-10 shadow-card">
                 <div className="grid gap-6 sm:grid-cols-2">
                   <label className="block">
                     <span className={labelClass}>Your Name</span>
