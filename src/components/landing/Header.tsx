@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useCart } from '@/context/CartContext'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -61,8 +62,15 @@ export default function Header() {
             aria-label="ORYN — Haute Parfumerie"
             className="group flex items-center gap-3.5"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C9A84C]/40 bg-gradient-to-b from-[#C9A84C]/20 to-transparent text-[#C9A84C] transition-all duration-300 group-hover:border-[#C9A84C] group-hover:shadow-gold-sm">
-              <span className="font-serif text-sm font-semibold tracking-wider">O</span>
+            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C9A84C]/40 bg-gradient-to-b from-[#C9A84C]/20 to-transparent p-1.5 text-[#C9A84C] transition-all duration-300 group-hover:border-[#C9A84C] group-hover:shadow-gold-sm">
+              <Image
+                src="/images/oryn-emblem-gold.png"
+                alt="ORYN Emblem"
+                width={28}
+                height={28}
+                className="h-full w-full object-contain"
+                priority
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-serif text-[1.3rem] font-bold uppercase leading-none tracking-brand text-[#F5F2EB] group-hover:text-[#C9A84C] transition-colors duration-300">

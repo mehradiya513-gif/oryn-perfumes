@@ -181,6 +181,16 @@ export default function Hero() {
                   <span className="rounded-full border border-[#C9A84C]/35 bg-[#121212] px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">
                     Signature Extrait
                   </span>
+                  <div className="flex items-center justify-center px-2">
+                    <Image
+                      src="/images/oryn-logo-horizontal.png"
+                      alt="ORYN Parfums"
+                      width={92}
+                      height={22}
+                      className="h-5 w-auto object-contain drop-shadow-[0_2px_10px_rgba(201,168,76,0.4)]"
+                      priority
+                    />
+                  </div>
                   <span className="text-xs font-bold text-[#C9A84C]">
                     {formatINR(activeScent.product.price)}
                   </span>

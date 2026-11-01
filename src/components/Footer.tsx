@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 /* ————————————————————————————————————————————————————————————————
    Footer — Midnight Noir & Champagne Gold Luxury House Signature
@@ -43,8 +44,14 @@ export default function Footer() {
           {/* Brand Identity & Mission (5 Cols) */}
           <div className="lg:col-span-5">
             <Link href="/" className="inline-flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#C9A84C]/50 bg-[#C9A84C]/10 text-[#C9A84C] shadow-sm">
-                <span className="font-serif text-base font-bold">O</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#C9A84C]/50 bg-[#C9A84C]/10 p-1.5 shadow-sm">
+                <Image
+                  src="/images/oryn-emblem-gold.png"
+                  alt="ORYN Emblem"
+                  width={32}
+                  height={32}
+                  className="h-full w-full object-contain"
+                />
               </div>
               <span className="font-serif text-2xl font-bold uppercase tracking-brand text-[#F5F2EB]">
                 Oryn
