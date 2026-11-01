@@ -179,26 +179,6 @@ export const products: Product[] = [
     imageAlt: 'The ORYN Discovery Duo gift set — two travel sprays',
     imageHover: '/images/passport-pink.png',
   },
-  {
-    id: 'oryn-gift-trio',
-    name: 'The Signature Trio',
-    tagline: 'Three 10ml travel sprays · Gift boxed',
-    description:
-      'Three travel sprays from the collection in the ORYN box — Arabian Oud, Wild Strawberry and Passport, together.',
-    price: 799,
-    mrp: 1199,
-    category: 'Gift Sets',
-    family: 'Gift Set',
-    concentration: 'Travel sprays · 10ml × 3',
-    topNotes: ['Arabian Oud · Wild Strawberry · Passport'],
-    heartNotes: [],
-    baseNotes: [],
-    longevity: 'Varies by scent',
-    bestseller: false,
-    image: '/images/champagne-dream.png',
-    imageAlt: 'The ORYN Signature Trio gift set — three travel sprays',
-    imageHover: '/images/bloom-gold.png',
-  },
 ]
 
 export default products

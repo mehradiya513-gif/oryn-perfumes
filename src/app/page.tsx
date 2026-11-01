@@ -5,7 +5,6 @@ import Bestsellers from '@/components/landing/Bestsellers'
 import ScentFinder from '@/components/landing/ScentFinder'
 import BrandStory from '@/components/landing/BrandStory'
 import NotesExplainer from '@/components/landing/NotesExplainer'
-import SocialProof from '@/components/landing/SocialProof'
 import OfferBanner from '@/components/landing/OfferBanner'
 import FAQ from '@/components/landing/FAQ'
 import Newsletter from '@/components/landing/Newsletter'
@@ -85,9 +84,6 @@ export default function HomePage() {
 
       {/* 9 · Scent notes explainer */}
       <NotesExplainer />
-
-      {/* 10 · Reviews + UGC grid */}
-      <SocialProof />
 
       {/* 11 · Offer banner with countdown */}
       <OfferBanner />

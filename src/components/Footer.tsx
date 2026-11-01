@@ -14,7 +14,6 @@ export default function Footer() {
     { label: 'Bespoke Scent Finder', href: '/#scent-finder' },
     { label: 'Notes Pyramid Guide', href: '/#notes' },
     { label: 'Our Atelier Story', href: '/about' },
-    { label: 'Client Reviews', href: '/#reviews' },
   ]
 
   const careLinks = [

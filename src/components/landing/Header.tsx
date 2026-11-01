@@ -15,7 +15,6 @@ const navLinks = [
   { label: 'Scent Finder', href: '/#scent-finder' },
   { label: 'Notes Pyramid', href: '/#notes' },
   { label: 'Our Story', href: '/about' },
-  { label: 'Reviews', href: '/#reviews' },
 ]
 
 export default function Header() {
