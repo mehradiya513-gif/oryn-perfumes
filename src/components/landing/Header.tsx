@@ -46,8 +46,8 @@ export default function Header() {
       <header
         className={`sticky top-0 z-40 w-full transition-all duration-500 ${
           scrolled
-            ? 'border-b border-[#1E3A5F] bg-[#0D1B2E]/92 backdrop-blur-xl shadow-soft'
-            : 'border-b border-[#1E3A5F]/60 bg-[#0D1B2E]/80 backdrop-blur-md'
+            ? 'border-b border-[#262626] bg-[#0A0A0A]/92 backdrop-blur-xl shadow-soft'
+            : 'border-b border-[#262626]/60 bg-[#0A0A0A]/80 backdrop-blur-md'
         }`}
       >
         <div
@@ -65,7 +65,7 @@ export default function Header() {
               <span className="font-serif text-sm font-semibold tracking-wider">O</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-serif text-[1.3rem] font-bold uppercase leading-none tracking-brand text-[#EAE6FF] group-hover:text-[#C9A84C] transition-colors duration-300">
+              <span className="font-serif text-[1.3rem] font-bold uppercase leading-none tracking-brand text-[#F5F2EB] group-hover:text-[#C9A84C] transition-colors duration-300">
                 Oryn
               </span>
               <span className="text-[8px] font-bold uppercase tracking-[0.32em] text-[#C9A84C]/80 mt-0.5">
@@ -80,7 +80,7 @@ export default function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="group relative text-[11px] font-bold uppercase tracking-[0.22em] text-[#9BAEC8] transition-colors duration-300 hover:text-[#EAE6FF] py-1"
+                className="group relative text-[11px] font-bold uppercase tracking-[0.22em] text-[#A8A29E] transition-colors duration-300 hover:text-[#F5F2EB] py-1"
               >
                 {link.label}
                 <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-[#C9A84C] transition-all duration-300 group-hover:w-full" />
@@ -95,7 +95,7 @@ export default function Header() {
               onClick={() => setSearchOpen((v) => !v)}
               aria-expanded={searchOpen}
               aria-label="Search fragrances"
-              className="flex h-9 w-9 items-center justify-center rounded-full text-[#9BAEC8] transition-all duration-300 hover:border hover:border-[#C9A84C]/40 hover:bg-[#C9A84C]/10 hover:text-[#C9A84C]"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-[#A8A29E] transition-all duration-300 hover:border hover:border-[#C9A84C]/40 hover:bg-[#C9A84C]/10 hover:text-[#C9A84C]"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
                 <circle cx="11" cy="11" r="7" />
@@ -108,7 +108,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setSignUpOpen(true)}
-                className="hidden text-[11px] font-bold uppercase tracking-[0.2em] text-[#9BAEC8] transition-colors duration-300 hover:text-[#C9A84C] sm:inline-block"
+                className="hidden text-[11px] font-bold uppercase tracking-[0.2em] text-[#A8A29E] transition-colors duration-300 hover:text-[#C9A84C] sm:inline-block"
               >
                 Sign In
               </button>
@@ -117,18 +117,18 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] transition-colors duration-300 hover:text-[#EAE6FF]"
+                  className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] transition-colors duration-300 hover:text-[#F5F2EB]"
                 >
                   <span className="h-2 w-2 rounded-full bg-[#C9A84C] animate-pulse" />
                   {customer.name.split(' ')[0]}
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute right-0 top-full z-50 mt-3 w-56 border border-[#1E3A5F] bg-[#0F1E35] p-2 shadow-card rounded-xl">
-                    <div className="border-b border-[#1E3A5F] px-4 py-3">
-                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#6B7FA3]">
+                  <div className="absolute right-0 top-full z-50 mt-3 w-56 border border-[#262626] bg-[#161616] p-2 shadow-card rounded-xl">
+                    <div className="border-b border-[#262626] px-4 py-3">
+                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#78716C]">
                         Signed in as
                       </p>
-                      <p className="truncate text-xs text-[#EAE6FF] mt-0.5 font-medium">{customer.email}</p>
+                      <p className="truncate text-xs text-[#F5F2EB] mt-0.5 font-medium">{customer.email}</p>
                     </div>
                     <button
                       type="button"
@@ -136,7 +136,7 @@ export default function Header() {
                         logoutCustomer()
                         setDropdownOpen(false)
                       }}
-                      className="w-full px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.2em] text-[#9BAEC8] hover:text-[#C9A84C] transition-colors"
+                      className="w-full px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8A29E] hover:text-[#C9A84C] transition-colors"
                     >
                       Log out
                     </button>
@@ -149,17 +149,17 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setCartOpen(true)}
-              className="relative flex items-center gap-2.5 rounded-full border border-[#1E3A5F] bg-[#112240] px-4 py-2 text-[#EAE6FF] transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#152642] hover:shadow-gold-sm"
+              className="relative flex items-center gap-2.5 rounded-full border border-[#262626] bg-[#121212] px-4 py-2 text-[#F5F2EB] transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#1C1C1C] hover:shadow-gold-sm"
               aria-label={`Open shopping bag — ${cartCount} items`}
             >
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="text-[#C9A84C]" aria-hidden="true">
                 <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" strokeLinejoin="round" />
                 <path d="M3 6h18M16 10a4 4 0 0 1-8 0" strokeLinecap="round" />
               </svg>
-              <span className="hidden text-[11px] font-bold uppercase tracking-[0.18em] sm:inline-block text-[#9BAEC8]">
+              <span className="hidden text-[11px] font-bold uppercase tracking-[0.18em] sm:inline-block text-[#A8A29E]">
                 Bag
               </span>
-              <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] px-1.5 text-[10px] font-extrabold text-[#0D1B2E] shadow-sm">
+              <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] px-1.5 text-[10px] font-extrabold text-[#0A0A0A] shadow-sm">
                 {cartCount}
               </span>
             </button>
@@ -168,7 +168,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#1E3A5F] text-[#EAE6FF] lg:hidden hover:border-[#C9A84C] hover:text-[#C9A84C]"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#262626] text-[#F5F2EB] lg:hidden hover:border-[#C9A84C] hover:text-[#C9A84C]"
               aria-label="Open menu"
               aria-expanded={menuOpen}
             >
@@ -187,7 +187,7 @@ export default function Header() {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="overflow-hidden border-t border-[#1E3A5F] bg-[#0D1B2E]/98 backdrop-blur-2xl"
+              className="overflow-hidden border-t border-[#262626] bg-[#0A0A0A]/98 backdrop-blur-2xl"
             >
               <form
                 className="mx-auto flex w-full max-w-[1280px] items-center gap-3 px-6 py-4 md:px-10"
@@ -205,12 +205,12 @@ export default function Header() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search by notes or scent name — try “oud”, “vanilla”, “rose”…"
-                  className="w-full bg-transparent py-1.5 text-[15px] text-[#EAE6FF] outline-none placeholder:text-[#6B7FA3] focus:placeholder:text-[#9BAEC8]"
+                  className="w-full bg-transparent py-1.5 text-[15px] text-[#F5F2EB] outline-none placeholder:text-[#78716C] focus:placeholder:text-[#A8A29E]"
                 />
                 <button
                   type="button"
                   onClick={() => setSearchOpen(false)}
-                  className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] hover:text-[#EAE6FF] transition-colors"
+                  className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] hover:text-[#F5F2EB] transition-colors"
                 >
                   Close
                 </button>
@@ -228,19 +228,19 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex flex-col bg-[#0D1B2E]/98 backdrop-blur-2xl lg:hidden"
+            className="fixed inset-0 z-50 flex flex-col bg-[#0A0A0A]/98 backdrop-blur-2xl lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
           >
-            <div className="flex h-20 items-center justify-between px-6 border-b border-[#1E3A5F]">
-              <span className="font-serif text-[1.3rem] font-bold uppercase tracking-brand text-[#EAE6FF]">
+            <div className="flex h-20 items-center justify-between px-6 border-b border-[#262626]">
+              <span className="font-serif text-[1.3rem] font-bold uppercase tracking-brand text-[#F5F2EB]">
                 Oryn
               </span>
               <button
                 type="button"
                 onClick={() => setMenuOpen(false)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C9A84C]/40 text-[#EAE6FF] hover:text-[#C9A84C]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C9A84C]/40 text-[#F5F2EB] hover:text-[#C9A84C]"
                 aria-label="Close menu"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
@@ -259,13 +259,13 @@ export default function Header() {
                   <Link
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className="font-serif text-3xl font-semibold text-[#EAE6FF] transition-colors hover:text-[#C9A84C]"
+                    className="font-serif text-3xl font-semibold text-[#F5F2EB] transition-colors hover:text-[#C9A84C]"
                   >
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
-              <div className="pt-6 border-t border-[#1E3A5F]">
+              <div className="pt-6 border-t border-[#262626]">
                 {!customer ? (
                   <button
                     type="button"
@@ -278,7 +278,7 @@ export default function Header() {
                     Sign In to Account
                   </button>
                 ) : (
-                  <p className="text-xs text-[#9BAEC8]">
+                  <p className="text-xs text-[#A8A29E]">
                     Signed in as <span className="text-[#C9A84C] font-semibold">{customer.name}</span>
                   </p>
                 )}

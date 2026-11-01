@@ -38,9 +38,9 @@ export default function OfferBanner() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <section aria-labelledby="offer-heading" className="bg-[#0D1B2E] py-16 md:py-24 relative">
+    <section aria-labelledby="offer-heading" className="bg-[#0A0A0A] py-16 md:py-24 relative">
       <div className="shell">
-        <div className="relative overflow-hidden rounded-3xl border border-[#1E3A5F] bg-gradient-to-b from-[#112240] via-[#0F1E35] to-[#0D1B2E] px-6 py-14 text-center md:py-20 md:px-12 shadow-card">
+        <div className="relative overflow-hidden rounded-3xl border border-[#262626] bg-gradient-to-b from-[#121212] via-[#161616] to-[#0A0A0A] px-6 py-14 text-center md:py-20 md:px-12 shadow-card">
           
           {/* Radial Gold Aura */}
           <div
@@ -51,11 +51,11 @@ export default function OfferBanner() {
           <div className="relative z-10">
             <span className="section-tag mb-4">Limited Allocation</span>
             
-            <h2 id="offer-heading" className="mx-auto max-w-3xl font-serif text-3xl font-semibold leading-[1.15] text-[#EAE6FF] md:text-5xl">
+            <h2 id="offer-heading" className="mx-auto max-w-3xl font-serif text-3xl font-semibold leading-[1.15] text-[#F5F2EB] md:text-5xl">
               Select Any 2 Fragrances, Receive an Instant <span className="gold-gradient-text italic">10% Privilege</span>
             </h2>
 
-            <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#9BAEC8]">
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#A8A29E]">
               Discount applies automatically at checkout. Seamlessly combinable with complimentary express delivery above ₹499 and pan-India Cash on Delivery.
             </p>
 
@@ -71,7 +71,7 @@ export default function OfferBanner() {
                 [s, 'Seconds'],
               ].map(([value, label]) => (
                 <div key={label} className="flex flex-col items-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#C9A84C]/40 bg-[#0D1B2E] font-serif text-2xl font-bold tabular-nums text-[#EAE6FF] shadow-sm md:h-20 md:w-20 md:text-3xl">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#C9A84C]/40 bg-[#0A0A0A] font-serif text-2xl font-bold tabular-nums text-[#F5F2EB] shadow-sm md:h-20 md:w-20 md:text-3xl">
                     {value}
                   </div>
                   <span className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">

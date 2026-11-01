@@ -111,9 +111,9 @@ export default function ScentFinder() {
   const discount = result ? discountPct(result.price, result.mrp) : 0
 
   return (
-    <section id="scent-finder" aria-labelledby="scent-finder-heading" className="scroll-mt-20 bg-[#0D1B2E] py-20 md:py-28 relative">
+    <section id="scent-finder" aria-labelledby="scent-finder-heading" className="scroll-mt-20 bg-[#0A0A0A] py-20 md:py-28 relative">
       <div className="shell">
-        <div className="rounded-3xl border border-[#1E3A5F] bg-[#0F1E35] p-8 md:p-14 shadow-card relative overflow-hidden">
+        <div className="rounded-3xl border border-[#262626] bg-[#161616] p-8 md:p-14 shadow-card relative overflow-hidden">
           
           {/* Subtle gold aura backdrop */}
           <div
@@ -126,10 +126,10 @@ export default function ScentFinder() {
             {/* Header info (Left 5 Cols) */}
             <div className="lg:col-span-5">
               <span className="section-tag mb-4">Olfactory Matching</span>
-              <h2 id="scent-finder-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#EAE6FF] md:text-5xl">
+              <h2 id="scent-finder-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
                 Find Your <span className="gold-gradient-text italic">Signature</span> Sillage
               </h2>
-              <p className="mt-5 text-sm leading-[1.8] text-[#9BAEC8]">
+              <p className="mt-5 text-sm leading-[1.8] text-[#A8A29E]">
                 Three bespoke questions calibrated to your tastes, occasions, and skin chemistry. Uncover the fragrance created to become your signature.
               </p>
 
@@ -145,7 +145,7 @@ export default function ScentFinder() {
                       <div
                         key={q.key}
                         className={`h-1.5 flex-1 rounded-full transition-all duration-400 ${
-                          i <= step ? 'bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C]' : 'bg-[#0D1B2E] border border-[#1E3A5F]'
+                          i <= step ? 'bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C]' : 'bg-[#0A0A0A] border border-[#262626]'
                         }`}
                       />
                     ))}
@@ -164,15 +164,15 @@ export default function ScentFinder() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.35 }}
-                    className="rounded-3xl border border-[#1E3A5F] bg-[#112240] p-6 md:p-8 shadow-sm"
+                    className="rounded-3xl border border-[#262626] bg-[#121212] p-6 md:p-8 shadow-sm"
                   >
                     <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C9A84C] mb-2">
                       Question 0{step + 1}
                     </p>
-                    <h3 className="font-serif text-2xl font-semibold text-[#EAE6FF] md:text-3xl">
+                    <h3 className="font-serif text-2xl font-semibold text-[#F5F2EB] md:text-3xl">
                       {questions[step].title}
                     </h3>
-                    <p className="mt-1 text-xs text-[#6B7FA3] mb-6">{questions[step].subtitle}</p>
+                    <p className="mt-1 text-xs text-[#78716C] mb-6">{questions[step].subtitle}</p>
 
                     <div className="grid gap-3 sm:grid-cols-2">
                       {questions[step].options.map((opt) => (
@@ -180,17 +180,17 @@ export default function ScentFinder() {
                           key={opt.value}
                           type="button"
                           onClick={() => pick(questions[step].key, opt.value)}
-                          className="group rounded-2xl border border-[#1E3A5F] bg-[#0F1E35] p-4 text-left transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#152642] hover:shadow-sm"
+                          className="group rounded-2xl border border-[#262626] bg-[#161616] p-4 text-left transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#1C1C1C] hover:shadow-sm"
                         >
                           <div className="flex items-center justify-between">
-                            <span className="font-serif text-base font-semibold text-[#EAE6FF] group-hover:text-[#C9A84C] transition-colors">
+                            <span className="font-serif text-base font-semibold text-[#F5F2EB] group-hover:text-[#C9A84C] transition-colors">
                               {opt.label}
                             </span>
                             <span className="text-[#C9A84C] text-xs opacity-0 transition-opacity group-hover:opacity-100">
                               →
                             </span>
                           </div>
-                          <p className="mt-1 text-xs text-[#6B7FA3] leading-relaxed group-hover:text-[#9BAEC8]">
+                          <p className="mt-1 text-xs text-[#78716C] leading-relaxed group-hover:text-[#A8A29E]">
                             {opt.desc}
                           </p>
                         </button>
@@ -201,7 +201,7 @@ export default function ScentFinder() {
                       <button
                         type="button"
                         onClick={() => setStep(step - 1)}
-                        className="mt-6 text-[11px] font-bold uppercase tracking-[0.2em] text-[#6B7FA3] hover:text-[#EAE6FF] transition-colors"
+                        className="mt-6 text-[11px] font-bold uppercase tracking-[0.2em] text-[#78716C] hover:text-[#F5F2EB] transition-colors"
                       >
                         ← Back to previous question
                       </button>
@@ -215,10 +215,10 @@ export default function ScentFinder() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5 }}
-                    className="flex flex-col gap-6 rounded-3xl border border-[#C9A84C]/40 bg-[#112240] p-6 sm:flex-row sm:p-8 shadow-card"
+                    className="flex flex-col gap-6 rounded-3xl border border-[#C9A84C]/40 bg-[#121212] p-6 sm:flex-row sm:p-8 shadow-card"
                   >
                     {/* Matched Product Bottle Showcase */}
-                    <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden rounded-2xl bg-gradient-to-b from-[#0F1E35] to-[#0D1B2E] sm:w-48 p-4 border border-[#1E3A5F]">
+                    <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden rounded-2xl bg-gradient-to-b from-[#161616] to-[#0A0A0A] sm:w-48 p-4 border border-[#262626]">
                       <Image
                         src={result.image}
                         alt={result.imageAlt}
@@ -227,7 +227,7 @@ export default function ScentFinder() {
                         className="object-contain p-2 drop-shadow-[0_12px_24px_rgba(0,0,0,0.5)]"
                       />
                       {discount > 0 && (
-                        <span className="absolute left-2.5 top-2.5 rounded bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#0D1B2E] shadow-sm">
+                        <span className="absolute left-2.5 top-2.5 rounded bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#0A0A0A] shadow-sm">
                           {discount}% off
                         </span>
                       )}
@@ -242,14 +242,14 @@ export default function ScentFinder() {
                         </span>
                       </div>
 
-                      <h3 className="mt-2 font-serif text-2xl font-bold text-[#EAE6FF] sm:text-3xl">
+                      <h3 className="mt-2 font-serif text-2xl font-bold text-[#F5F2EB] sm:text-3xl">
                         {result.name}
                       </h3>
                       <p className="mt-0.5 text-xs font-semibold uppercase tracking-[0.18em] text-[#C9A84C]">
                         {result.tagline}
                       </p>
 
-                      <p className="mt-3 text-xs leading-[1.8] text-[#9BAEC8] line-clamp-3">
+                      <p className="mt-3 text-xs leading-[1.8] text-[#A8A29E] line-clamp-3">
                         {result.description}
                       </p>
 
@@ -257,15 +257,15 @@ export default function ScentFinder() {
                         {result.topNotes.slice(0, 3).map((note) => (
                           <span
                             key={note}
-                            className="rounded-md border border-[#1E3A5F] bg-[#0F1E35] px-2.5 py-0.5 text-[10px] text-[#9BAEC8]"
+                            className="rounded-md border border-[#262626] bg-[#161616] px-2.5 py-0.5 text-[10px] text-[#A8A29E]"
                           >
                             {note}
                           </span>
                         ))}
                       </div>
 
-                      <div className="mt-auto flex flex-wrap items-center gap-4 pt-5 border-t border-[#1E3A5F]">
-                        <span className="text-xl font-bold text-[#EAE6FF]">{formatINR(result.price)}</span>
+                      <div className="mt-auto flex flex-wrap items-center gap-4 pt-5 border-t border-[#262626]">
+                        <span className="text-xl font-bold text-[#F5F2EB]">{formatINR(result.price)}</span>
                         <button
                           type="button"
                           onClick={() => handleAdd(result)}
@@ -277,7 +277,7 @@ export default function ScentFinder() {
                         <button
                           type="button"
                           onClick={restart}
-                          className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6B7FA3] hover:text-[#EAE6FF] transition-colors"
+                          className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#78716C] hover:text-[#F5F2EB] transition-colors"
                         >
                           Retake Quiz
                         </button>

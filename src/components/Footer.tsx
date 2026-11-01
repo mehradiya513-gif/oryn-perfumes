@@ -34,11 +34,11 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="border-t border-[#1E3A5F] bg-[#0A1424] text-[#EAE6FF] relative z-20">
+    <footer className="border-t border-[#262626] bg-[#080808] text-[#F5F2EB] relative z-20">
       <div className="shell pt-16 pb-12 md:pt-20">
         
         {/* Top Brand Banner */}
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8 pb-14 border-b border-[#1E3A5F]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8 pb-14 border-b border-[#262626]">
           
           {/* Brand Identity & Mission (5 Cols) */}
           <div className="lg:col-span-5">
@@ -46,12 +46,12 @@ export default function Footer() {
               <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#C9A84C]/50 bg-[#C9A84C]/10 text-[#C9A84C] shadow-sm">
                 <span className="font-serif text-base font-bold">O</span>
               </div>
-              <span className="font-serif text-2xl font-bold uppercase tracking-brand text-[#EAE6FF]">
+              <span className="font-serif text-2xl font-bold uppercase tracking-brand text-[#F5F2EB]">
                 Oryn
               </span>
             </Link>
 
-            <p className="mt-5 max-w-sm text-sm leading-[1.8] text-[#9BAEC8]">
+            <p className="mt-5 max-w-sm text-sm leading-[1.8] text-[#A8A29E]">
               Accessible Indian haute parfumerie. Pure, long-lasting Extrait concentrations formulated
               with master-blended French oils. Transparent formulation, zero middlemen, nothing above ₹800.
             </p>
@@ -61,7 +61,7 @@ export default function Footer() {
                 href="https://instagram.com/oryn"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-[#1E3A5F] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#9BAEC8] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
+                className="rounded-full border border-[#262626] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8A29E] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
               >
                 Instagram
               </a>
@@ -69,7 +69,7 @@ export default function Footer() {
                 href="https://pinterest.com/oryn"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-[#1E3A5F] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#9BAEC8] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
+                className="rounded-full border border-[#262626] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8A29E] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
               >
                 Pinterest
               </a>
@@ -77,7 +77,7 @@ export default function Footer() {
                 href="https://wa.me/919000000000"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-[#1E3A5F] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#9BAEC8] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
+                className="rounded-full border border-[#262626] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8A29E] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
               >
                 WhatsApp
               </a>
@@ -87,7 +87,7 @@ export default function Footer() {
           {/* Explore Links (2 Cols) */}
           <nav className="lg:col-span-2" aria-label="Explore Collection">
             <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A84C]">Explore</p>
-            <ul className="space-y-3 text-xs text-[#9BAEC8]">
+            <ul className="space-y-3 text-xs text-[#A8A29E]">
               {exploreLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="transition-colors hover:text-[#C9A84C]">
@@ -101,7 +101,7 @@ export default function Footer() {
           {/* Client Care Links (2 Cols) */}
           <nav className="lg:col-span-2" aria-label="Client Concierge">
             <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A84C]">Concierge</p>
-            <ul className="space-y-3 text-xs text-[#9BAEC8]">
+            <ul className="space-y-3 text-xs text-[#A8A29E]">
               {careLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="transition-colors hover:text-[#C9A84C]">
@@ -119,14 +119,14 @@ export default function Footer() {
               {payments.map((p) => (
                 <span
                   key={p.label}
-                  className="rounded-md border border-[#1E3A5F] bg-[#112240] px-2.5 py-1 text-[10px] font-bold tracking-wider text-[#EAE6FF]"
+                  className="rounded-md border border-[#262626] bg-[#121212] px-2.5 py-1 text-[10px] font-bold tracking-wider text-[#F5F2EB]"
                   title={p.label}
                 >
                   {p.mark}
                 </span>
               ))}
             </div>
-            <p className="mt-5 text-xs leading-[1.7] text-[#6B7FA3]">
+            <p className="mt-5 text-xs leading-[1.7] text-[#78716C]">
               ✦ Free shipping on orders above ₹499<br />
               ✦ Verified Cash on Delivery pan-India<br />
               ✦ Tamper-proof packaging guarantee
@@ -136,7 +136,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Legal Row */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] text-[#6B7FA3]">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] text-[#78716C]">
           <p>&copy; {new Date().getFullYear()} ORYN PARFUMS. ALL RIGHTS RESERVED.</p>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:text-[#C9A84C] transition-colors">Privacy Policy</Link>

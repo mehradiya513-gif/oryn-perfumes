@@ -19,17 +19,17 @@ export default function Bestsellers() {
     : allProducts.filter((p) => p.category === selectedCategory)
 
   return (
-    <section id="bestsellers" aria-labelledby="bestsellers-heading" className="scroll-mt-20 bg-[#0D1B2E] py-20 md:py-28 relative">
+    <section id="bestsellers" aria-labelledby="bestsellers-heading" className="scroll-mt-20 bg-[#0A0A0A] py-20 md:py-28 relative">
       <div className="shell">
         {/* Section Header */}
         <div className="mb-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:mb-12">
           <div>
             <span className="section-tag mb-4">Master Formulation</span>
-            <h2 id="bestsellers-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#EAE6FF] md:text-5xl">
+            <h2 id="bestsellers-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
               The Signature <span className="gold-gradient-text italic">Collection</span>
             </h2>
           </div>
-          <p className="max-w-sm text-sm leading-[1.8] text-[#9BAEC8]">
+          <p className="max-w-sm text-sm leading-[1.8] text-[#A8A29E]">
             Crafted without compromises. Long-wearing extrait formulas composed in small batches, always under ₹800.
           </p>
         </div>
@@ -47,8 +47,8 @@ export default function Bestsellers() {
                 onClick={() => setSelectedCategory(category)}
                 className={`relative rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
                   isActive
-                    ? 'border border-[#C9A84C] bg-[#112240] text-[#C9A84C] shadow-sm'
-                    : 'border border-[#1E3A5F] bg-[#0F1E35] text-[#6B7FA3] hover:border-[#C9A84C]/40 hover:text-[#EAE6FF]'
+                    ? 'border border-[#C9A84C] bg-[#121212] text-[#C9A84C] shadow-sm'
+                    : 'border border-[#262626] bg-[#161616] text-[#78716C] hover:border-[#C9A84C]/40 hover:text-[#F5F2EB]'
                 }`}
               >
                 {category}
@@ -83,16 +83,16 @@ export default function Bestsellers() {
         </motion.div>
 
         {/* Bottom guarantee strip */}
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-6 rounded-2xl border border-[#1E3A5F] bg-[#0F1E35] px-6 py-4 text-center shadow-sm">
-          <span className="text-xs font-semibold text-[#EAE6FF]">
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-6 rounded-2xl border border-[#262626] bg-[#161616] px-6 py-4 text-center shadow-sm">
+          <span className="text-xs font-semibold text-[#F5F2EB]">
             ✦ Complimentary Shipping on all orders above ₹499
           </span>
           <span className="hidden text-[#C9A84C] md:inline">·</span>
-          <span className="text-xs font-semibold text-[#EAE6FF]">
+          <span className="text-xs font-semibold text-[#F5F2EB]">
             ✦ Settle via Cash on Delivery or Instant UPI
           </span>
           <span className="hidden text-[#C9A84C] md:inline">·</span>
-          <span className="text-xs font-semibold text-[#EAE6FF]">
+          <span className="text-xs font-semibold text-[#F5F2EB]">
             ✦ 100% Satisfaction or Effortless 7-Day Exchange
           </span>
         </div>

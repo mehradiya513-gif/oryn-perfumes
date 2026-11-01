@@ -61,19 +61,19 @@ function Stars({ count }: { count: number }) {
 
 export default function SocialProof() {
   return (
-    <section id="reviews" aria-labelledby="reviews-heading" className="scroll-mt-20 bg-[#0D1B2E] py-20 md:py-28 relative">
+    <section id="reviews" aria-labelledby="reviews-heading" className="scroll-mt-20 bg-[#0A0A0A] py-20 md:py-28 relative">
       <div className="shell">
         {/* Section Header */}
         <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <span className="section-tag mb-4">Customer Commendations</span>
-            <h2 id="reviews-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#EAE6FF] md:text-5xl">
+            <h2 id="reviews-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
               Worn &amp; <span className="gold-gradient-text italic">Re-ordered</span> Across India
             </h2>
           </div>
-          <div className="flex items-center gap-3 rounded-full border border-[#C9A84C]/30 bg-[#112240] px-5 py-2.5 shadow-sm">
+          <div className="flex items-center gap-3 rounded-full border border-[#C9A84C]/30 bg-[#121212] px-5 py-2.5 shadow-sm">
             <Stars count={5} />
-            <span className="text-xs font-bold text-[#EAE6FF]">4.9 · 2,400+ Verified Orders</span>
+            <span className="text-xs font-bold text-[#F5F2EB]">4.9 · 2,400+ Verified Orders</span>
           </div>
         </div>
 
@@ -86,7 +86,7 @@ export default function SocialProof() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.6, delay: i * 0.08 }}
-              className="flex h-full flex-col rounded-3xl border border-[#1E3A5F] bg-[#0F1E35] p-6 shadow-sm transition-all duration-300 hover:border-[#C9A84C] hover:shadow-card"
+              className="flex h-full flex-col rounded-3xl border border-[#262626] bg-[#161616] p-6 shadow-sm transition-all duration-300 hover:border-[#C9A84C] hover:shadow-card"
             >
               <div className="flex items-center justify-between">
                 <Stars count={review.stars} />
@@ -95,13 +95,13 @@ export default function SocialProof() {
                 </span>
               </div>
 
-              <p className="mt-4 flex-1 text-sm leading-[1.8] text-[#9BAEC8] italic">
+              <p className="mt-4 flex-1 text-sm leading-[1.8] text-[#A8A29E] italic">
                 &ldquo;{review.text}&rdquo;
               </p>
 
-              <div className="mt-6 border-t border-[#1E3A5F] pt-4">
-                <p className="text-xs font-bold text-[#EAE6FF] uppercase tracking-wider">
-                  {review.name} <span className="font-normal text-[#6B7FA3]">· {review.city}</span>
+              <div className="mt-6 border-t border-[#262626] pt-4">
+                <p className="text-xs font-bold text-[#F5F2EB] uppercase tracking-wider">
+                  {review.name} <span className="font-normal text-[#78716C]">· {review.city}</span>
                 </p>
                 <p className="text-[11px] font-medium text-[#C9A84C] mt-0.5">
                   Favorite: {review.scent}
@@ -112,19 +112,19 @@ export default function SocialProof() {
         </div>
 
         {/* UGC Community Gallery */}
-        <div className="mt-16 pt-12 border-t border-[#1E3A5F]">
+        <div className="mt-16 pt-12 border-t border-[#262626]">
           <div className="mb-6 flex items-center justify-between">
             <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">
               #WearORYN · The Community Lookbook
             </span>
-            <span className="text-xs text-[#6B7FA3]">Tagged by 8,000+ creators on Instagram</span>
+            <span className="text-xs text-[#78716C]">Tagged by 8,000+ creators on Instagram</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
             {ugc.map((item) => (
               <div
                 key={item.src}
-                className="group relative aspect-square overflow-hidden rounded-2xl border border-[#1E3A5F] bg-[#0F1E35] shadow-sm"
+                className="group relative aspect-square overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] shadow-sm"
               >
                 <Image
                   src={item.src}
@@ -136,7 +136,7 @@ export default function SocialProof() {
                 />
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-[#0D1B2E]/90 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-80"
+                  className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-80"
                 />
                 <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <p className="text-[11px] font-bold text-white">{item.name}</p>

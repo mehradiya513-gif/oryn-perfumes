@@ -10,15 +10,15 @@
   box-sizing: border-box;
 }
 
-/* Custom smooth scrollbar — navy & gold */
+/* Custom smooth scrollbar — black & gold */
 ::-webkit-scrollbar {
   width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #0D1B2E;
+  background: #0A0A0A;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1E3A5F;
+  background: #262626;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -50,7 +50,7 @@
 /* ————— Gold aura radial glow ————— */
 .gold-aura,
 .rose-aura {
-  background: radial-gradient(circle at center, rgba(201, 168, 76, 0.14) 0%, rgba(13, 27, 46, 0) 70%);
+  background: radial-gradient(circle at center, rgba(201, 168, 76, 0.14) 0%, rgba(10, 10, 10, 0) 70%);
 }
 
 /* ————— Gold divider line ————— */
@@ -61,14 +61,14 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #0D1B2E;
+  background-color: #0A0A0A;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #0D1B2E;
-  color: #EAE6FF;
+  background-color: #0A0A0A;
+  color: #F5F2EB;
   font-family: var(--font-body, 'Inter'), system-ui, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -87,7 +87,7 @@ h6 {
   font-family: var(--font-display, 'Playfair Display'), Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.015em;
-  color: #EAE6FF;
+  color: #F5F2EB;
 }
 
 button,
@@ -125,29 +125,29 @@ textarea {
     background-color: #C9A84C;
   }
 
-  /* ————— Luxury Button System: Champagne Gold & Midnight Navy ————— */
+  /* ————— Luxury Button System: Champagne Gold & Pure Black ————— */
   .btn-gold {
-    @apply inline-flex items-center justify-center px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#0D1B2E] transition-all duration-300 hover:brightness-110 active:scale-[0.98];
+    @apply inline-flex items-center justify-center px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#0A0A0A] transition-all duration-300 hover:brightness-110 active:scale-[0.98];
     background: linear-gradient(135deg, #C9A84C 0%, #E8D5A3 50%, #C9A84C 100%);
     background-size: 200% auto;
     box-shadow: 0 4px 20px -4px rgba(201, 168, 76, 0.4);
   }
 
   .btn-dark {
-    @apply inline-flex items-center justify-center border border-[#1E3A5F] bg-[#0F1E35] text-[#EAE6FF] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#C9A84C] hover:text-[#0D1B2E] hover:shadow-gold active:scale-[0.98];
+    @apply inline-flex items-center justify-center border border-[#262626] bg-[#161616] text-[#F5F2EB] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#C9A84C] hover:text-[#0A0A0A] hover:shadow-gold active:scale-[0.98];
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center border border-[#C9A84C]/50 text-[#C9A84C] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#C9A84C] hover:text-[#0D1B2E] hover:shadow-gold active:scale-[0.98];
+    @apply inline-flex items-center justify-center border border-[#C9A84C]/50 text-[#C9A84C] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:border-[#C9A84C] hover:bg-[#C9A84C] hover:text-[#0A0A0A] hover:shadow-gold active:scale-[0.98];
   }
 
   .btn-light {
-    @apply inline-flex items-center justify-center border border-[#1E3A5F] bg-[#112240] text-[#EAE6FF] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:bg-[#1E3A5F] hover:border-[#C9A84C]/50 hover:shadow-gold-sm active:scale-[0.98];
+    @apply inline-flex items-center justify-center border border-[#262626] bg-[#121212] text-[#F5F2EB] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] transition-all duration-300 hover:bg-[#262626] hover:border-[#C9A84C]/50 hover:shadow-gold-sm active:scale-[0.98];
   }
 
-  /* Deep navy frosted glass card */
+  /* Deep black frosted glass card */
   .glass-card {
-    background: rgba(15, 30, 53, 0.75);
+    background: rgba(22, 22, 22, 0.75);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(201, 168, 76, 0.15);

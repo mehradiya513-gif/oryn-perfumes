@@ -35,9 +35,9 @@ export default function Newsletter() {
   }
 
   return (
-    <section id="newsletter" aria-labelledby="newsletter-heading" className="scroll-mt-20 bg-[#0D1B2E] py-20 md:py-28 relative">
+    <section id="newsletter" aria-labelledby="newsletter-heading" className="scroll-mt-20 bg-[#0A0A0A] py-20 md:py-28 relative">
       <div className="shell">
-        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-[#1E3A5F] bg-gradient-to-b from-[#112240] via-[#0F1E35] to-[#0D1B2E] p-8 md:p-16 text-center shadow-card">
+        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-[#262626] bg-gradient-to-b from-[#121212] via-[#161616] to-[#0A0A0A] p-8 md:p-16 text-center shadow-card">
           
           {/* Subtle central gold aura */}
           <div
@@ -48,11 +48,11 @@ export default function Newsletter() {
           <div className="relative z-10">
             <span className="section-tag mb-4">Private Society</span>
             
-            <h2 id="newsletter-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#EAE6FF] md:text-5xl">
+            <h2 id="newsletter-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
               Join The <span className="gold-gradient-text italic">Fragrance Circle</span>
             </h2>
 
-            <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#9BAEC8]">
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#A8A29E]">
               Receive a private 10% welcome privilege toward your first order, plus exclusive early allocations of seasonal batch extraits.
             </p>
 
@@ -60,12 +60,12 @@ export default function Newsletter() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="mx-auto mt-8 max-w-md rounded-2xl border border-[#C9A84C]/40 bg-[#112240] p-6 text-sm text-[#EAE6FF]"
+                className="mx-auto mt-8 max-w-md rounded-2xl border border-[#C9A84C]/40 bg-[#121212] p-6 text-sm text-[#F5F2EB]"
                 role="status"
               >
                 <span className="text-[#C9A84C] text-lg block mb-1">✦</span>
-                <p className="font-serif text-lg font-semibold text-[#EAE6FF]">You are formally initiated.</p>
-                <p className="text-xs text-[#9BAEC8] mt-1">
+                <p className="font-serif text-lg font-semibold text-[#F5F2EB]">You are formally initiated.</p>
+                <p className="text-xs text-[#A8A29E] mt-1">
                   Check your inbox for your exclusive 10% privilege invitation code.
                 </p>
               </motion.div>
@@ -80,7 +80,7 @@ export default function Newsletter() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address…"
-                    className="flex-1 rounded-2xl border border-[#1E3A5F] bg-[#0D1B2E] px-5 py-3.5 text-sm text-[#EAE6FF] placeholder:text-[#6B7FA3] outline-none transition-colors focus:border-[#C9A84C]"
+                    className="flex-1 rounded-2xl border border-[#262626] bg-[#0A0A0A] px-5 py-3.5 text-sm text-[#F5F2EB] placeholder:text-[#78716C] outline-none transition-colors focus:border-[#C9A84C]"
                   />
                   <button
                     type="submit"
@@ -91,7 +91,7 @@ export default function Newsletter() {
                   </button>
                 </div>
 
-                <div className="flex items-center justify-center gap-2 pt-2 text-xs text-[#6B7FA3]">
+                <div className="flex items-center justify-center gap-2 pt-2 text-xs text-[#78716C]">
                   <span>Prefer WhatsApp dispatch?</span>
                   <label htmlFor="newsletter-phone" className="sr-only">WhatsApp number</label>
                   <input
@@ -100,13 +100,13 @@ export default function Newsletter() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 Mobile…"
-                    className="w-32 rounded-xl border border-[#1E3A5F] bg-[#0D1B2E] px-2.5 py-1 text-xs text-[#EAE6FF] placeholder:text-[#6B7FA3] outline-none focus:border-[#C9A84C]"
+                    className="w-32 rounded-xl border border-[#262626] bg-[#0A0A0A] px-2.5 py-1 text-xs text-[#F5F2EB] placeholder:text-[#78716C] outline-none focus:border-[#C9A84C]"
                   />
                   <a
                     href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi ORYN! Send me the 10% first-order privilege code.')}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="border-b border-[#C9A84C] text-[10px] font-bold uppercase tracking-wider text-[#C9A84C] hover:text-[#EAE6FF] transition-colors"
+                    className="border-b border-[#C9A84C] text-[10px] font-bold uppercase tracking-wider text-[#C9A84C] hover:text-[#F5F2EB] transition-colors"
                   >
                     Dispatch Privileges
                   </a>
@@ -114,7 +114,7 @@ export default function Newsletter() {
               </form>
             )}
 
-            <div className="mt-8 flex items-center justify-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B7FA3]">
+            <div className="mt-8 flex items-center justify-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#78716C]">
               <span>✦ Pure French Oils</span>
               <span>✦ Zero Spam Guarantee</span>
               <span>✦ Monthly Releases Only</span>

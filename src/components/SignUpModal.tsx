@@ -150,7 +150,7 @@ export default function SignUpModal() {
   if (!signUpOpen) return null
 
   const inputClass =
-    'w-full bg-[#112240] border border-[#1E3A5F] rounded-xl focus:border-[#C9A84C] outline-none px-4 py-3 text-sm text-[#EAE6FF] placeholder:text-[#6B7FA3] transition-colors'
+    'w-full bg-[#121212] border border-[#262626] rounded-xl focus:border-[#C9A84C] outline-none px-4 py-3 text-sm text-[#F5F2EB] placeholder:text-[#78716C] transition-colors'
   const labelClass = 'block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2 font-bold'
 
   return (
@@ -158,12 +158,12 @@ export default function SignUpModal() {
       <div
         ref={overlayRef}
         onClick={handleClose}
-        className="absolute inset-0 bg-[#070D17]/75 backdrop-blur-md"
+        className="absolute inset-0 bg-[#050505]/75 backdrop-blur-md"
       />
 
       <div
         ref={modalRef}
-        className="relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[#1E3A5F] bg-[#0D1B2E] text-[#EAE6FF] p-8 md:p-12 shadow-card animate-fade-in"
+        className="relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[#262626] bg-[#0A0A0A] text-[#F5F2EB] p-8 md:p-12 shadow-card animate-fade-in"
       >
         {/* Gold aura background */}
         <div
@@ -171,17 +171,17 @@ export default function SignUpModal() {
           className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-[#C9A84C]/15 blur-[80px]"
         />
 
-        <div className="relative z-10 flex items-start justify-between border-b border-[#1E3A5F] pb-6 mb-8">
+        <div className="relative z-10 flex items-start justify-between border-b border-[#262626] pb-6 mb-8">
           <div>
             <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">Client Access</p>
-            <h2 className="font-serif text-3xl font-semibold text-[#EAE6FF]">
+            <h2 className="font-serif text-3xl font-semibold text-[#F5F2EB]">
               {isSignUp ? 'Join The House of ORYN' : 'Welcome Back'}
             </h2>
           </div>
           <button
             type="button"
             onClick={handleClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#1E3A5F] text-[#6B7FA3] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#262626] text-[#78716C] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
             aria-label="Close"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -256,7 +256,7 @@ export default function SignUpModal() {
                     className={`${inputClass} cursor-pointer`}
                   >
                     {countries.map((c) => (
-                      <option key={c} value={c} className="bg-[#112240] text-[#EAE6FF]">
+                      <option key={c} value={c} className="bg-[#121212] text-[#F5F2EB]">
                         {c}
                       </option>
                     ))}
@@ -283,7 +283,7 @@ export default function SignUpModal() {
           </button>
         </form>
 
-        <p className="relative z-10 mt-8 text-center text-xs font-light text-[#9BAEC8]">
+        <p className="relative z-10 mt-8 text-center text-xs font-light text-[#A8A29E]">
           {isSignUp ? (
             <>
               Already have an account?{' '}
@@ -293,7 +293,7 @@ export default function SignUpModal() {
                   setIsSignUp(false)
                   setStatus('')
                 }}
-                className="text-[#C9A84C] underline underline-offset-4 hover:text-[#EAE6FF] transition-colors ml-1"
+                className="text-[#C9A84C] underline underline-offset-4 hover:text-[#F5F2EB] transition-colors ml-1"
               >
                 Sign in
               </button>
@@ -307,7 +307,7 @@ export default function SignUpModal() {
                   setIsSignUp(true)
                   setStatus('')
                 }}
-                className="text-[#C9A84C] underline underline-offset-4 hover:text-[#EAE6FF] transition-colors ml-1"
+                className="text-[#C9A84C] underline underline-offset-4 hover:text-[#F5F2EB] transition-colors ml-1"
               >
                 Create an account
               </button>
