@@ -34,7 +34,7 @@ export type Product = {
 export const categories: { name: Category; blurb: string; image: string }[] = [
   { name: 'For Him', blurb: 'Oud, woods & dark spices', image: '/images/black-oud-dark.png' },
   { name: 'For Her', blurb: 'Florals & warm gourmands', image: '/images/strawberry-red.png' },
-  { name: 'Unisex', blurb: 'Shared, signature scents', image: '/images/arabian-oud-purple.png' },
+  { name: 'Unisex', blurb: 'Shared, signature scents', image: '/images/oryn-gold-logo-transparent.png' },
   { name: 'Gift Sets', blurb: 'Duos & curated boxes', image: '/images/bloom-gold.png' },
 ]
 
@@ -55,8 +55,8 @@ export const products: Product[] = [
     baseNotes: ['Warm Amber', 'Smoked Oakwood', 'Vetiver'],
     longevity: '8–10 hours',
     bestseller: true,
-    image: '/images/arabian-oud-purple.png',
-    imageAlt: 'ORYN Arabian Oud — eau de parfum bottle on a purple ground',
+    image: '/images/oryn-gold-logo-transparent.png',
+    imageAlt: 'ORYN Arabian Oud — Signature Extrait featuring the ORYN golden insignia',
     imageHover: '/images/black-oud-dark.png',
   },
   {

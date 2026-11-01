@@ -40,7 +40,7 @@ const reviews = [
 
 const ugc = [
   { src: '/images/strawberry-red.png', alt: 'ORYN Wild Strawberry on dressing table', name: 'Wild Strawberry' },
-  { src: '/images/arabian-oud-purple.png', alt: 'ORYN Arabian Oud in dusk light', name: 'Arabian Oud' },
+  { src: '/images/oryn-gold-logo-transparent.png', alt: 'ORYN Arabian Oud signature brand insignia', name: 'Arabian Oud' },
   { src: '/images/passport-pink.png', alt: 'ORYN Passport on pink velvet', name: 'Passport' },
   { src: '/images/shanaya-green.png', alt: 'ORYN Shanaya botanical shot', name: 'Shanaya' },
   { src: '/images/gucci-flora-blue.png', alt: 'ORYN Flora beside peonies', name: 'Flora' },

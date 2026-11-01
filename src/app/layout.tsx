@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     description: 'Premium fragrances under ₹800. Free shipping above ₹499 · COD available.',
     url: 'https://oryn.in',
     siteName: 'ORYN',
-    images: [{ url: '/images/arabian-oud-purple.png', width: 1200, height: 630, alt: 'ORYN perfumes' }],
+    images: [{ url: '/images/oryn-gold-logo-transparent.png', width: 1200, height: 630, alt: 'ORYN perfumes' }],
     locale: 'en_IN',
     type: 'website',
   },
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ORYN — Luxury You Can Actually Wear',
     description: 'Premium fragrances under ₹800. Free shipping above ₹499 · COD available.',
-    images: ['/images/arabian-oud-purple.png'],
+    images: ['/images/oryn-gold-logo-transparent.png'],
   },
 }
 
