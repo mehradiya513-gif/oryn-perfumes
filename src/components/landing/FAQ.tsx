@@ -21,8 +21,8 @@ const faqs = [
     a: 'Orders are dispatched within 24 business hours. Express transit typically completes within 2–4 business days for major Indian metropolitan areas. Shipping is complimentary on all orders exceeding ₹499.',
   },
   {
-    q: 'What is the return and exchange procedure?',
-    a: 'We offer an unconditional 7-day return policy on unopened flacons. Should any item arrive compromised or leaking during courier transit, we dispatch an immediate complimentary replacement upon receipt of a parcel photograph.',
+    q: 'What if my item arrives damaged or leaking?',
+    a: 'As a hygiene-sensitive category, fragrance flacons cannot be returned or exchanged once dispatched. However, should any item arrive compromised or leaking during courier transit, we dispatch an immediate complimentary replacement upon receipt of a parcel photograph within 48 hours of delivery.',
   },
   {
     q: 'Is Cash on Delivery supported across all locations?',

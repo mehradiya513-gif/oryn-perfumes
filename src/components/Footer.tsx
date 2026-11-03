@@ -19,7 +19,7 @@ export default function Footer() {
 
   const careLinks = [
     { label: 'Shipping & Delivery', href: '/shipping' },
-    { label: '7-Day Return Policy', href: '/refund' },
+    { label: 'Damages & Refunds', href: '/refund' },
     { label: 'Privacy Standards', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },
     { label: 'FAQ', href: '/#faq' },
