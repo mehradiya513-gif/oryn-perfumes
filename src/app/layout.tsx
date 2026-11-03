@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/context/CartContext'
-import AnnouncementBar from '@/components/landing/AnnouncementBar'
 import Header from '@/components/landing/Header'
 import CartDrawer from '@/components/CartDrawer'
 import CheckoutModal from '@/components/CheckoutModal'
@@ -56,7 +55,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="bg-obsidian font-sans text-pearl antialiased selection:bg-gold selection:text-obsidian">
         <CartProvider>
-          <AnnouncementBar />
           <Header />
           <CartDrawer />
           <CheckoutModal />

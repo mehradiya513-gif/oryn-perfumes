@@ -1,41 +1,13 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useCart } from '@/context/CartContext'
-import { products } from '@/lib/products'
+import { motion } from 'framer-motion'
 
 /* ————————————————————————————————————————————————————————————————
    Modern Interactive Editorial Hero — Split-Screen with Live Bottle Stage
 ———————————————————————————————————————————————————————————————— */
 
-const heroScents = [
-  {
-    product: products.find((p) => p.id === 'oryn-arabian-oud') || products[0],
-    accent: '#C9A84C',
-    notes: ['Damask Rose', 'Deep Oud', 'Warm Amber'],
-    vibe: 'Warm, magnetic & regal',
-  },
-  {
-    product: products.find((p) => p.id === 'oryn-strawberry') || products[1],
-    accent: '#E8D5A3',
-    notes: ['Wild Berries', 'Sun Strawberry', 'Bourbon Vanilla'],
-    vibe: 'Playful, sweet & addictive',
-  },
-  {
-    product: products.find((p) => p.id === 'oryn-black-oud') || products[5],
-    accent: '#9E7A2C',
-    notes: ['Black Spices', 'Smoky Birch', 'Dark Leather'],
-    vibe: 'Deep, smoky & commanding',
-  },
-]
-
 export default function Hero() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const activeScent = heroScents[activeIndex]
-  const { addToCart } = useCart()
-
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -97,24 +69,6 @@ export default function Hero() {
               Blended slowly from rare French essences and bottled in Mumbai. High-concentration
               extraits with 8–12 hour sillage, honest prices, and zero middleman markup. Always under ₹800.
             </motion.p>
-
-            {/* Key Value Badges */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.28 }}
-              className="mt-7 flex flex-wrap items-center gap-2.5 text-xs text-[#A8A29E]"
-            >
-              <span className="rounded-lg border border-[#262626] bg-[#161616]/80 px-3.5 py-1.5 font-medium shadow-sm">
-                ✧ 100% Extrait Concentration
-              </span>
-              <span className="rounded-lg border border-[#262626] bg-[#161616]/80 px-3.5 py-1.5 font-medium shadow-sm">
-                ✧ Under ₹800 Honest Luxury
-              </span>
-              <span className="rounded-lg border border-[#262626] bg-[#161616]/80 px-3.5 py-1.5 font-medium shadow-sm">
-                ✧ Complimentary Express &amp; COD
-              </span>
-            </motion.div>
 
             {/* Call To Actions */}
             <motion.div
@@ -178,80 +132,23 @@ export default function Hero() {
 
                 {/* Brand Logo Display replacing bottle image */}
                 <div className="relative my-4 flex h-[280px] w-full items-center justify-center sm:h-[320px]">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeScent.product.id}
-                      initial={{ opacity: 0, y: 15, scale: 0.94 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -15, scale: 0.94 }}
-                      transition={{ duration: 0.45 }}
-                      className="relative h-full w-full"
-                    >
-                      <Image
-                        src="/images/oryn-gold-logo-transparent.png"
-                        alt="ORYN Haute Parfumerie"
-                        fill
-                        priority
-                        sizes="(max-width: 640px) 80vw, 380px"
-                        className="object-contain p-4 drop-shadow-[0_20px_40px_rgba(201,168,76,0.45)]"
-                      />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* Notes Tags Overlay */}
-                <div className="relative z-10 rounded-2xl border border-[#262626] bg-[#161616]/90 p-4 shadow-sm backdrop-blur-md">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-serif text-lg font-semibold text-[#F5F2EB]">
-                        {activeScent.product.name}
-                      </h3>
-                      <p className="text-[11px] text-[#78716C] mt-0.5">{activeScent.vibe}</p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => addToCart(activeScent.product)}
-                      className="rounded-xl bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#0A0A0A] shadow-sm transition-all duration-300 hover:brightness-105 active:scale-95"
-                    >
-                      Add +
-                    </button>
-                  </div>
-
-                  {/* Note Chips */}
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {activeScent.notes.map((note) => (
-                      <span
-                        key={note}
-                        className="rounded-md border border-[#262626] bg-[#121212] px-2.5 py-0.5 text-[10px] font-medium text-[#C9A84C]"
-                      >
-                        {note}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Interactive Scent Switcher Tabs */}
-              <div className="mt-4 flex w-full items-center justify-between gap-2 rounded-2xl border border-[#262626] bg-[#161616]/80 p-1.5 shadow-sm">
-                {heroScents.map((item, idx) => (
-                  <button
-                    key={item.product.id}
-                    type="button"
-                    onClick={() => setActiveIndex(idx)}
-                    className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-2 text-[11px] font-semibold transition-all duration-300 ${
-                      idx === activeIndex
-                        ? 'bg-[#121212] text-[#C9A84C] border border-[#C9A84C]/40 shadow-sm'
-                        : 'text-[#78716C] hover:text-[#F5F2EB]'
-                    }`}
+                  <motion.div
+                    initial={{ opacity: 0, y: 15, scale: 0.94 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.45 }}
+                    className="relative h-full w-full"
                   >
-                    <span
-                      className={`h-2 w-2 rounded-full ${
-                        idx === activeIndex ? 'bg-[#C9A84C] animate-pulse' : 'bg-[#262626]'
-                      }`}
+                    <Image
+                      src="/images/oryn-gold-logo-transparent.png"
+                      alt="ORYN Haute Parfumerie"
+                      fill
+                      priority
+                      sizes="(max-width: 640px) 80vw, 380px"
+                      className="object-contain p-4 drop-shadow-[0_20px_40px_rgba(201,168,76,0.45)]"
                     />
-                    <span className="truncate">{item.product.name}</span>
-                  </button>
-                ))}
+                  </motion.div>
+                </div>
+
               </div>
             </motion.div>
           </div>

@@ -9,7 +9,7 @@ import ProductCard from './ProductCard'
    Bestsellers & Collection Showcase with Interactive Category Tabs
 ———————————————————————————————————————————————————————————————— */
 
-const filterCategories = ['All Fragrances', 'For Him', 'For Her', 'Unisex', 'Gift Sets'] as const
+const filterCategories = ['All Fragrances', 'For Him', 'For Her', 'Unisex'] as const
 
 export default function Bestsellers() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All Fragrances')
@@ -81,21 +81,6 @@ export default function Bestsellers() {
             ))}
           </AnimatePresence>
         </motion.div>
-
-        {/* Bottom guarantee strip */}
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-6 rounded-2xl border border-[#262626] bg-[#161616] px-6 py-4 text-center shadow-sm">
-          <span className="text-xs font-semibold text-[#F5F2EB]">
-            ✦ Complimentary Shipping on all orders above ₹499
-          </span>
-          <span className="hidden text-[#C9A84C] md:inline">·</span>
-          <span className="text-xs font-semibold text-[#F5F2EB]">
-            ✦ Settle via Cash on Delivery or Instant UPI
-          </span>
-          <span className="hidden text-[#C9A84C] md:inline">·</span>
-          <span className="text-xs font-semibold text-[#F5F2EB]">
-            ✦ 100% Satisfaction or Effortless 7-Day Exchange
-          </span>
-        </div>
       </div>
     </section>
   )

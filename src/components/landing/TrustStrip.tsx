@@ -21,27 +21,14 @@ const items = [
       <path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-4 3-6 5-9Zm-2 9a2 2 0 1 0 4 0" strokeLinecap="round" strokeLinejoin="round" />
     ),
   },
-  {
-    label: 'Cash on Delivery',
-    sub: 'Pay at your doorstep across 25,000+ PIN codes',
-    icon: (
-      <path d="M3 8h16a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Zm0 0 2-3h12l2 3M7 13h3" strokeLinecap="round" strokeLinejoin="round" />
-    ),
-  },
-  {
-    label: '7-Day Return Guarantee',
-    sub: 'Effortless exchanges if not completely captivated',
-    icon: (
-      <path d="M3 10a7 7 0 0 1 7-7h8l-3-3m3 3-3 3M21 14a7 7 0 0 1-7 7H6l3 3m-3-3 3-3" strokeLinecap="round" strokeLinejoin="round" />
-    ),
-  },
+
 ]
 
 export default function TrustStrip() {
   return (
     <section id="trust-strip" aria-label="Why shop with ORYN" className="border-y border-[#262626] bg-[#0A0A0A] relative z-20">
       <div className="shell py-10 md:py-12">
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-6">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
           {items.map((item, i) => (
             <motion.li
               key={item.label}
