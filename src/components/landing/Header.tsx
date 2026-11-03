@@ -12,7 +12,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 const navLinks = [
   { label: 'Collection', href: '/#bestsellers' },
-  { label: 'Categories', href: '/#categories' },
   { label: 'Scent Finder', href: '/#scent-finder' },
   { label: 'Notes Pyramid', href: '/#notes' },
   { label: 'Our Story', href: '/about' },
