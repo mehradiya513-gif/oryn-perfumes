@@ -1,6 +1,4 @@
 import Hero from '@/components/landing/Hero'
-import TrustStrip from '@/components/landing/TrustStrip'
-import CategoryTiles from '@/components/landing/CategoryTiles'
 import Bestsellers from '@/components/landing/Bestsellers'
 import ScentFinder from '@/components/landing/ScentFinder'
 import BrandStory from '@/components/landing/BrandStory'
@@ -67,13 +65,7 @@ export default function HomePage() {
       {/* 3 · Hero */}
       <Hero />
 
-      {/* 4 · Trust strip */}
-      <TrustStrip />
-
-      {/* 5 · Shop by Category */}
-      <CategoryTiles />
-
-      {/* 6 · Bestsellers — carousel on mobile, 4-col grid on desktop */}
+      {/* 5 · Bestsellers — carousel on mobile, 4-col grid on desktop */}
       <Bestsellers />
 
       {/* 7 · Scent Finder quiz */}
