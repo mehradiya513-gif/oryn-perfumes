@@ -45,7 +45,7 @@ export default function FAQ() {
             </p>
             <div className="mt-8">
               <a
-                href="https://wa.me/919000000000?text=Hi%20ORYN!%20I%20have%20a%20question%20regarding%20fragrances."
+                href="https://wa.link/9yufbe"
                 target="_blank"
                 rel="noreferrer"
                 className="btn-outline !py-3 !px-6 inline-flex"
