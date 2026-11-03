@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
    WhatsAppFloat — Concierge Floating Direct Line
 ———————————————————————————————————————————————————————————————— */
 
-const WHATSAPP_NUMBER = '919000000000'
+const WHATSAPP_NUMBER = '919877976038'
 
 export default function WhatsAppFloat() {
   return (

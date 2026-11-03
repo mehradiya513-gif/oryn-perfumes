@@ -81,7 +81,7 @@ export default function Footer() {
                 Pinterest
               </a>
               <a
-                href="https://wa.me/919000000000"
+                href="https://wa.me/919877976038"
                 target="_blank"
                 rel="noreferrer"
                 className="rounded-full border border-[#262626] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8A29E] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"

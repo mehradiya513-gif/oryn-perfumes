@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
    Newsletter — Private Fragrance Circle & 10% Welcome Privilege
 ———————————————————————————————————————————————————————————————— */
 
-const WHATSAPP_NUMBER = '919000000000'
+const WHATSAPP_NUMBER = '919877976038'
 
 export default function Newsletter() {
   const [email, setEmail] = useState('')
