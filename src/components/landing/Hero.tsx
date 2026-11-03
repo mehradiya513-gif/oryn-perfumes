@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '@/context/CartContext'
-import { products, formatINR } from '@/lib/products'
+import { products } from '@/lib/products'
 
 /* ————————————————————————————————————————————————————————————————
    Modern Interactive Editorial Hero — Split-Screen with Live Bottle Stage
@@ -175,16 +175,6 @@ export default function Hero() {
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0 bg-radial-gradient from-[#C9A84C]/15 via-transparent to-transparent opacity-80"
                 />
-
-                {/* Badge on Card */}
-                <div className="relative z-10 flex items-center justify-between">
-                  <span className="rounded-full border border-[#C9A84C]/35 bg-[#121212] px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">
-                    Signature Extrait
-                  </span>
-                  <span className="text-xs font-bold text-[#C9A84C]">
-                    {formatINR(activeScent.product.price)}
-                  </span>
-                </div>
 
                 {/* Brand Logo Display replacing bottle image */}
                 <div className="relative my-4 flex h-[280px] w-full items-center justify-center sm:h-[320px]">
