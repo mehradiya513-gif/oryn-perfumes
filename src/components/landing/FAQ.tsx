@@ -24,10 +24,6 @@ const faqs = [
     q: 'What if my item arrives damaged or leaking?',
     a: 'As a hygiene-sensitive category, fragrance flacons cannot be returned or exchanged once dispatched. However, should any item arrive compromised or leaking during courier transit, we dispatch an immediate complimentary replacement upon receipt of a parcel photograph within 48 hours of delivery.',
   },
-  {
-    q: 'Is Cash on Delivery supported across all locations?',
-    a: 'Yes. Cash on Delivery is supported across 25,000+ PIN codes with zero additional fee. You are welcome to inspect the tamper-proof delivery seal and pay the courier agent upon arrival.',
-  },
 ]
 
 export default function FAQ() {
