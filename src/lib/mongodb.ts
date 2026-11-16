@@ -17,12 +17,24 @@ if (!cached) {
 }
 
 async function connectToDatabase(): Promise<typeof mongoose> {
-  const MONGODB_URI = process.env.MONGODB_URI;
+  let MONGODB_URI = process.env.MONGODB_URI;
 
   if (!MONGODB_URI) {
     throw new Error(
       'Please define the MONGODB_URI environment variable inside .env.local'
     );
+  }
+
+  // Sanitize URI: trim whitespace, remove accidental prefix, and strip quotes
+  MONGODB_URI = MONGODB_URI.trim();
+  if (MONGODB_URI.startsWith('MONGODB_URI=')) {
+    MONGODB_URI = MONGODB_URI.slice('MONGODB_URI='.length).trim();
+  }
+  while (MONGODB_URI.startsWith('"') || MONGODB_URI.startsWith("'")) {
+    MONGODB_URI = MONGODB_URI.slice(1).trim();
+  }
+  while (MONGODB_URI.endsWith('"') || MONGODB_URI.endsWith("'")) {
+    MONGODB_URI = MONGODB_URI.slice(0, -1).trim();
   }
 
   // If already connected, return cached connection
