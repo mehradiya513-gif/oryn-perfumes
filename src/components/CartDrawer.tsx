@@ -151,12 +151,8 @@ export default function CartDrawer() {
               onClick={() => {
                 handleClose()
                 setTimeout(() => {
-                  if (!customer) {
-                    setAuthPromptOpen(true)
-                  } else {
-                    setOrderOpen(true)
-                    setStatus('')
-                  }
+                  setOrderOpen(true)
+                  setStatus('')
                 }, 300)
               }}
               className="btn-gold w-full text-center"

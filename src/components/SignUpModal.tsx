@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useCart } from '@/context/CartContext'
 
 export default function SignUpModal() {
-  const { signUpOpen, setSignUpOpen, loginCustomer, status, setStatus } = useCart()
+  const { signUpOpen, setSignUpOpen, loginCustomer, status, setStatus, cart, setOrderOpen } = useCart()
 
   const [isSignUp, setIsSignUp] = useState(true)
   const [name, setName] = useState('')
@@ -106,6 +106,9 @@ export default function SignUpModal() {
       setCountry('India')
 
       setSignUpOpen(false)
+      if (cart.length > 0) {
+        setOrderOpen(true)
+      }
       setStatus('Account created. Welcome to ORYN.')
     } else {
       if (!email || !password) {
@@ -133,6 +136,9 @@ export default function SignUpModal() {
       setEmail('')
       setPassword('')
       setSignUpOpen(false)
+      if (cart.length > 0) {
+        setOrderOpen(true)
+      }
       setStatus('Welcome back to ORYN.')
     }
   }

@@ -54,8 +54,16 @@ export async function POST(request: NextRequest) {
       order: orderResponse,
       orderId: newOrder._id.toString()
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error creating order:", error);
-    return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
+    const isConnError =
+      error?.name === 'MongooseServerSelectionError' ||
+      error?.message?.includes('ECONNREFUSED') ||
+      error?.message?.includes('ENOTFOUND') ||
+      error?.message?.includes('querySrv');
+    const msg = isConnError
+      ? 'Database connection failed: your MongoDB Atlas cluster appears unreachable or paused. Please resume it in MongoDB Atlas or update MONGODB_URI in .env.local.'
+      : (error?.message || 'Failed to create order');
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }

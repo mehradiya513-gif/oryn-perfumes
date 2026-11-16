@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import { useCart } from '@/context/CartContext'
 
 export default function AuthPromptPopup() {
-  const { authPromptOpen, setAuthPromptOpen, setSignUpOpen } = useCart()
+  const { authPromptOpen, setAuthPromptOpen, setSignUpOpen, setOrderOpen } = useCart()
   const popupRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -94,6 +94,16 @@ export default function AuthPromptPopup() {
           </button>
           <button onClick={openLogin} className="btn-outline w-full text-center">
             Sign In
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setAuthPromptOpen(false)
+              setTimeout(() => setOrderOpen(true), 80)
+            }}
+            className="w-full text-center text-xs text-[#A8A29E] hover:text-[#C9A84C] py-1 transition-colors uppercase tracking-wider"
+          >
+            Continue as Guest →
           </button>
         </div>
 
