@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 import connectToDatabase from '@/lib/mongodb';
 import Order from '@/models/Order';
 import { sendOrderDispatchedEmail } from '@/lib/email';
@@ -9,6 +10,11 @@ export async function PATCH(
 ) {
   try {
     const id = params.id;
+
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json({ error: 'Invalid order ID format' }, { status: 400 });
+    }
+
     const body = await request.json();
     
     if (body.status !== 'dispatched') {

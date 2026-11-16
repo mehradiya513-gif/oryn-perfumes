@@ -33,10 +33,11 @@ export async function POST(request: NextRequest) {
       email: body.email || 'customer@oryn.com',
       phone: body.phone || '',
       address: body.address || '',
-      country: body.country || '',
+      country: body.country || 'India',
       paymentMethod: body.paymentMethod || 'cod',
       total: body.total || 0,
       items: body.items || [],
+      freebies: body.freebies || [],
       created: new Date().toLocaleString(),
       status: 'pending'
     });
@@ -48,7 +49,11 @@ export async function POST(request: NextRequest) {
       id: newOrder._id.toString()
     };
 
-    return NextResponse.json({ order: orderResponse })
+    return NextResponse.json({ 
+      success: true,
+      order: orderResponse,
+      orderId: newOrder._id.toString()
+    })
   } catch (error) {
     console.error("Error creating order:", error);
     return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })

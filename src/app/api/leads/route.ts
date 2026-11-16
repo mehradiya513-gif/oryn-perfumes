@@ -25,11 +25,16 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+
+    if (!body.email) {
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+    }
+
     await connectToDatabase();
     
     const newLead = new Lead({
-      name: body.name,
-      email: body.email,
+      name: body.name || 'Anonymous',
+      email: body.email.trim(),
       phone: body.phone || '',
       message: body.message || ''
     });

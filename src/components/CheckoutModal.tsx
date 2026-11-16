@@ -110,8 +110,14 @@ export default function CheckoutModal() {
       const data = await response.json()
 
       if (response.ok) {
+        const confirmedOrderId =
+          data.orderId ||
+          data.order?.id ||
+          data.order?._id ||
+          Math.random().toString(36).substring(2, 9).toUpperCase()
+
         setOrderSuccess({
-          id: data.orderId || Math.random().toString(36).substring(2, 9).toUpperCase(),
+          id: confirmedOrderId,
           name,
           email,
           phone,
