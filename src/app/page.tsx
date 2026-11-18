@@ -15,7 +15,7 @@ import { products } from '@/lib/products'
    Product JSON-LD is emitted server-side for SEO.
 ———————————————————————————————————————————————————————————————— */
 
-const origin = 'https://oryn.in'
+const origin = 'https://oryn-perfumes.vercel.app'
 
 const productSchema = {
   '@context': 'https://schema.org',

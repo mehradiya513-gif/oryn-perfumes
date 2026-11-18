@@ -24,7 +24,7 @@ const body = Inter({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://oryn.in'),
+  metadataBase: new URL('https://oryn-perfumes.vercel.app'),
   title: {
     default: 'ORYN — Luxury You Can Actually Wear | Perfumes under ₹800',
     template: '%s — ORYN',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ORYN — Luxury You Can Actually Wear',
     description: 'Premium fragrances under ₹800. Free shipping above ₹499 · COD available.',
-    url: 'https://oryn.in',
+    url: 'https://oryn-perfumes.vercel.app',
     siteName: 'ORYN',
     images: [{ url: '/images/oryn-gold-logo-transparent.png', width: 1200, height: 630, alt: 'ORYN perfumes' }],
     locale: 'en_IN',
