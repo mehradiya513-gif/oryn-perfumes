@@ -11,40 +11,40 @@ const reviews = [
   {
     name: 'Ananya S.',
     city: 'Mumbai',
-    scent: 'Passport',
+    scent: 'Love Affair',
     stars: 5,
-    text: 'Ordered Passport for daily wear — 10 hours later I can still smell warm vanilla. At ₹450, the quality is truly amazing.',
+    text: 'Ordered Love Affair for daily wear — 10 hours later I can still smell warm marshmallow and vanilla. At ₹550, the quality is truly amazing.',
   },
   {
     name: 'Rohan M.',
     city: 'New Delhi',
-    scent: 'Arabian Oud',
+    scent: 'Sultan',
     stars: 5,
-    text: 'Arabian Oud gets me compliments every time I wear it to meetings or dinner. Friends cannot believe it costs under ₹800.',
+    text: 'Sultan gets me compliments every time I wear it to meetings or dinner. Friends cannot believe it costs under ₹800.',
   },
   {
     name: 'Priya K.',
     city: 'Bengaluru',
-    scent: 'Wild Strawberry',
+    scent: 'Scarlet Kiss',
     stars: 5,
-    text: 'Bought the Discovery Duo as a gift and ended up ordering full bottles for myself. Beautiful luxury feel from the box to the bottle.',
+    text: 'Scarlet Kiss has the most beautiful strawberry and vanilla dry down. Beautiful luxury feel from the box to the bottle.',
   },
   {
     name: 'Vikram J.',
     city: 'Pune',
-    scent: 'Black Oud',
+    scent: 'Vodka Ice',
     stars: 5,
-    text: 'Black Oud is my favorite scent now. Rich, smoky, and easily lasts through my whole 12-hour workday. Fast delivery made it easy.',
+    text: 'Vodka Ice is my favorite scent now. Ultra fresh, crisp, and easily lasts through my whole 12-hour workday. Fast delivery made it easy.',
   },
 ]
 
 const ugc = [
-  { src: '/images/strawberry-red.png', alt: 'ORYN Wild Strawberry on dressing table', name: 'Wild Strawberry' },
-  { src: '/images/oryn-gold-logo-transparent.png', alt: 'ORYN Arabian Oud signature brand insignia', name: 'Arabian Oud' },
-  { src: '/images/passport-pink.png', alt: 'ORYN Passport on pink velvet', name: 'Passport' },
-  { src: '/images/shanaya-green.png', alt: 'ORYN Shanaya botanical shot', name: 'Shanaya' },
-  { src: '/images/gucci-flora-blue.png', alt: 'ORYN Flora beside peonies', name: 'Flora' },
-  { src: '/images/black-oud-dark.png', alt: 'ORYN Black Oud moody atmosphere', name: 'Black Oud' },
+  { src: '/images/vodka-ice.png', alt: 'ORYN Vodka Ice luxury flacon', name: 'Vodka Ice' },
+  { src: '/images/scarlet-kiss.png', alt: 'ORYN Scarlet Kiss luxury flacon', name: 'Scarlet Kiss' },
+  { src: '/images/sultan.png', alt: 'ORYN Sultan royal purple flacon', name: 'Sultan' },
+  { src: '/images/love-affair.png', alt: 'ORYN Love Affair soft pink flacon', name: 'Love Affair' },
+  { src: '/images/venom.png', alt: 'ORYN Venom emerald green flacon', name: 'Venom' },
+  { src: '/images/bloom-gold.png', alt: 'ORYN Discovery Duo gift set', name: 'Discovery Duo' },
 ]
 
 function Stars({ count }: { count: number }) {
