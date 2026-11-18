@@ -7,7 +7,6 @@ import OfferBanner from '@/components/landing/OfferBanner'
 import FAQ from '@/components/landing/FAQ'
 import Newsletter from '@/components/landing/Newsletter'
 import StickyAddToCart from '@/components/landing/StickyAddToCart'
-import WhatsAppFloat from '@/components/landing/WhatsAppFloat'
 import { products } from '@/lib/products'
 
 /* ————————————————————————————————————————————————————————————————
@@ -88,7 +87,6 @@ export default function HomePage() {
 
       {/* Extras */}
       <StickyAddToCart />
-      <WhatsAppFloat />
     </>
   )
 }
