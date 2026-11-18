@@ -1,18 +1,30 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import gsap from 'gsap'
+import Link from 'next/link'
+import Image from 'next/image'
 
 type OrderItem = {
   id: string
   name: string
   price: number
   quantity: number
+  image?: string
+}
+
+type FreebieItem = {
+  id: string
+  name: string
+  price?: number
+  quantity?: number
+  image?: string
+  description?: string
 }
 
 type Order = {
   id: string
+  _id?: string
   name: string
   email: string
   phone: string
@@ -21,8 +33,10 @@ type Order = {
   paymentMethod: string
   total: number
   items: OrderItem[]
+  freebies?: FreebieItem[]
   created: string
-  status?: string
+  createdAt?: string
+  status?: 'pending' | 'dispatched'
 }
 
 type Lead = {
@@ -40,9 +54,16 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true)
   const [orders, setOrders] = useState<Order[]>([])
   const [leads, setLeads] = useState<Lead[]>([])
-  const [activeTab, setActiveTab] = useState<'orders' | 'leads'>('orders')
+  const [activeTab, setActiveTab] = useState<'orders' | 'leads' | 'settings'>('orders')
   const [dispatchingId, setDispatchingId] = useState<string | null>(null)
+  const [copyNotification, setCopyNotification] = useState<string | null>(null)
 
+  // Search & Filter state
+  const [searchQuery, setSearchQuery] = useState('')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'dispatched'>('all')
+  const [paymentFilter, setPaymentFilter] = useState<'all' | 'cod' | 'upi'>('all')
+
+  // Settings state
   const [newUsername, setNewUsername] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -50,78 +71,139 @@ export default function AdminDashboardPage() {
   const [settingsError, setSettingsError] = useState('')
   const [isSaving, setIsSaving] = useState(false)
 
-  const dashboardRef = useRef<HTMLDivElement | null>(null)
-
-  // Verify login status on mount — redirect to login page if not authenticated
+  // Verify authentication on mount
   useEffect(() => {
     const isLogged = localStorage.getItem('oryn_seller_logged_in')
     if (isLogged === 'true') {
       setSellerLoggedIn(true)
       fetchOrders()
       fetchLeads()
-      // Load current seller username
       setNewUsername(localStorage.getItem('oryn_seller_username') || 'seller')
     } else {
       router.replace('/admin/login')
     }
   }, [router])
 
-  // Fetch orders from API
-  const fetchOrders = () => {
+  const fetchOrders = async () => {
     setLoading(true)
-    fetch('/api/orders')
-      .then((res) => res.json())
-      .then((data) => {
-        setOrders(data.orders || [])
-        setLoading(false)
-      })
-      .catch(() => {
-        setOrders([])
-        setLoading(false)
-      })
+    try {
+      const res = await fetch('/api/orders')
+      const data = await res.json()
+      setOrders(data.orders || [])
+    } catch {
+      setOrders([])
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const fetchLeads = () => {
-    fetch('/api/leads')
-      .then((res) => res.json())
-      .then((data) => {
-        setLeads(data.leads || [])
-      })
-      .catch(() => setLeads([]))
+  const fetchLeads = async () => {
+    try {
+      const res = await fetch('/api/leads')
+      const data = await res.json()
+      setLeads(data.leads || [])
+    } catch {
+      setLeads([])
+    }
   }
 
-  const handleDispatchOrder = async (orderId: string) => {
+  const handleUpdateStatus = async (orderId: string, newStatus: 'pending' | 'dispatched') => {
     setDispatchingId(orderId)
     try {
       const res = await fetch(`/api/orders/${orderId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'dispatched' })
+        body: JSON.stringify({ status: newStatus }),
       })
       if (res.ok) {
-        setOrders(orders.map(o => o.id === orderId ? { ...o, status: 'dispatched' } : o))
+        setOrders((prev) =>
+          prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o))
+        )
       } else {
-        alert('Failed to update order status')
+        alert('Failed to update status.')
       }
     } catch (e) {
       console.error(e)
+      alert('Error communicating with server.')
     } finally {
       setDispatchingId(null)
     }
   }
 
+  // Copy helper
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text)
+    setCopyNotification(label)
+    setTimeout(() => setCopyNotification(null), 2200)
+  }
+
+  // Export orders to CSV
+  const handleExportCSV = () => {
+    if (orders.length === 0) return
+    const headers = ['Order ID', 'Date', 'Customer Name', 'Email', 'Phone', 'Address', 'Country', 'Payment Method', 'Items', 'Total (INR)', 'Status']
+    const rows = orders.map((o) => [
+      `"${o.id}"`,
+      `"${o.created}"`,
+      `"${o.name.replace(/"/g, '""')}"`,
+      `"${o.email}"`,
+      `"${o.phone || ''}"`,
+      `"${(o.address || '').replace(/"/g, '""')}"`,
+      `"${o.country || 'India'}"`,
+      `"${o.paymentMethod || 'cod'}"`,
+      `"${(o.items || []).map((i) => `${i.name} (x${i.quantity})`).join(', ').replace(/"/g, '""')}"`,
+      o.total,
+      `"${o.status || 'pending'}"`,
+    ])
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n')
+    const encodedUri = encodeURI(csvContent)
+    const link = document.createElement('a')
+    link.setAttribute('href', encodedUri)
+    link.setAttribute('download', `ORYN_Orders_${new Date().toISOString().split('T')[0]}.csv`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   // Dashboard Stats Calculations
   const stats = useMemo(() => {
-    if (orders.length === 0) {
-      return { totalRevenue: 0, orderCount: 0, averageValue: 0 }
-    }
-    const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0)
+    const totalRevenue = orders.reduce((sum, order) => sum + (order.total || 0), 0)
     const orderCount = orders.length
-    const averageValue = Math.round(totalRevenue / orderCount)
-    return { totalRevenue, orderCount, averageValue }
+    const pendingCount = orders.filter((o) => o.status !== 'dispatched').length
+    const dispatchedCount = orders.filter((o) => o.status === 'dispatched').length
+    const averageValue = orderCount > 0 ? Math.round(totalRevenue / orderCount) : 0
+    return { totalRevenue, orderCount, pendingCount, dispatchedCount, averageValue }
   }, [orders])
 
-  // Update credentials handler
+  // Filtered orders
+  const filteredOrders = useMemo(() => {
+    return orders.filter((order) => {
+      // Status filter
+      if (statusFilter === 'pending' && order.status === 'dispatched') return false
+      if (statusFilter === 'dispatched' && order.status !== 'dispatched') return false
+
+      // Payment filter
+      if (paymentFilter === 'cod' && order.paymentMethod !== 'cod') return false
+      if (paymentFilter === 'upi' && !order.paymentMethod?.toLowerCase().includes('upi')) return false
+
+      // Search query
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase()
+        const matchId = order.id?.toLowerCase().includes(q)
+        const matchName = order.name?.toLowerCase().includes(q)
+        const matchEmail = order.email?.toLowerCase().includes(q)
+        const matchPhone = order.phone?.toLowerCase().includes(q)
+        const matchAddress = order.address?.toLowerCase().includes(q)
+        const matchItem = order.items?.some((i) => i.name?.toLowerCase().includes(q))
+        if (!matchId && !matchName && !matchEmail && !matchPhone && !matchAddress && !matchItem) {
+          return false
+        }
+      }
+
+      return true
+    })
+  }, [orders, statusFilter, paymentFilter, searchQuery])
+
+  // Update credentials
   const handleUpdateCredentials = (e: React.FormEvent) => {
     e.preventDefault()
     setSettingsError('')
@@ -131,19 +213,11 @@ export default function AdminDashboardPage() {
     const password = newPassword.trim()
     const confirm = confirmPassword.trim()
 
-    if (!username) {
-      setSettingsError('Username cannot be empty.')
-      return
-    }
-    if (username.length < 3) {
+    if (!username || username.length < 3) {
       setSettingsError('Username must be at least 3 characters.')
       return
     }
-    if (!password) {
-      setSettingsError('Password cannot be empty.')
-      return
-    }
-    if (password.length < 4) {
+    if (!password || password.length < 4) {
       setSettingsError('Password must be at least 4 characters.')
       return
     }
@@ -156,16 +230,15 @@ export default function AdminDashboardPage() {
     setTimeout(() => {
       localStorage.setItem('oryn_seller_username', username)
       localStorage.setItem('oryn_seller_password', password)
-      // Keep admin session cookie alive
       document.cookie = 'oryn_admin_session=true; path=/; max-age=86400; SameSite=Lax'
       setNewPassword('')
       setConfirmPassword('')
       setSettingsSuccess('Access credentials updated successfully!')
       setIsSaving(false)
-    }, 500)
+    }, 400)
   }
 
-  // Logout handler
+  // Logout
   const handleLogout = () => {
     setSellerLoggedIn(false)
     localStorage.removeItem('oryn_seller_logged_in')
@@ -173,27 +246,11 @@ export default function AdminDashboardPage() {
     router.push('/admin/login')
   }
 
-  // Animations when dashboard opens
-  useEffect(() => {
-    if (sellerLoggedIn && !loading) {
-      gsap.fromTo(
-        '.admin-stat-card',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' },
-      )
-      gsap.fromTo(
-        '.admin-order-row',
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out', delay: 0.15 },
-      )
-    }
-  }, [sellerLoggedIn, loading])
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-transparent flex flex-col items-center justify-center space-y-4 text-olive">
-        <span className="text-4xl animate-pulse">⚜️</span>
-        <h2 className="font-serif text-xl font-bold">Loading dashboard...</h2>
+      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center space-y-4 text-[#F5F2EB]">
+        <div className="h-10 w-10 border-2 border-[#262626] border-t-[#C9A84C] rounded-full animate-spin" />
+        <h2 className="font-serif text-xl font-semibold text-[#C9A84C]">Accessing Atelier Registry…</h2>
       </div>
     )
   }
@@ -201,302 +258,571 @@ export default function AdminDashboardPage() {
   if (!sellerLoggedIn) return null
 
   return (
-    <main className="min-h-screen bg-transparent py-24 px-6 sm:px-10 text-olive">
-      {/* Admin Panel Dashboard */}
-      <div className="mx-auto max-w-7xl" ref={dashboardRef}>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sand border border-stone/35">
-                <span className="text-xs">📊</span>
-                <p className="mono-tag text-[9px] font-bold text-stone">Administration</p>
-              </div>
-              <h1 className="font-serif text-4xl font-light lowercase italic tracking-wide text-olive">seller dashboard</h1>
+    <main className="min-h-screen bg-[#0A0A0A] text-[#F5F2EB] py-8 sm:py-12 px-4 sm:px-8 lg:px-12">
+      {/* Toast Notification */}
+      {copyNotification && (
+        <div className="fixed bottom-6 right-6 z-50 rounded-2xl border border-[#C9A84C] bg-[#121212] px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#C9A84C] shadow-gold-sm animate-fade-in flex items-center gap-2">
+          <span>✓</span> {copyNotification}
+        </div>
+      )}
+
+      <div className="mx-auto max-w-7xl space-y-10">
+        
+        {/* Top Header Bar */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#262626]">
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#C9A84C]/40 bg-[#121212] text-[#C9A84C] p-2 shadow-sm">
+              <Image
+                src="/images/oryn-emblem-gold.png"
+                alt="ORYN Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
             </div>
+            <div>
+              <div className="flex items-center gap-2.5">
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">
+                  ORYN Atelier Administration
+                </span>
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" title="System Live" />
+              </div>
+              <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-[#F5F2EB]">
+                Fulfillment &amp; Orders Registry
+              </h1>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={fetchOrders}
+              className="flex items-center gap-2 rounded-xl border border-[#262626] bg-[#121212] px-4 py-2.5 text-xs font-semibold text-[#F5F2EB] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
+              title="Refresh Orders List"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>Refresh</span>
+            </button>
+
+            <Link
+              href="/"
+              className="flex items-center gap-2 rounded-xl border border-[#262626] bg-[#121212] px-4 py-2.5 text-xs font-semibold text-[#F5F2EB] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>Storefront</span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="rounded-xl border border-red-900/60 bg-red-950/20 px-4 py-2.5 text-xs font-semibold text-red-400 hover:bg-red-900/40 transition-colors"
+            >
+              Log Out
+            </button>
+          </div>
+        </div>
+
+        {/* Metric Summary Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="rounded-2xl border border-[#262626] bg-[#121212] p-5 shadow-sm">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[#78716C]">Gross Sales</p>
+            <p className="font-serif text-2xl sm:text-3xl font-bold text-[#F5F2EB] mt-1.5">
+              ₹{stats.totalRevenue.toLocaleString('en-IN')}
+            </p>
+            <span className="text-[10px] text-[#C9A84C] mt-1 block">✦ All orders placed</span>
+          </div>
+
+          <div className="rounded-2xl border border-[#262626] bg-[#121212] p-5 shadow-sm">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[#78716C]">Total Orders</p>
+            <p className="font-serif text-2xl sm:text-3xl font-bold text-[#F5F2EB] mt-1.5">
+              {stats.orderCount}
+            </p>
+            <span className="text-[10px] text-[#A8A29E] mt-1 block">Lifetime volume</span>
+          </div>
+
+          <div className="rounded-2xl border border-amber-900/40 bg-[#14120e] p-5 shadow-sm">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-amber-400">Needs Dispatch</p>
+            <p className="font-serif text-2xl sm:text-3xl font-bold text-amber-300 mt-1.5">
+              {stats.pendingCount}
+            </p>
+            <span className="text-[10px] text-amber-500 mt-1 block">Awaiting packaging</span>
+          </div>
+
+          <div className="rounded-2xl border border-emerald-900/40 bg-[#0e1411] p-5 shadow-sm">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Dispatched</p>
+            <p className="font-serif text-2xl sm:text-3xl font-bold text-emerald-300 mt-1.5">
+              {stats.dispatchedCount}
+            </p>
+            <span className="text-[10px] text-emerald-500 mt-1 block">Handed to courier</span>
+          </div>
+
+          <div className="rounded-2xl border border-[#262626] bg-[#121212] p-5 shadow-sm col-span-2 lg:col-span-1">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[#78716C]">Average Ticket</p>
+            <p className="font-serif text-2xl sm:text-3xl font-bold text-[#C9A84C] mt-1.5">
+              ₹{stats.averageValue.toLocaleString('en-IN')}
+            </p>
+            <span className="text-[10px] text-[#78716C] mt-1 block">Average order total</span>
+          </div>
+        </div>
+
+        {/* Tab Navigation & Search */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#262626] pb-4">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setActiveTab('orders')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                activeTab === 'orders'
+                  ? 'bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] text-[#0A0A0A] shadow-gold-sm'
+                  : 'border border-[#262626] bg-[#121212] text-[#A8A29E] hover:text-[#F5F2EB]'
+              }`}
+            >
+              Orders ({orders.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('leads')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                activeTab === 'leads'
+                  ? 'bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] text-[#0A0A0A] shadow-gold-sm'
+                  : 'border border-[#262626] bg-[#121212] text-[#A8A29E] hover:text-[#F5F2EB]'
+              }`}
+            >
+              Inquiries &amp; Leads ({leads.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('settings')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                activeTab === 'settings'
+                  ? 'bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] text-[#0A0A0A] shadow-gold-sm'
+                  : 'border border-[#262626] bg-[#121212] text-[#A8A29E] hover:text-[#F5F2EB]'
+              }`}
+            >
+              Credentials
+            </button>
+          </div>
+
+          {activeTab === 'orders' && (
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={handleExportCSV}
+                className="flex items-center gap-2 rounded-xl border border-[#262626] bg-[#161616] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#C9A84C] hover:border-[#C9A84C] transition-colors"
+                title="Download CSV for Excel"
+              >
+                <span>📥</span> Export CSV
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Tab 1: Orders View */}
+        {activeTab === 'orders' && (
+          <div className="space-y-6">
             
-            <div className="flex items-center gap-4">
-              <button
-                type="button"
-                onClick={() => router.push('/')}
-                className="rounded-full border border-stone/30 bg-sand text-olive px-6 py-2.5 text-xs font-bold uppercase tracking-wider font-mono transition hover:bg-stone/10 flex items-center gap-2 shadow-xs"
-              >
-                <span>🏠</span> Return to Store
-              </button>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="rounded-full bg-olive hover:bg-stone border border-stone/30 text-oatmeal px-6 py-2.5 text-xs font-bold uppercase tracking-wider font-mono transition shadow-xs"
-              >
-                Log Out
-              </button>
+            {/* Filter Bar */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 rounded-2xl border border-[#262626] bg-[#121212] p-4">
+              {/* Search Bar */}
+              <div className="relative flex-1">
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search by order ID, name, email, phone, or address…"
+                  className="w-full rounded-xl border border-[#262626] bg-[#0A0A0A] pl-10 pr-4 py-2.5 text-xs text-[#F5F2EB] placeholder:text-[#78716C] outline-none focus:border-[#C9A84C] transition-colors"
+                />
+                <svg
+                  className="absolute left-3.5 top-3 text-[#78716C]"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" strokeLinecap="round" />
+                </svg>
+              </div>
+
+              {/* Status Select */}
+              <div className="flex items-center gap-2">
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value as any)}
+                  className="rounded-xl border border-[#262626] bg-[#0A0A0A] px-3 py-2.5 text-xs text-[#F5F2EB] outline-none focus:border-[#C9A84C]"
+                >
+                  <option value="all">Status: All</option>
+                  <option value="pending">Status: ⏳ Pending</option>
+                  <option value="dispatched">Status: ✓ Dispatched</option>
+                </select>
+
+                <select
+                  value={paymentFilter}
+                  onChange={(e) => setPaymentFilter(e.target.value as any)}
+                  className="rounded-xl border border-[#262626] bg-[#0A0A0A] px-3 py-2.5 text-xs text-[#F5F2EB] outline-none focus:border-[#C9A84C]"
+                >
+                  <option value="all">Payment: All</option>
+                  <option value="cod">Payment: COD</option>
+                  <option value="upi">Payment: UPI</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          {/* Statistics Metric Cards */}
-          <div className="grid gap-6 sm:grid-cols-3 mb-12">
-            {[
-              { label: 'Total Revenue', value: `₹${stats.totalRevenue.toLocaleString()}`, border: 'border-stone/20', bg: 'bg-sand/65', text: 'text-olive', icon: '💰' },
-              { label: 'Total Orders', value: stats.orderCount, border: 'border-stone/20', bg: 'bg-sand/65', text: 'text-olive', icon: '📦' },
-              { label: 'Average Ticket', value: `₹${stats.averageValue}`, border: 'border-stone/20', bg: 'bg-sand/65', text: 'text-olive', icon: '⚜️' },
-            ].map((card, idx) => (
-              <div
-                key={idx}
-                className={`admin-stat-card rounded-3xl border ${card.border} ${card.bg} p-6 shadow-soft flex items-center justify-between transition-colors duration-300 hover:border-stone/40`}
-              >
-                <div className="space-y-1">
-                  <p className="text-[10px] font-bold text-stone uppercase tracking-widest font-mono">{card.label}</p>
-                  <p className={`text-3xl font-serif font-normal tracking-wide ${card.text}`}>{card.value}</p>
+            {/* Orders Feed */}
+            {filteredOrders.length === 0 ? (
+              <div className="rounded-3xl border border-[#262626] bg-[#121212] p-16 text-center space-y-4">
+                <div className="mx-auto h-16 w-16 rounded-full border border-[#C9A84C]/30 bg-[#0A0A0A] flex items-center justify-center text-2xl text-[#C9A84C]">
+                  📦
                 </div>
-                <div className="text-2xl bg-sand border border-stone/20 rounded-full h-11 w-11 flex items-center justify-center shadow-xs">
-                  {card.icon}
-                </div>
+                <h3 className="font-serif text-2xl font-semibold text-[#F5F2EB]">
+                  {orders.length === 0 ? 'No orders recorded yet' : 'No matching orders found'}
+                </h3>
+                <p className="text-xs text-[#78716C] max-w-sm mx-auto leading-relaxed">
+                  {orders.length === 0
+                    ? 'When patrons place orders on your ORYN boutique, complete customer files and items will appear here.'
+                    : 'Try clearing your search query or adjusting your status and payment filters.'}
+                </p>
               </div>
-            ))}
-          </div>
+            ) : (
+              <div className="space-y-6">
+                {filteredOrders.map((order) => {
+                  const isDispatched = order.status === 'dispatched'
+                  const rawPhone = order.phone || ''
+                  const cleanPhone = rawPhone.replace(/[^0-9]/g, '')
+                  const waNumber = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`
+                  const courierLabel = `Recipient: ${order.name}\nContact: ${order.phone}\nAddress:\n${order.address}\nCountry: ${order.country || 'India'}\nOrder: #${order.id}\nTotal: ₹${order.total} (${order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Prepaid UPI'})`
 
-          <div className="grid gap-8 lg:grid-cols-3 items-start">
-            {/* Main Content Area */}
-            <div className="lg:col-span-2 space-y-6">
-              
-              {/* Tabs */}
-              <div className="flex items-center gap-2 p-1.5 bg-sand/65 border border-stone/20 rounded-2xl shadow-soft w-fit">
-                <button
-                  onClick={() => setActiveTab('orders')}
-                  className={`px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition ${activeTab === 'orders' ? 'bg-olive text-oatmeal shadow-xs' : 'text-olive/70 hover:text-olive hover:bg-stone/10'}`}
-                >
-                  Purchase Orders
-                </button>
-                <button
-                  onClick={() => setActiveTab('leads')}
-                  className={`px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider font-mono transition ${activeTab === 'leads' ? 'bg-olive text-oatmeal shadow-xs' : 'text-olive/70 hover:text-olive hover:bg-stone/10'}`}
-                >
-                  Customer Leads
-                </button>
-              </div>
-
-            {activeTab === 'orders' ? (
-            <div className="rounded-wabi-2 border border-stone/20 bg-sand/65 p-8 md:p-10 shadow-soft relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-stone/5 rounded-full blur-3xl pointer-events-none" />
-              
-              <div className="flex items-center justify-between mb-8 pb-5 border-b border-stone/20">
-                <h2 className="font-serif text-2xl font-light text-olive">Purchase Orders Vault</h2>
-                <button
-                  onClick={fetchOrders}
-                  className="text-[10px] font-bold uppercase tracking-wider text-olive/80 hover:text-olive flex items-center gap-1.5 bg-sand border border-stone/30 rounded-xl px-4 py-2 transition hover:bg-stone/15 font-mono"
-                >
-                  🔄 Refresh Orders
-                </button>
-              </div>
-
-              {orders.length === 0 ? (
-                <div className="rounded-[28px] border border-dashed border-stone/25 bg-sand/35 p-16 text-center space-y-4">
-                  <span className="text-4xl text-stone/40">⚜️</span>
-                  <p className="text-olive font-serif text-lg font-bold">No purchase orders placed yet</p>
-                  <p className="text-stone/85 text-xs max-w-xs mx-auto leading-relaxed">
-                    When customers purchase fragrances from your ORYN store, their order files will populate in this registry.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  {orders.map((order) => (
+                  return (
                     <div
                       key={order.id}
-                      className="admin-order-row rounded-3xl border border-stone/15 bg-sand/40 p-6 hover:border-stone/35 hover:bg-sand/70 transition duration-300 space-y-5 shadow-xs"
+                      className="rounded-3xl border border-[#262626] bg-[#121212] p-6 sm:p-8 space-y-6 hover:border-[#C9A84C]/40 transition-all shadow-card"
                     >
-                      {/* Header Info */}
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone/15 pb-4">
-                        <div>
+                      {/* Order Header */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#262626]">
+                        <div className="space-y-1">
                           <div className="flex items-center gap-3 flex-wrap">
-                            <p className="text-[10px] font-bold text-stone uppercase tracking-widest font-mono">ORDER FILE #{order.id}</p>
-                            <span className="px-3 py-0.5 rounded-full bg-sand border border-stone/30 text-[9px] font-bold text-olive uppercase tracking-wider font-mono">
-                              {order.paymentMethod === 'cod' ? 'Cash on Delivery' : order.paymentMethod === 'upi' ? 'Pay by any UPI' : order.paymentMethod || 'Cash on Delivery'}
+                            <span className="font-mono text-sm font-bold text-[#C9A84C]">
+                              Order #{order.id}
                             </span>
-                          </div>
-                          <p className="text-base font-serif font-semibold text-olive tracking-wide mt-1.5">{order.name || 'Guest Customer'}</p>
-                        </div>
-                        <div className="sm:text-right flex flex-col sm:items-end gap-2">
-                          <div>
-                            <p className="text-[10px] text-stone/80 font-bold uppercase tracking-wider font-mono">{order.created}</p>
-                            <p className="text-2xl font-serif font-normal text-olive mt-1">₹{order.total}</p>
-                          </div>
-                          <div className="flex items-center gap-2 mt-1">
-                            <span className={`px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-widest font-mono border ${order.status === 'dispatched' ? 'bg-emerald-50/50 border-emerald-200 text-emerald-700' : 'bg-amber-50/50 border-amber-200 text-amber-700'}`}>
-                              {order.status === 'dispatched' ? '✓ Dispatched' : '⏳ Pending'}
-                            </span>
-                            {order.status !== 'dispatched' && (
-                              <button
-                                onClick={() => handleDispatchOrder(order.id)}
-                                disabled={dispatchingId === order.id}
-                                className="px-3 py-1 bg-olive text-oatmeal rounded-md text-[9px] font-bold uppercase tracking-widest font-mono hover:bg-stone transition disabled:opacity-50"
-                              >
-                                {dispatchingId === order.id ? 'Updating...' : 'Mark Dispatched'}
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Customer details Grid */}
-                      <div className="grid gap-4 sm:grid-cols-3 text-xs text-olive/85 bg-sand/40 border border-stone/15 rounded-xl p-4">
-                        <div>
-                          <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Email Address</p>
-                          <p className="font-semibold text-olive/90 mt-1 truncate">{order.email}</p>
-                        </div>
-                        <div>
-                          <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Contact Phone</p>
-                          <p className="font-semibold text-olive/90 mt-1">{order.phone || 'N/A'}</p>
-                        </div>
-                        <div>
-                          <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Delivery Address</p>
-                          <p className="font-semibold text-olive/90 mt-1 whitespace-pre-wrap leading-relaxed">{order.address}</p>
-                        </div>
-                      </div>
-
-                      {/* Purchased items mapping */}
-                      <div className="space-y-3">
-                        <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono">Registry Items</p>
-                        <div className="grid gap-3 sm:grid-cols-2">
-                          {order.items.map((item) => (
-                            <div
-                              key={item.id}
-                              className="flex items-center justify-between rounded-xl bg-sand/40 border border-stone/15 p-4 hover:border-stone/25 transition shadow-2xs"
+                            <button
+                              type="button"
+                              onClick={() => copyToClipboard(order.id, 'Order ID Copied')}
+                              className="text-[10px] text-[#78716C] hover:text-[#C9A84C] transition-colors"
+                              title="Copy Order ID"
                             >
-                              <div className="space-y-1">
-                                <p className="text-xs font-serif font-semibold text-olive">{item.name}</p>
-                                <p className="text-[10px] text-stone/60 font-semibold uppercase tracking-wider font-mono">Qty: {item.quantity}</p>
+                              📋 Copy
+                            </button>
+                            <span
+                              className={`rounded-full px-3 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
+                                order.paymentMethod === 'cod'
+                                  ? 'border-amber-700/50 bg-amber-950/30 text-amber-300'
+                                  : 'border-emerald-700/50 bg-emerald-950/30 text-emerald-300'
+                              }`}
+                            >
+                              {order.paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : order.paymentMethod}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[#78716C]">Placed on: {order.created}</p>
+                        </div>
+
+                        {/* Status & Fulfillment Toggle */}
+                        <div className="flex items-center gap-3">
+                          <span
+                            className={`rounded-full px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider border ${
+                              isDispatched
+                                ? 'border-emerald-500/40 bg-emerald-950/40 text-emerald-300'
+                                : 'border-amber-500/40 bg-amber-950/40 text-amber-300 animate-pulse'
+                            }`}
+                          >
+                            {isDispatched ? '✓ Dispatched' : '⏳ Awaiting Dispatch'}
+                          </span>
+
+                          <button
+                            type="button"
+                            disabled={dispatchingId === order.id}
+                            onClick={() => handleUpdateStatus(order.id, isDispatched ? 'pending' : 'dispatched')}
+                            className={`rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all disabled:opacity-50 ${
+                              isDispatched
+                                ? 'border border-[#262626] bg-[#161616] text-[#A8A29E] hover:text-[#F5F2EB]'
+                                : 'btn-gold !py-2 !px-4'
+                            }`}
+                          >
+                            {dispatchingId === order.id
+                              ? 'Updating…'
+                              : isDispatched
+                              ? 'Revert to Pending'
+                              : 'Mark as Dispatched 🚚'}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Customer Details & Shipping Section */}
+                      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-[#161616] border border-[#262626] rounded-2xl p-5 sm:p-6">
+                        {/* Recipient Contact (5 cols) */}
+                        <div className="md:col-span-5 space-y-3">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">
+                            Customer &amp; Contact
+                          </p>
+                          <div>
+                            <p className="font-serif text-lg font-semibold text-[#F5F2EB]">{order.name}</p>
+                            <a
+                              href={`mailto:${order.email}`}
+                              className="text-xs text-[#A8A29E] hover:text-[#C9A84C] transition-colors block mt-0.5"
+                            >
+                              ✉️ {order.email}
+                            </a>
+                            <p className="text-xs text-[#F5F2EB] font-semibold mt-1">
+                              📞 {order.phone || 'No phone provided'}
+                            </p>
+                          </div>
+
+                          {/* Quick Action Buttons */}
+                          <div className="flex items-center gap-2 pt-2">
+                            {cleanPhone && (
+                              <a
+                                href={`https://wa.me/${waNumber}?text=${encodeURIComponent(
+                                  `Hi ${order.name}, this is ORYN Parfums regarding your order #${order.id}.`
+                                )}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-800/60 bg-emerald-950/30 px-3 py-1.5 text-[11px] font-semibold text-emerald-300 hover:bg-emerald-900/40 transition-colors"
+                              >
+                                <span>💬</span> WhatsApp
+                              </a>
+                            )}
+                            {order.phone && (
+                              <a
+                                href={`tel:${order.phone}`}
+                                className="inline-flex items-center gap-1.5 rounded-lg border border-[#262626] bg-[#121212] px-3 py-1.5 text-[11px] font-semibold text-[#A8A29E] hover:text-[#F5F2EB] transition-colors"
+                              >
+                                <span>📞</span> Call
+                              </a>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => copyToClipboard(courierLabel, 'Courier Label Copied')}
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-[#262626] bg-[#121212] px-3 py-1.5 text-[11px] font-semibold text-[#C9A84C] hover:border-[#C9A84C] transition-colors"
+                            >
+                              <span>📋</span> Copy Label
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Delivery Address (4 cols) */}
+                        <div className="md:col-span-4 space-y-2 border-t md:border-t-0 md:border-l border-[#262626] pt-4 md:pt-0 md:pl-6">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">
+                            Shipping Destination
+                          </p>
+                          <p className="text-xs text-[#F5F2EB] font-medium whitespace-pre-wrap leading-relaxed">
+                            {order.address}
+                          </p>
+                          <p className="text-[11px] text-[#A8A29E] font-semibold mt-1">
+                            🇮🇳 {order.country || 'India'}
+                          </p>
+                        </div>
+
+                        {/* Payment & Total (3 cols) */}
+                        <div className="md:col-span-3 space-y-2 border-t md:border-t-0 md:border-l border-[#262626] pt-4 md:pt-0 md:pl-6 flex flex-col justify-between">
+                          <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">
+                              Payment Method
+                            </p>
+                            <p className="text-xs text-[#F5F2EB] font-semibold mt-1">
+                              {order.paymentMethod === 'cod' ? 'Cash on Delivery' : order.paymentMethod}
+                            </p>
+                          </div>
+                          <div className="pt-3 border-t border-[#262626]">
+                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#78716C]">Payable Total</p>
+                            <p className="font-serif text-2xl font-bold text-[#F5F2EB]">
+                              ₹{order.total}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Items Ordered */}
+                      <div className="space-y-3">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">
+                          Allocated Items ({(order.items || []).length})
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                          {(order.items || []).map((item, idx) => (
+                            <div
+                              key={idx}
+                              className="flex items-center gap-3 rounded-xl border border-[#262626] bg-[#161616] p-3 shadow-xs"
+                            >
+                              <div className="relative h-12 w-10 shrink-0 overflow-hidden rounded-lg bg-[#121212] p-1 border border-[#262626]">
+                                {item.image ? (
+                                  <Image src={item.image} alt={item.name} fill sizes="40px" className="object-contain" />
+                                ) : (
+                                  <div className="h-full w-full flex items-center justify-center text-xs text-[#C9A84C]">⚜️</div>
+                                )}
                               </div>
-                              {item.price === 0 ? (
-                                <span className="inline-block px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-[9px] font-bold text-emerald-800 uppercase tracking-wider font-mono">
-                                  🎁 Free Gift
-                                </span>
-                              ) : (
-                                <p className="text-xs font-bold text-olive font-semibold">₹{item.price * item.quantity}</p>
-                              )}
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs font-semibold text-[#F5F2EB] truncate">{item.name}</p>
+                                <p className="text-[11px] text-[#78716C]">
+                                  Qty: <strong className="text-[#F5F2EB]">{item.quantity}</strong> × ₹{item.price}
+                                </p>
+                              </div>
+                              <p className="text-xs font-bold text-[#C9A84C]">₹{item.price * item.quantity}</p>
+                            </div>
+                          ))}
+
+                          {(order.freebies || []).map((gift, gIdx) => (
+                            <div
+                              key={`gift-${gIdx}`}
+                              className="flex items-center gap-3 rounded-xl border border-[#C9A84C]/30 bg-[#14120e] p-3 shadow-xs"
+                            >
+                              <span className="text-xl text-[#C9A84C]">🎁</span>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs font-semibold text-[#F5F2EB] truncate">{gift.name}</p>
+                                <p className="text-[10px] text-[#C9A84C] uppercase tracking-wider font-bold">Complimentary Gift</p>
+                              </div>
+                              <span className="text-xs font-bold text-[#C9A84C]">Free</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            ) : (
-            <div className="rounded-wabi-2 border border-stone/20 bg-sand/65 p-8 md:p-10 shadow-soft relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-stone/5 rounded-full blur-3xl pointer-events-none" />
-              
-              <div className="flex items-center justify-between mb-8 pb-5 border-b border-stone/20">
-                <h2 className="font-serif text-2xl font-light text-olive">Customer Leads</h2>
-                <button
-                  onClick={fetchLeads}
-                  className="text-[10px] font-bold uppercase tracking-wider text-olive/80 hover:text-olive flex items-center gap-1.5 bg-sand border border-stone/30 rounded-xl px-4 py-2 transition hover:bg-stone/15 font-mono"
-                >
-                  🔄 Refresh Leads
-                </button>
+                  )
+                })}
               </div>
-
-              {leads.length === 0 ? (
-                <div className="rounded-[28px] border border-dashed border-stone/25 bg-sand/35 p-16 text-center space-y-4">
-                  <span className="text-4xl text-stone/40">📝</span>
-                  <p className="text-olive font-serif text-lg font-bold">No leads found</p>
-                  <p className="text-stone/85 text-xs max-w-xs mx-auto leading-relaxed">
-                    Customer inquiries and contact form submissions will appear here.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {leads.map((lead) => (
-                    <div key={lead.id} className="rounded-2xl border border-stone/15 bg-sand/40 p-5 hover:border-stone/35 transition space-y-3 shadow-xs">
-                      <div className="flex justify-between items-start border-b border-stone/10 pb-3">
-                        <div>
-                          <p className="font-serif text-lg font-semibold text-olive">{lead.name}</p>
-                          <div className="flex items-center gap-3 mt-1">
-                            <p className="text-[10px] font-bold font-mono text-stone tracking-wider">{lead.email}</p>
-                            {lead.phone && (
-                              <p className="text-[10px] font-bold font-mono text-stone tracking-wider border-l border-stone/30 pl-3">{lead.phone}</p>
-                            )}
-                          </div>
-                        </div>
-                        <p className="text-[9px] font-bold font-mono text-stone/60 uppercase tracking-widest">{new Date(lead.createdAt).toLocaleDateString()}</p>
-                      </div>
-                      <div>
-                        <p className="text-[9px] uppercase font-bold text-stone tracking-widest font-mono mb-1.5">Message</p>
-                        <p className="text-xs text-olive/90 leading-relaxed bg-white/40 p-3 rounded-xl border border-stone/10">{lead.message || 'No message provided.'}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
             )}
+          </div>
+        )}
+
+        {/* Tab 2: Leads & Contact Messages */}
+        {activeTab === 'leads' && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between pb-3 border-b border-[#262626]">
+              <h2 className="font-serif text-xl font-semibold text-[#F5F2EB]">Customer Inquiries &amp; Newsletter Signups</h2>
+              <span className="text-xs text-[#78716C]">{leads.length} total submissions</span>
             </div>
 
-            {/* Access Settings Card */}
-            <div className="rounded-wabi-2 border border-stone/20 bg-sand/65 p-8 md:p-10 shadow-soft relative overflow-hidden space-y-6">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-stone/5 rounded-full blur-2xl pointer-events-none" />
-              
-              <div className="border-b border-stone/20 pb-5">
-                <h2 className="font-serif text-2xl font-light text-olive">Access Credentials</h2>
-                <p className="text-[10px] text-stone/85 mt-1 font-mono">Manage your seller dashboard login information</p>
+            {leads.length === 0 ? (
+              <div className="rounded-3xl border border-[#262626] bg-[#121212] p-16 text-center space-y-3">
+                <span className="text-3xl text-[#C9A84C]">✉️</span>
+                <p className="font-serif text-xl text-[#F5F2EB]">No customer inquiries recorded yet</p>
+                <p className="text-xs text-[#78716C]">Submissions from your contact page and newsletter form will appear here.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {leads.map((lead) => (
+                  <div key={lead.id} className="rounded-2xl border border-[#262626] bg-[#121212] p-5 space-y-3 shadow-sm">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="font-serif text-base font-semibold text-[#F5F2EB]">{lead.name}</p>
+                        <a href={`mailto:${lead.email}`} className="text-xs text-[#A8A29E] hover:text-[#C9A84C] block mt-0.5">
+                          ✉️ {lead.email}
+                        </a>
+                        {lead.phone && (
+                          <a href={`tel:${lead.phone}`} className="text-xs text-[#F5F2EB] font-medium block mt-0.5">
+                            📞 {lead.phone}
+                          </a>
+                        )}
+                      </div>
+                      <span className="text-[10px] text-[#78716C] font-mono">
+                        {lead.createdAt ? new Date(lead.createdAt).toLocaleDateString() : ''}
+                      </span>
+                    </div>
+
+                    <div className="border-t border-[#262626] pt-3">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#78716C] mb-1">Inquiry / Note</p>
+                      <p className="text-xs text-[#A8A29E] bg-[#161616] border border-[#262626] rounded-xl p-3 leading-relaxed whitespace-pre-wrap">
+                        {lead.message || 'Newsletter 10% welcome privilege requested'}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Tab 3: Credentials & Settings */}
+        {activeTab === 'settings' && (
+          <div className="max-w-xl mx-auto rounded-3xl border border-[#262626] bg-[#121212] p-8 space-y-6 shadow-card">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">Security &amp; Access</p>
+              <h2 className="font-serif text-2xl font-semibold text-[#F5F2EB] mt-1">Change Seller Credentials</h2>
+              <p className="text-xs text-[#78716C] mt-1">
+                Update the login username and password used to access this admin panel.
+              </p>
+            </div>
+
+            <form onSubmit={handleUpdateCredentials} className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={newUsername}
+                  onChange={(e) => { setNewUsername(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
+                  className="w-full rounded-xl border border-[#262626] bg-[#0A0A0A] px-4 py-3 text-xs text-[#F5F2EB] outline-none focus:border-[#C9A84C]"
+                />
               </div>
 
-              <form onSubmit={handleUpdateCredentials} className="space-y-4 relative">
-                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-olive/80 font-mono">
-                  Username
-                  <input
-                    type="text"
-                    value={newUsername}
-                    onChange={(e) => { setNewUsername(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
-                    className="mt-2 w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-2.5 text-xs text-olive outline-none focus:border-olive/60 transition"
-                    placeholder="Enter username"
-                  />
-                </label>
-
-                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-olive/80 font-mono">
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
                   New Password
-                  <input
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => { setNewPassword(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
-                    className="mt-2 w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-2.5 text-xs text-olive outline-none focus:border-olive/60 transition"
-                    placeholder="••••••••"
-                  />
                 </label>
+                <input
+                  type="password"
+                  required
+                  value={newPassword}
+                  onChange={(e) => { setNewPassword(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
+                  className="w-full rounded-xl border border-[#262626] bg-[#0A0A0A] px-4 py-3 text-xs text-[#F5F2EB] outline-none focus:border-[#C9A84C]"
+                  placeholder="••••••••"
+                />
+              </div>
 
-                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-olive/80 font-mono">
-                  Confirm Password
-                  <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => { setConfirmPassword(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
-                    className="mt-2 w-full rounded-xl border border-stone/30 bg-oatmeal px-4 py-2.5 text-xs text-olive outline-none focus:border-olive/60 transition"
-                    placeholder="••••••••"
-                  />
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
+                  Confirm New Password
                 </label>
+                <input
+                  type="password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => { setConfirmPassword(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
+                  className="w-full rounded-xl border border-[#262626] bg-[#0A0A0A] px-4 py-3 text-xs text-[#F5F2EB] outline-none focus:border-[#C9A84C]"
+                  placeholder="••••••••"
+                />
+              </div>
 
-                {settingsError && (
-                  <div className="rounded-xl border border-red-200 bg-red-50/80 px-3 py-2 text-[10px] font-semibold text-red-800 text-center leading-relaxed">
-                    ⚠️ {settingsError}
-                  </div>
-                )}
+              {settingsError && (
+                <div className="rounded-xl border border-red-900/60 bg-red-950/40 p-3 text-xs text-red-300 text-center">
+                  ⚠️ {settingsError}
+                </div>
+              )}
 
-                {settingsSuccess && (
-                  <div className="rounded-xl border border-emerald-200 bg-emerald-50/80 px-3 py-2 text-[10px] font-semibold text-emerald-800 text-center leading-relaxed">
-                    ✓ {settingsSuccess}
-                  </div>
-                )}
+              {settingsSuccess && (
+                <div className="rounded-xl border border-emerald-900/60 bg-emerald-950/40 p-3 text-xs text-emerald-300 text-center">
+                  ✓ {settingsSuccess}
+                </div>
+              )}
 
-                <button
-                  type="submit"
-                  disabled={isSaving}
-                  className="w-full mt-2 rounded-full bg-olive text-oatmeal py-3.5 text-[10px] font-bold uppercase tracking-wider font-mono transition hover:bg-stone disabled:opacity-75 cursor-pointer shadow-sm"
-                >
-                  {isSaving ? 'Saving...' : 'Save Settings'}
-                </button>
-              </form>
-            </div>
+              <button
+                type="submit"
+                disabled={isSaving}
+                className="btn-gold w-full !py-3.5 text-center mt-2 disabled:opacity-50"
+              >
+                {isSaving ? 'Saving…' : 'Update Credentials'}
+              </button>
+            </form>
           </div>
-        </div>
+        )}
+
+      </div>
     </main>
   )
 }
