@@ -92,25 +92,6 @@ export default function Hero() {
                 Take Scent Quiz
               </button>
             </motion.div>
-
-            {/* Trust Quote / Stats */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.45 }}
-              className="mt-10 flex items-center gap-6 border-t border-[#262626] pt-6"
-            >
-              <div className="flex items-center gap-1.5">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <span key={s} className="text-[#C9A84C] text-xs">★</span>
-                ))}
-                <span className="ml-1.5 text-xs font-bold text-[#F5F2EB]">4.9 / 5</span>
-              </div>
-              <span className="h-3 w-px bg-[#262626]" />
-              <p className="text-xs text-[#78716C]">
-                Loved by <strong className="text-[#F5F2EB] font-semibold">14,000+ happy customers</strong> across India
-              </p>
-            </motion.div>
           </div>
 
           {/* ————— RIGHT COLUMN: Spotlight Editorial Bottle Stage ————— */}
