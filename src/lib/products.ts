@@ -7,7 +7,7 @@
    All prices are in ₹. Every product must stay under ₹800.
 ———————————————————————————————————————————————————————————————— */
 
-export type Category = 'For Him' | 'For Her' | 'Unisex' | 'Gift Sets'
+export type Category = 'For Him' | 'For Her' | 'Unisex'
 
 export type Product = {
   id: string
@@ -35,7 +35,6 @@ export const categories: { name: Category; blurb: string; image: string }[] = [
   { name: 'For Him', blurb: 'Oud, rich woods & amber', image: '/images/sultan.png' },
   { name: 'For Her', blurb: 'Sweet vanilla & berries', image: '/images/scarlet-kiss.png' },
   { name: 'Unisex', blurb: 'Crisp, fresh & clean', image: '/images/vodka-ice.png' },
-  { name: 'Gift Sets', blurb: 'Duos & curated boxes', image: '/images/bloom-gold.png' },
 ]
 
 export const products: Product[] = [
@@ -138,26 +137,6 @@ export const products: Product[] = [
     image: '/images/venom.png',
     imageAlt: 'ORYN Venom — Luxury perfume in emerald green flacon',
     imageHover: '/images/IMG_4395.PNG',
-  },
-  {
-    id: 'oryn-gift-duo',
-    name: 'The Discovery Duo',
-    tagline: 'Two 10ml travel sprays · Gift boxed',
-    description:
-      'Pick any two travel sprays from our new collection in the ORYN gift box — the easiest way to gift luxury or find your signature.',
-    price: 499,
-    mrp: 699,
-    category: 'Gift Sets',
-    family: 'Gift Set',
-    concentration: 'Travel sprays · 10ml × 2',
-    topNotes: ['Your choice — any two from the new collection'],
-    heartNotes: [],
-    baseNotes: [],
-    longevity: 'Varies by scent',
-    bestseller: false,
-    image: '/images/bloom-gold.png',
-    imageAlt: 'The ORYN Discovery Duo gift set — two travel sprays',
-    imageHover: '/images/sultan.png',
   },
 ]
 

@@ -32,7 +32,7 @@ export default function CategoryTiles() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
           {categories.map((cat, i) => (
             <motion.button
               key={cat.name}

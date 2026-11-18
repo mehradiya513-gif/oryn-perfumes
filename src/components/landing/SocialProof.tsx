@@ -44,7 +44,6 @@ const ugc = [
   { src: '/images/sultan.png', alt: 'ORYN Sultan royal purple flacon', name: 'Sultan' },
   { src: '/images/love-affair.png', alt: 'ORYN Love Affair soft pink flacon', name: 'Love Affair' },
   { src: '/images/venom.png', alt: 'ORYN Venom emerald green flacon', name: 'Venom' },
-  { src: '/images/bloom-gold.png', alt: 'ORYN Discovery Duo gift set', name: 'Discovery Duo' },
 ]
 
 function Stars({ count }: { count: number }) {
@@ -120,7 +119,7 @@ export default function SocialProof() {
             <span className="text-xs text-[#78716C]">Tagged by 8,000+ creators on Instagram</span>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
             {ugc.map((item) => (
               <div
                 key={item.src}

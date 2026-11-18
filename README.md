@@ -30,7 +30,7 @@ Other useful routes that ship with the site: `/about`, `/contact`,
 2. Sticky header — transparent over hero, solid charcoal on scroll, search + cart + hamburger
 3. Hero — full-screen cinematic image, "Luxury You Can Actually Wear" (₹800 sub-line), 2 CTAs, scroll cue
 4. Trust strip — Long-lasting · Premium Ingredients · Express Delivery · Easy Returns
-5. Shop by Category — For Him / For Her / Unisex / Gift Sets tiles
+5. Shop by Category — For Him / For Her / Unisex tiles
 6. Bestsellers — swipe carousel (mobile) / 4-column grid (desktop), MRP strike + discount badges + hover image swap
 7. Scent Finder — 3-question quiz that recommends a product
 8. Brand Story — split image/copy
