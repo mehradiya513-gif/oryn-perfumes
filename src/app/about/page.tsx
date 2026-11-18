@@ -38,13 +38,12 @@ export default function AboutPage() {
       {/* Opening Hero */}
       <section className="shell pb-20 pt-28 md:pb-28 md:pt-36">
         <Reveal>
-          <span className="section-tag mb-6">Atelier Genesis</span>
+          <span className="section-tag mb-6">Our Story</span>
           <h1 className="max-w-3xl font-serif text-4xl font-semibold leading-[1.1] tracking-[-0.015em] text-pearl md:text-6xl">
-            A perfume house created <span className="gold-gradient-text italic">with intention.</span>
+            Luxury perfume created <span className="gold-gradient-text italic">with care.</span>
           </h1>
           <p className="mt-8 max-w-2xl text-[16px] leading-[1.8] text-sand md:text-[17.5px]">
-            ORYN is an independent haute parfumerie. No archive, no borrowed heritage — only an uncompromising
-            conviction of what luxury fragrance must be, and the artisanal patience to compose it properly.
+            ORYN is an independent Indian fragrance brand. We believe great perfumes should be long-lasting, beautifully made, and affordable for everyone to wear every day.
           </p>
         </Reveal>
       </section>
@@ -62,7 +61,7 @@ export default function AboutPage() {
             />
           </div>
           <p className="mt-5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-gold/70">
-            The ORYN Atelier Brand Plaque
+            The ORYN Brand Emblem
           </p>
         </Reveal>
       </section>
@@ -74,12 +73,12 @@ export default function AboutPage() {
             <Reveal className="lg:col-span-5">
               <span className="section-tag mb-6">Why ORYN Exists</span>
               <h2 className="font-serif text-3xl font-semibold leading-[1.18] text-pearl md:text-5xl">
-                Fragrance had surrendered to <span className="gold-gradient-text italic">noise.</span>
+                Perfume should not cost a <span className="gold-gradient-text italic">fortune.</span>
               </h2>
               <p className="mt-7 max-w-md text-[15px] leading-[1.8] text-sand">
-                Thousands of mass synthetic releases each year. Scents engineered for a fleeting quarter,
-                hyped with millions in marketing, and forgotten by the next season. We built ORYN as the antithesis:
-                a focused collection, formulated with master French oils, made to be worn for decades.
+                Most big perfume brands spend huge amounts of money on celebrity endorsements and luxury malls,
+                then pass those costs onto you. We do things differently: fine French perfume oils, clean formulas,
+                and direct prices under ₹800.
               </p>
             </Reveal>
 
@@ -87,18 +86,18 @@ export default function AboutPage() {
               {[
                 {
                   n: 'I',
-                  title: 'Composed Slowly, Never Rushed',
-                  copy: 'Each extrait is built around a singular evocative premise — a mood, a memory, a precious botanical — matured until perfectly harmonized.',
+                  title: 'Carefully Crafted Scents',
+                  copy: 'Every fragrance is made with fine French oils and matured carefully until the scent is smooth, rich, and well-balanced.',
                 },
                 {
                   n: 'II',
-                  title: 'Extrait Concentration for True Intimacy',
-                  copy: 'Our fragrances are dosed at up to 25% oil concentration. They become a second skin rather than an assault on a crowded room.',
+                  title: 'High 25% Oil Concentration',
+                  copy: 'Our perfumes carry a high concentration of fragrance oils. They easily last 8–12 hours on skin and clothes without fading.',
                 },
                 {
                   n: 'III',
-                  title: 'Radical Honesty & Zero Luxury Tax',
-                  copy: 'We formulate in small batches. We disclose note pyramids and hold prices strictly under ₹800. That is the entire philosophy.',
+                  title: 'Honest Prices Under ₹800',
+                  copy: 'We bottle in small batches, share all fragrance notes clearly, and keep every single bottle under ₹800 with zero middleman fees.',
                 },
               ].map((item, i) => (
                 <Reveal key={item.n} delay={i * 80}>
@@ -124,27 +123,25 @@ export default function AboutPage() {
       <section className="bg-obsidian">
         <div className="shell py-24 md:py-36">
           <Reveal>
-            <span className="section-tag mb-8 block text-center justify-center">Haute Parfumerie Credo</span>
+            <span className="section-tag mb-8 block text-center justify-center">Our Philosophy</span>
             <blockquote className="mx-auto max-w-3xl text-center font-serif text-2xl font-medium italic leading-[1.4] text-pearl md:text-4xl">
-              &ldquo;A fragrance should not aggressively announce you. It should linger — in a room, in a memory,
-              on a collar — long after you have departed.&rdquo;
+              &ldquo;A great perfume should never be loud or overpowering. It should leave a pleasant, memorable scent that people remember.&rdquo;
             </blockquote>
           </Reveal>
         </div>
       </section>
 
-      {/* Contact Concierge Form */}
+      {/* Contact Form */}
       <section className="border-t border-gold/15 bg-[#121212]">
         <div className="shell py-24 md:py-32">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <span className="section-tag mb-6">Concierge Dialogue</span>
+              <span className="section-tag mb-6">Get in Touch</span>
               <h2 className="font-serif text-3xl font-semibold text-pearl md:text-5xl">
-                Converse with <span className="gold-gradient-text italic">ORYN</span>
+                Send Us a <span className="gold-gradient-text italic">Message</span>
               </h2>
               <p className="mt-6 max-w-md text-[15px] leading-[1.8] text-sand">
-                Inquiries regarding notes, custom allocations, or private gifting — our perfumer team reads every note
-                and responds with care.
+                Have a question about our perfumes or need assistance with your order? Send us a message and our team will get back to you quickly.
               </p>
             </Reveal>
 
@@ -187,14 +184,14 @@ export default function AboutPage() {
                 </label>
 
                 <label className="block">
-                  <span className={labelClass}>Inquiry or Note</span>
+                  <span className={labelClass}>Message</span>
                   <textarea
                     required
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className={`${inputClass} resize-none`}
-                    placeholder="How may our atelier assist you?"
+                    placeholder="How can we help you?"
                   />
                 </label>
 
@@ -203,17 +200,17 @@ export default function AboutPage() {
                   disabled={formStatus === 'submitting'}
                   className="btn-gold w-full disabled:opacity-50"
                 >
-                  {formStatus === 'submitting' ? 'Transmitting…' : 'Dispatch Message'}
+                  {formStatus === 'submitting' ? 'Sending…' : 'Send Message'}
                 </button>
 
                 {formStatus === 'success' && (
                   <p className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-xs text-emerald-400">
-                    Transmitted successfully. Our perfumer concierge will respond to your dispatch shortly.
+                    Message sent successfully! Our team will get back to you shortly.
                   </p>
                 )}
                 {formStatus === 'error' && (
                   <p className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs text-rose-400">
-                    Network error. Kindly re-attempt or reach us on WhatsApp.
+                    Something went wrong. Please try again or message us directly on WhatsApp.
                   </p>
                 )}
               </form>

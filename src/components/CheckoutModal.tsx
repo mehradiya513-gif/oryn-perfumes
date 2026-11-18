@@ -177,47 +177,46 @@ export default function CheckoutModal() {
             <span className="text-[#C9A84C] text-2xl">✦</span>
             <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A84C]">Order Confirmed</p>
             <h2 className="font-serif text-3xl md:text-4xl font-semibold text-[#F5F2EB]">
-              Thank You for Your Patronage.
+              Thank You for Your Order!
             </h2>
             <p className="text-[#A8A29E] font-light leading-relaxed max-w-md mx-auto text-sm">
-              Your flacon is being prepared in our Mumbai atelier. A formal dispatch confirmation
-              has been relayed to your email.
+              Your perfume is being packed and prepared for delivery. We have sent your order details to your email.
             </p>
             <div className="inline-block rounded-full border border-[#C9A84C]/40 bg-[#121212] px-6 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#C9A84C]">
-              Order Reference #{orderSuccess.id}
+              Order Number #{orderSuccess.id}
             </div>
 
             <div className="text-left rounded-2xl border border-[#262626] bg-[#161616] p-6 space-y-4 text-xs font-light shadow-sm">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Recipient</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Customer Name</p>
                   <p className="text-[#F5F2EB] font-medium">{orderSuccess.name}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Contact</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Phone Number</p>
                   <p className="text-[#F5F2EB] font-medium">{orderSuccess.phone}</p>
                 </div>
                 <div className="col-span-2">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Delivery Address</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Shipping Address</p>
                   <p className="text-[#F5F2EB] font-medium whitespace-pre-wrap">
                     {orderSuccess.address}, {orderSuccess.country}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Settlement</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Payment Method</p>
                   <p className="text-[#C9A84C] font-semibold">
                     {orderSuccess.paymentMethod || 'Prepaid UPI'}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Initiated On</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Order Date</p>
                   <p className="text-[#F5F2EB] font-medium">{orderSuccess.created}</p>
                 </div>
               </div>
             </div>
 
             <button type="button" onClick={handleClose} className="btn-gold w-full">
-              Explore More Creations
+              Continue Shopping
             </button>
           </div>
         ) : (
@@ -225,8 +224,8 @@ export default function CheckoutModal() {
           <div className="p-8 md:p-12">
             <div className="flex items-start justify-between border-b border-[#262626] pb-6 mb-8">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A84C] mb-1">Encrypted Checkout</p>
-                <h2 className="font-serif text-3xl font-semibold text-[#F5F2EB]">Complete Your Allocation</h2>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A84C] mb-1">Fast &amp; Safe Checkout</p>
+                <h2 className="font-serif text-3xl font-semibold text-[#F5F2EB]">Complete Your Order</h2>
               </div>
               <button
                 type="button"
@@ -243,21 +242,21 @@ export default function CheckoutModal() {
             <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {/* Shipping Details */}
               <div className="space-y-5">
-                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">Recipient Details</p>
+                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">Delivery Details</p>
 
                 <label className="block">
                   <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Full Name</span>
-                  <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Full legal name" className={inputClass} />
+                  <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter your name" className={inputClass} />
                 </label>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <label className="block">
-                    <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Email</span>
-                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@domain.com" className={inputClass} />
+                    <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Email Address</span>
+                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="yourname@gmail.com" className={inputClass} />
                   </label>
                   <label className="block">
-                    <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Mobile Phone</span>
-                    <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91" className={inputClass} />
+                    <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-2">Phone Number</span>
+                    <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="10-digit mobile number" className={inputClass} />
                   </label>
                 </div>
 
@@ -279,22 +278,22 @@ export default function CheckoutModal() {
                     rows={3}
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    placeholder="House/Apt, Landmark, City, State, PIN code"
+                    placeholder="House/Flat number, Street, Landmark, City, State, PIN code"
                     className={`${inputClass} resize-none`}
                   />
                 </label>
 
                 <div>
-                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-3">Settlement Method</span>
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-3">Payment Method</span>
                   <div className="rounded-xl border border-[#C9A84C] bg-[#121212] p-4 text-xs flex items-center justify-between shadow-gold-sm">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-[#F5F2EB]">Prepaid — Instant UPI</span>
+                        <span className="font-semibold text-[#F5F2EB]">Pay with UPI</span>
                         <span className="rounded-full bg-[#C9A84C]/15 border border-[#C9A84C]/40 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#C9A84C]">
-                          100% Encrypted
+                          100% Safe
                         </span>
                       </div>
-                      <p className="text-[11px] text-[#78716C]">GPay, PhonePe, Paytm, QR &amp; any BHIM UPI</p>
+                      <p className="text-[11px] text-[#78716C]">Google Pay, PhonePe, Paytm, or any UPI app</p>
                     </div>
                     <div className="h-4 w-4 rounded-full border-2 border-[#C9A84C] flex items-center justify-center">
                       <div className="h-2 w-2 rounded-full bg-[#C9A84C]" />
@@ -305,7 +304,7 @@ export default function CheckoutModal() {
 
               {/* Order Summary Column */}
               <div className="flex flex-col rounded-2xl border border-[#262626] bg-[#161616] p-6 shadow-sm">
-                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C9A84C] mb-6">Allocation Summary</p>
+                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C9A84C] mb-6">Order Summary</p>
 
                 <div className="space-y-4 flex-1 overflow-y-auto max-h-60 pr-1">
                   {cart.map((item) => (
@@ -341,22 +340,22 @@ export default function CheckoutModal() {
                         <p className="text-xs font-semibold text-[#F5F2EB]">{gift.name}</p>
                         <p className="text-[10px] text-[#78716C] line-clamp-1">{gift.description}</p>
                       </div>
-                      <span className="text-[9px] uppercase tracking-wider text-[#C9A84C]">Complimentary</span>
+                      <span className="text-[9px] uppercase tracking-wider text-[#C9A84C]">Free Gift</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="border-t border-[#262626] mt-6 pt-5 space-y-2.5">
                   <div className="flex items-center justify-between text-xs text-[#A8A29E]">
-                    <span>Subtotal</span>
+                    <span>Items Total</span>
                     <span>₹{cartTotal}</span>
                   </div>
                   <div className="flex items-center justify-between text-xs text-[#A8A29E]">
-                    <span>Express Dispatch</span>
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#C9A84C]">Complimentary</span>
+                    <span>Shipping</span>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#C9A84C]">Free</span>
                   </div>
                   <div className="flex items-center justify-between pt-3 border-t border-[#262626] text-base">
-                    <span className="font-serif font-semibold text-[#F5F2EB]">Payable Total</span>
+                    <span className="font-serif font-semibold text-[#F5F2EB]">Total Amount</span>
                     <span className="font-serif font-bold text-xl text-[#F5F2EB]">₹{cartTotal}</span>
                   </div>
 
@@ -365,7 +364,7 @@ export default function CheckoutModal() {
                     disabled={submitting}
                     className="btn-gold w-full mt-4 disabled:opacity-50"
                   >
-                    {submitting ? 'Authenticating…' : 'Proceed to UPI Payment'}
+                    {submitting ? 'Please wait…' : 'Proceed to Payment'}
                   </button>
 
                   {status && (
@@ -395,9 +394,9 @@ export default function CheckoutModal() {
               {upiStep === 'select' ? (
                 <>
                   <div>
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A84C] mb-1">Encrypted Gateway</p>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-[#C9A84C] mb-1">UPI Payment</p>
                     <h3 className="font-serif text-2xl font-semibold text-[#F5F2EB]">Choose Your UPI App</h3>
-                    <p className="text-xs text-[#A8A29E] mt-1">To settle ₹{cartTotal}</p>
+                    <p className="text-xs text-[#A8A29E] mt-1">Amount to pay: ₹{cartTotal}</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2.5">
@@ -446,16 +445,16 @@ export default function CheckoutModal() {
                     }}
                     className="btn-gold w-full disabled:opacity-50"
                   >
-                    Authorize ₹{cartTotal}
+                    Pay ₹{cartTotal}
                   </button>
                 </>
               ) : (
                 <div className="py-8 text-center space-y-4">
                   <div className="h-10 w-10 mx-auto border-2 border-[#262626] border-t-[#C9A84C] rounded-full animate-spin" />
-                  <h4 className="font-serif text-xl font-semibold text-[#F5F2EB]">Authorizing Transaction</h4>
+                  <h4 className="font-serif text-xl font-semibold text-[#F5F2EB]">Opening Payment App…</h4>
                   <p className="text-xs text-[#A8A29E] max-w-xs mx-auto leading-relaxed">
                     Connecting to {upiApps.find((a) => a.id === selectedUpiApp)?.name || 'UPI'}.
-                    Kindly approve the transaction notification on your mobile handset.
+                    Please approve the payment request on your phone.
                   </p>
                 </div>
               )}

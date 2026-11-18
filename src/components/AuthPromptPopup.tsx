@@ -81,10 +81,10 @@ export default function AuthPromptPopup() {
             <span className="font-serif text-base font-bold">O</span>
           </div>
           <h2 id="auth-prompt-title" className="font-serif text-2xl font-semibold leading-snug mb-2 text-[#F5F2EB]">
-            Welcome to the Atelier
+            Welcome to ORYN
           </h2>
           <p className="text-xs font-light text-[#A8A29E] leading-relaxed max-w-[260px] mx-auto">
-            Sign in or create an account to finalize your allocation and track your order.
+            Sign in or create an account to complete your order and track delivery.
           </p>
         </div>
 
@@ -108,7 +108,7 @@ export default function AuthPromptPopup() {
         </div>
 
         <p className="relative z-10 mt-6 text-center text-[10px] uppercase tracking-[0.25em] text-[#78716C]">
-          ✦ Complimentary express delivery above ₹499
+          ✦ Free express delivery on orders above ₹499
         </p>
       </div>
     </div>

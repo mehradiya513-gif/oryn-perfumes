@@ -2,8 +2,8 @@ export default function PrivacyPage() {
   return (
     <div className="bg-obsidian text-pearl min-h-screen">
       <section className="mx-auto max-w-3xl px-6 pt-32 md:pt-40 pb-28 md:pb-32">
-        <span className="section-tag mb-4">Integrity</span>
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold mb-6">Privacy Standards</h1>
+        <span className="section-tag mb-4">Privacy</span>
+        <h1 className="font-serif text-4xl md:text-5xl font-semibold mb-6">Privacy Policy</h1>
         <p className="text-[10px] uppercase tracking-[0.25em] text-gold/80 mb-12">
           Last updated {new Date().toLocaleDateString()}
         </p>
@@ -12,24 +12,24 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">1. Information We Collect</h2>
             <p className="mb-3">
-              At ORYN, preserving our patrons&rsquo; privacy is paramount. We solely capture information required to safely dispatch your fragrance, process encrypted settlements, and communicate dispatch notifications.
+              At ORYN, your privacy is very important to us. We only collect the basic information needed to deliver your perfumes, process your payments safely, and send you order tracking updates.
             </p>
             <p>
-              We do not sell, rent, or trade your personal data with third-party advertisers under any circumstance.
-            </p>
-          </section>
-
-          <section className="border-t border-white/10 pt-8">
-            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">2. Transaction Security</h2>
-            <p>
-              Payment data processed via UPI, RuPay, or card networks is tokenized through 256-bit SSL encrypted financial conduits. No confidential card credentials or UPI PINs are ever retained on our systems.
+              We never sell, rent, or share your personal contact information with third-party advertisers.
             </p>
           </section>
 
           <section className="border-t border-white/10 pt-8">
-            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">3. Cookies &amp; Preferences</h2>
+            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">2. Payment Security</h2>
             <p>
-              We utilize functional session cookies solely to preserve your shopping bag selections and maintain seamless cart persistence while exploring our collection.
+              All payments are processed securely through encrypted banking gateways. We never see, store, or have access to your private UPI PIN, passwords, or card numbers.
+            </p>
+          </section>
+
+          <section className="border-t border-white/10 pt-8">
+            <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">3. Cookies</h2>
+            <p>
+              We only use simple website cookies to remember the items in your shopping bag so you can easily checkout without losing your cart.
             </p>
           </section>
         </div>

@@ -24,7 +24,7 @@ export default function BrandStory() {
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-[#262626] bg-[#161616] shadow-card">
               <Image
                 src="/images/IMG-20260802-WA0019.jpg"
-                alt="The ORYN atelier still life with perfume flacons, fine oils, and amber light"
+                alt="ORYN perfume bottles and fragrance oils"
                 fill
                 loading="lazy"
                 sizes="(max-width: 1024px) 90vw, 48vw"
@@ -39,13 +39,13 @@ export default function BrandStory() {
             {/* Floating Luxury Plaque Badge */}
             <div className="absolute -bottom-6 -right-4 md:right-6 rounded-3xl border border-[#C9A84C]/40 bg-[#161616]/95 p-5 shadow-gold backdrop-blur-xl max-w-xs">
               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C] block">
-                Atelier Guarantee
+                Our Promise
               </span>
               <p className="mt-1 font-serif text-base font-semibold text-[#F5F2EB]">
-                “Every individual deserves a signature extrait.”
+                “Everyone deserves a great signature perfume.”
               </p>
               <span className="mt-2 text-[10px] text-[#78716C] block">
-                Formulated in Mumbai · Certified Cruelty-Free
+                Made in Mumbai · 100% Cruelty-Free
               </span>
             </div>
           </motion.div>
@@ -58,20 +58,20 @@ export default function BrandStory() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="lg:col-span-6"
           >
-            <span className="section-tag mb-4">Our Manifesto</span>
+            <span className="section-tag mb-4">Our Story</span>
             <h2 id="brand-story-heading" className="font-serif text-3xl font-semibold leading-[1.12] text-[#F5F2EB] md:text-5xl">
-              Authentic luxury shouldn&rsquo;t demand <span className="gold-gradient-text italic">a month&rsquo;s rent.</span>
+              Luxury perfume shouldn&rsquo;t cost <span className="gold-gradient-text italic">a fortune.</span>
             </h2>
 
             <div className="mt-6 space-y-5 text-[15px] leading-[1.8] text-[#A8A29E]">
               <p>
-                We established ORYN with an unyielding principle: the world’s most transcendent scents
-                belong on your skin, not locked behind boutique glass counters bearing 5-digit price tags.
+                We started ORYN with one simple belief: great perfumes should be worn and enjoyed every day,
+                not locked behind glass counters with ₹10,000 price tags.
               </p>
               <p>
-                By working directly with master oil blenders in Grasse, France, and bottling in Mumbai,
-                we cut away celebrity branding fees, lavish department store markups, and excessive packaging.
-                The outcome is an uncompromising, high-tenacity Extrait de Parfum made for real life.
+                We import our perfume oils directly from France and bottle them in Mumbai. We skip expensive
+                celebrity ads, fancy showroom markups, and middleman fees. This allows us to offer you rich,
+                long-lasting luxury perfumes at an honest price.
               </p>
             </div>
 
@@ -80,17 +80,17 @@ export default function BrandStory() {
               <div className="rounded-2xl border border-[#262626] bg-[#161616] p-5 shadow-sm">
                 <span className="text-[#C9A84C] font-serif text-xl font-bold">20% – 25%</span>
                 <h3 className="mt-1 font-semibold text-xs text-[#F5F2EB] uppercase tracking-wider">
-                  Pure Oil Extrait
+                  Pure Perfume Oil
                 </h3>
-                <p className="mt-1 text-xs text-[#A8A29E]">Remarkable sillage that stays from dawn to midnight.</p>
+                <p className="mt-1 text-xs text-[#A8A29E]">Long-lasting scent that stays from morning till night.</p>
               </div>
 
               <div className="rounded-2xl border border-[#262626] bg-[#161616] p-5 shadow-sm">
                 <span className="text-[#C9A84C] font-serif text-xl font-bold">Under ₹800</span>
                 <h3 className="mt-1 font-semibold text-xs text-[#F5F2EB] uppercase tracking-wider">
-                  Honest Luxury
+                  Honest Pricing
                 </h3>
-                <p className="mt-1 text-xs text-[#A8A29E]">Zero luxury tax, zero middleman fees. Always affordable.</p>
+                <p className="mt-1 text-xs text-[#A8A29E]">No middleman markups. Always high quality and affordable.</p>
               </div>
             </div>
           </motion.div>

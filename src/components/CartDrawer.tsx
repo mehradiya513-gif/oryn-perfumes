@@ -83,10 +83,10 @@ export default function CartDrawer() {
               </div>
               <p className="font-serif text-2xl text-[#F5F2EB]">Your bag is empty.</p>
               <p className="text-[#A8A29E] text-sm font-light max-w-[260px] leading-relaxed">
-                Handcrafted extraits are waiting — explore the collection to find your signature.
+                Explore our collection to find your favorite fragrance.
               </p>
               <button type="button" onClick={handleClose} className="btn-outline !px-7 !py-3">
-                Discover Collection
+                Shop Perfumes
               </button>
             </div>
           ) : (
@@ -139,11 +139,11 @@ export default function CartDrawer() {
         {cart.length > 0 && (
           <div className="border-t border-[#262626] space-y-4 bg-[#121212] px-8 py-7">
             <div className="flex items-center justify-between text-xs text-[#A8A29E]">
-              <span>Express Delivery</span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">Complimentary</span>
+              <span>Delivery</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C]">Free</span>
             </div>
             <div className="flex items-center justify-between border-t border-[#262626] pt-3">
-              <span className="font-serif text-lg text-[#F5F2EB]">Grand Total</span>
+              <span className="font-serif text-lg text-[#F5F2EB]">Total</span>
               <span className="font-serif text-2xl font-bold text-[#F5F2EB]">₹{cartTotal}</span>
             </div>
             <button
@@ -157,10 +157,10 @@ export default function CartDrawer() {
               }}
               className="btn-gold w-full text-center"
             >
-              Proceed to Secure Checkout
+              Proceed to Checkout
             </button>
             <p className="text-[10px] text-center uppercase tracking-wider text-[#78716C]">
-              ✦ 100% Encrypted &amp; Instant UPI Accepted
+              ✦ 100% Secure &amp; Instant UPI Payment
             </p>
           </div>
         )}

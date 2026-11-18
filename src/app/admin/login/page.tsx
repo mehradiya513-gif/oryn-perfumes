@@ -81,7 +81,7 @@ export default function SellerLoginPage() {
         setLoginError(data.error || 'Authentication failed. Please verify credentials.')
       }
     } catch {
-      setLoginError('Network interruption. Please re-attempt.')
+      setLoginError('Network error. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -91,7 +91,7 @@ export default function SellerLoginPage() {
     return (
       <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center space-y-4 text-[#F5F2EB]">
         <div className="h-8 w-8 border-2 border-[#262626] border-t-[#C9A84C] rounded-full animate-spin" />
-        <p className="text-xs text-[#78716C] uppercase tracking-widest font-mono">Verifying Access Gate…</p>
+        <p className="text-xs text-[#78716C] uppercase tracking-widest font-mono">Loading…</p>
       </div>
     )
   }
@@ -108,7 +108,7 @@ export default function SellerLoginPage() {
           <div className="mx-auto h-14 w-14 rounded-full border border-[#C9A84C]/40 bg-gradient-to-b from-[#C9A84C]/20 to-transparent flex items-center justify-center p-2 text-[#C9A84C] shadow-sm">
             <Image
               src="/images/oryn-emblem-gold.png"
-              alt="ORYN Insignia"
+              alt="ORYN Logo"
               width={34}
               height={34}
               className="object-contain"
@@ -116,15 +116,15 @@ export default function SellerLoginPage() {
           </div>
           <div>
             <span className="inline-block rounded-full bg-[#161616] border border-[#C9A84C]/30 px-3 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] text-[#C9A84C] mb-2">
-              {needsSetup ? 'First-Time Setup' : 'Private Console'}
+              {needsSetup ? 'First-Time Setup' : 'Admin Portal'}
             </span>
             <h1 className="font-serif text-3xl font-semibold tracking-wide text-[#F5F2EB]">
-              {needsSetup ? 'Create Admin Account' : 'Admin Gate'}
+              {needsSetup ? 'Create Admin Account' : 'Admin Login'}
             </h1>
             <p className="text-xs text-[#78716C] mt-1.5 leading-relaxed">
               {needsSetup
-                ? 'Choose your private administrator username and password to secure this portal.'
-                : 'Restricted administrative portal. Authorized personnel only.'}
+                ? 'Choose your administrator username and password to secure this portal.'
+                : 'Restricted administrative area. Admin sign-in only.'}
             </p>
           </div>
         </div>

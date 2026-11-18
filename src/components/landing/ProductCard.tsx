@@ -6,7 +6,7 @@ import { type Product, formatINR, discountPct } from '@/lib/products'
 import { useCart } from '@/context/CartContext'
 
 /* ————————————————————————————————————————————————————————————————
-   ProductCard — Haute Parfumerie Glass Card with Instant Add to Bag
+   ProductCard — Luxury Perfume Card with Instant Add to Bag
 ———————————————————————————————————————————————————————————————— */
 
 export default function ProductCard({

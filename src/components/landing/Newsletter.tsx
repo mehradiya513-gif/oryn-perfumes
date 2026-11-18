@@ -46,14 +46,14 @@ export default function Newsletter() {
           />
 
           <div className="relative z-10">
-            <span className="section-tag mb-4">Private Society</span>
+            <span className="section-tag mb-4">Special Offer</span>
             
             <h2 id="newsletter-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
-              Join The <span className="gold-gradient-text italic">Fragrance Circle</span>
+              Get <span className="gold-gradient-text italic">10% Off</span> Your First Order
             </h2>
 
             <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#A8A29E]">
-              Receive a private 10% welcome privilege toward your first order, plus exclusive early allocations of seasonal batch extraits.
+              Subscribe to get your 10% welcome discount code and be the first to know about new perfume releases.
             </p>
 
             {status === 'done' ? (
@@ -64,9 +64,9 @@ export default function Newsletter() {
                 role="status"
               >
                 <span className="text-[#C9A84C] text-lg block mb-1">✦</span>
-                <p className="font-serif text-lg font-semibold text-[#F5F2EB]">You are formally initiated.</p>
+                <p className="font-serif text-lg font-semibold text-[#F5F2EB]">You&rsquo;re on the list!</p>
                 <p className="text-xs text-[#A8A29E] mt-1">
-                  Check your inbox for your exclusive 10% privilege invitation code.
+                  Check your inbox for your 10% discount coupon code.
                 </p>
               </motion.div>
             ) : (
@@ -87,12 +87,12 @@ export default function Newsletter() {
                     disabled={status === 'sending'}
                     className="btn-gold !py-3.5 whitespace-nowrap"
                   >
-                    {status === 'sending' ? 'Initiating…' : 'Claim 10% Off'}
+                    {status === 'sending' ? 'Sending…' : 'Claim 10% Off'}
                   </button>
                 </div>
 
                 <div className="flex items-center justify-center gap-2 pt-2 text-xs text-[#78716C]">
-                  <span>Prefer WhatsApp dispatch?</span>
+                  <span>Prefer WhatsApp?</span>
                   <label htmlFor="newsletter-phone" className="sr-only">WhatsApp number</label>
                   <input
                     id="newsletter-phone"
@@ -103,12 +103,12 @@ export default function Newsletter() {
                     className="w-32 rounded-xl border border-[#262626] bg-[#0A0A0A] px-2.5 py-1 text-xs text-[#F5F2EB] placeholder:text-[#78716C] outline-none focus:border-[#C9A84C]"
                   />
                   <a
-                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi ORYN! Send me the 10% first-order privilege code.')}`}
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi ORYN! Please send me the 10% discount code.')}`}
                     target="_blank"
                     rel="noreferrer"
                     className="border-b border-[#C9A84C] text-[10px] font-bold uppercase tracking-wider text-[#C9A84C] hover:text-[#F5F2EB] transition-colors"
                   >
-                    Dispatch Privileges
+                    Get Code on WhatsApp
                   </a>
                 </div>
               </form>

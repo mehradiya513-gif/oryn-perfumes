@@ -11,30 +11,30 @@ const reviews = [
   {
     name: 'Ananya S.',
     city: 'Mumbai',
-    scent: 'Passport Extrait',
+    scent: 'Passport',
     stars: 5,
-    text: 'Ordered Passport for daily office wear — 10 hours later my kurta still radiates warm vanilla and orchid. At ₹450 this value is unmatched in Indian fragrance.',
+    text: 'Ordered Passport for daily wear — 10 hours later I can still smell warm vanilla. At ₹450, the quality is truly amazing.',
   },
   {
     name: 'Rohan M.',
     city: 'New Delhi',
     scent: 'Arabian Oud',
     stars: 5,
-    text: 'Arabian Oud garners compliments every single time I wear it to meetings and dinner dates. Colleagues are stunned that it costs under ₹800.',
+    text: 'Arabian Oud gets me compliments every time I wear it to meetings or dinner. Friends cannot believe it costs under ₹800.',
   },
   {
     name: 'Priya K.',
     city: 'Bengaluru',
     scent: 'Wild Strawberry',
     stars: 5,
-    text: 'Bought the Discovery Duo as a wedding gift and ended up ordering full bottles for myself the following week. Impeccable luxury feel from box to base.',
+    text: 'Bought the Discovery Duo as a gift and ended up ordering full bottles for myself. Beautiful luxury feel from the box to the bottle.',
   },
   {
     name: 'Vikram J.',
     city: 'Pune',
     scent: 'Black Oud',
     stars: 5,
-    text: 'Black Oud is my undisputed signature now. Deep, smoky, and projects through my whole 12-hour day. Instant UPI checkout and express delivery made it effortless.',
+    text: 'Black Oud is my favorite scent now. Rich, smoky, and easily lasts through my whole 12-hour workday. Fast delivery made it easy.',
   },
 ]
 
@@ -66,14 +66,14 @@ export default function SocialProof() {
         {/* Section Header */}
         <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <span className="section-tag mb-4">Customer Commendations</span>
+            <span className="section-tag mb-4">Customer Reviews</span>
             <h2 id="reviews-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
-              Worn &amp; <span className="gold-gradient-text italic">Re-ordered</span> Across India
+              Loved &amp; <span className="gold-gradient-text italic">Re-ordered</span> Across India
             </h2>
           </div>
           <div className="flex items-center gap-3 rounded-full border border-[#C9A84C]/30 bg-[#121212] px-5 py-2.5 shadow-sm">
             <Stars count={5} />
-            <span className="text-xs font-bold text-[#F5F2EB]">4.9 · 2,400+ Verified Orders</span>
+            <span className="text-xs font-bold text-[#F5F2EB]">4.9 · 2,400+ Happy Customers</span>
           </div>
         </div>
 
@@ -115,7 +115,7 @@ export default function SocialProof() {
         <div className="mt-16 pt-12 border-t border-[#262626]">
           <div className="mb-6 flex items-center justify-between">
             <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">
-              #WearORYN · The Community Lookbook
+              #WearORYN on Instagram
             </span>
             <span className="text-xs text-[#78716C]">Tagged by 8,000+ creators on Instagram</span>
           </div>

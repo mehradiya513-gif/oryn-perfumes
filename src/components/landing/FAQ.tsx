@@ -4,25 +4,25 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 /* ————————————————————————————————————————————————————————————————
-   FAQ — Concierge & Client Clarifications
+   FAQ — Questions & Answers
 ———————————————————————————————————————————————————————————————— */
 
 const faqs = [
   {
-    q: 'How long do ORYN extraits endure on skin and attire?',
-    a: 'Our fragrances are formulated at high Extrait de Parfum concentrations (up to 25% pure essential oils). On bare pulse points, they reliably project for 8–12 hours, and often linger across linen, collars, and outerwear for 24+ hours.',
+    q: 'How long does the perfume scent last?',
+    a: 'Our perfumes are made with high perfume oil concentration (up to 25%). They easily last 8–12 hours on skin, and often more than 24 hours on clothes.',
   },
   {
-    q: 'Where are the fragrance oils formulated and bottled?',
-    a: 'Our fine aromatic essences and absolute oils are blended in Grasse, France, under master perfumer standards, then matured and bottled in small artisanal batches in Mumbai, India. Every flacon carries an authenticated batch code.',
+    q: 'Where are ORYN perfumes made?',
+    a: 'Our fine fragrance oils are imported directly from France, and each bottle is carefully filled and packed in Mumbai, India.',
   },
   {
-    q: 'What are the delivery timelines and shipping charges?',
-    a: 'Orders are dispatched within 24 business hours. Express transit typically completes within 2–4 business days for major Indian metropolitan areas. Shipping is complimentary on all orders exceeding ₹499.',
+    q: 'How long does delivery take, and is shipping free?',
+    a: 'Orders are shipped within 24 hours. Delivery usually takes 2–4 business days across India. Shipping is completely free on all orders above ₹499.',
   },
   {
-    q: 'What if my item arrives damaged or leaking?',
-    a: 'As a hygiene-sensitive category, fragrance flacons cannot be returned or exchanged once dispatched. However, should any item arrive compromised or leaking during courier transit, we dispatch an immediate complimentary replacement upon receipt of a parcel photograph within 48 hours of delivery.',
+    q: 'What if my perfume bottle arrives damaged or leaking?',
+    a: 'If your bottle arrives damaged or leaking during shipping, simply send us a photo on WhatsApp within 48 hours of delivery. We will send you a free replacement right away.',
   },
 ]
 
@@ -36,12 +36,12 @@ export default function FAQ() {
           
           {/* Header (Left 4 Cols) */}
           <div className="lg:col-span-4">
-            <span className="section-tag mb-4">Concierge Desk</span>
+            <span className="section-tag mb-4">Help &amp; FAQ</span>
             <h2 id="faq-heading" className="font-serif text-3xl font-semibold leading-[1.15] text-[#F5F2EB] md:text-5xl">
-              Clarity &amp; Answers, <span className="gold-gradient-text italic">Unveiled.</span>
+              Frequently Asked <span className="gold-gradient-text italic">Questions</span>
             </h2>
             <p className="mt-5 text-sm leading-[1.8] text-[#A8A29E]">
-              Have a custom fragrance query or corporate gifting inquiry? Our perfumery concierge is directly accessible via WhatsApp during working hours.
+              Have a question about our perfumes or need help choosing? Message our team directly on WhatsApp anytime.
             </p>
             <div className="mt-8">
               <a

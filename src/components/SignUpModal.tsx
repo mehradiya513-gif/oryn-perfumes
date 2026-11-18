@@ -179,9 +179,9 @@ export default function SignUpModal() {
 
         <div className="relative z-10 flex items-start justify-between border-b border-[#262626] pb-6 mb-8">
           <div>
-            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">Client Access</p>
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">Your Account</p>
             <h2 className="font-serif text-3xl font-semibold text-[#F5F2EB]">
-              {isSignUp ? 'Join The House of ORYN' : 'Welcome Back'}
+              {isSignUp ? 'Create an Account' : 'Welcome Back'}
             </h2>
           </div>
           <button
@@ -203,7 +203,7 @@ export default function SignUpModal() {
         <form onSubmit={handleAuthSubmit} className="relative z-10 space-y-6">
           {isSignUp && (
             <label className="block">
-              <span className={labelClass}>Full Legal Name</span>
+              <span className={labelClass}>Full Name</span>
               <input
                 type="text"
                 value={name}
@@ -285,7 +285,7 @@ export default function SignUpModal() {
           )}
 
           <button type="submit" className="btn-gold w-full mt-2">
-            {isSignUp ? 'Create Atelier Account' : 'Authenticate & Sign In'}
+            {isSignUp ? 'Create Account' : 'Sign In'}
           </button>
         </form>
 

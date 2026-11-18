@@ -3,25 +3,24 @@
 import { motion } from 'framer-motion'
 
 /* ————————————————————————————————————————————————————————————————
-   TrustStrip — Haute Parfumerie Hallmarks & Quality Guarantees
+   TrustStrip — Quality Promises & Guarantees
 ———————————————————————————————————————————————————————————————— */
 
 const items = [
   {
-    label: '8–12H Extrait Longevity',
-    sub: 'Extrait concentration for long-lasting sillage',
+    label: 'Lasts 8–12 Hours',
+    sub: 'High perfume oil concentration that stays with you all day',
     icon: (
       <path d="M12 7v5l3 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" strokeLinecap="round" strokeLinejoin="round" />
     ),
   },
   {
-    label: 'Grasse French Oils',
-    sub: 'Imported artisanal essences blended in Mumbai',
+    label: 'Fine French Oils',
+    sub: 'Imported fragrance oils bottled with care in Mumbai',
     icon: (
       <path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-4 3-6 5-9Zm-2 9a2 2 0 1 0 4 0" strokeLinecap="round" strokeLinejoin="round" />
     ),
   },
-
 ]
 
 export default function TrustStrip() {

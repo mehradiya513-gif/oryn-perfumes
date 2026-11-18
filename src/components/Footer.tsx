@@ -12,18 +12,18 @@ export default function Footer() {
   const exploreLinks = [
     { label: 'Collection', href: '/#bestsellers' },
     { label: 'Fragrance Families', href: '/#categories' },
-    { label: 'Bespoke Scent Finder', href: '/#scent-finder' },
-    { label: 'Notes Pyramid Guide', href: '/#notes' },
-    { label: 'Our Atelier Story', href: '/about' },
+    { label: 'Scent Finder Quiz', href: '/#scent-finder' },
+    { label: 'Fragrance Notes Guide', href: '/#notes' },
+    { label: 'Our Story', href: '/about' },
   ]
 
   const careLinks = [
     { label: 'Shipping & Delivery', href: '/shipping' },
     { label: 'Damages & Refunds', href: '/refund' },
-    { label: 'Privacy Standards', href: '/privacy' },
+    { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },
     { label: 'FAQ', href: '/#faq' },
-    { label: 'Atelier Contact', href: '/contact' },
+    { label: 'Contact Us', href: '/contact' },
   ]
 
   const payments = [
@@ -59,8 +59,7 @@ export default function Footer() {
             </Link>
 
             <p className="mt-5 max-w-sm text-sm leading-[1.8] text-[#A8A29E]">
-              Accessible Indian haute parfumerie. Pure, long-lasting Extrait concentrations formulated
-              with master-blended French oils. Transparent formulation, zero middlemen, nothing above ₹800.
+              Affordable luxury perfumes made in India. Long-lasting fragrances crafted with fine French oils. Direct to you, with no middlemen, and always under ₹800.
             </p>
 
             <div className="mt-6 flex items-center gap-4">
@@ -106,8 +105,8 @@ export default function Footer() {
           </nav>
 
           {/* Client Care Links (2 Cols) */}
-          <nav className="lg:col-span-2" aria-label="Client Concierge">
-            <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A84C]">Concierge</p>
+          <nav className="lg:col-span-2" aria-label="Customer Support">
+            <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A84C]">Support</p>
             <ul className="space-y-3 text-xs text-[#A8A29E]">
               {careLinks.map((link) => (
                 <li key={link.label}>

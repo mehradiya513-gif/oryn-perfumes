@@ -24,13 +24,13 @@ export default function Bestsellers() {
         {/* Section Header */}
         <div className="mb-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:mb-12">
           <div>
-            <span className="section-tag mb-4">Master Formulation</span>
+            <span className="section-tag mb-4">Our Perfumes</span>
             <h2 id="bestsellers-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
               The Signature <span className="gold-gradient-text italic">Collection</span>
             </h2>
           </div>
           <p className="max-w-sm text-sm leading-[1.8] text-[#A8A29E]">
-            Crafted without compromises. Long-wearing extrait formulas composed in small batches, always under ₹800.
+            Long-lasting luxury perfumes made in small batches, always priced under ₹800.
           </p>
         </div>
 

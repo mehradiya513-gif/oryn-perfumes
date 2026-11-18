@@ -3,12 +3,12 @@ export default function ContactPage() {
     <div className="bg-obsidian text-pearl min-h-screen">
       <section className="shell pb-24 pt-28 md:pb-32 md:pt-36">
         <div className="max-w-2xl">
-          <span className="section-tag mb-6">Concierge</span>
+          <span className="section-tag mb-6">Support</span>
           <h1 className="font-serif text-4xl font-semibold leading-[1.1] tracking-[-0.015em] text-pearl md:text-6xl">
-            Talk to <span className="gold-gradient-text italic">ORYN</span>
+            Contact <span className="gold-gradient-text italic">ORYN</span>
           </h1>
           <p className="mt-8 text-[16px] leading-[1.8] text-sand md:text-[17.5px]">
-            A question about notes, a special request, or an atelier inquiry — our perfumery team reads every dispatch and answers personally.
+            Have a question about our perfumes, shipping, or need help with an order? We are here to help you.
           </p>
         </div>
 

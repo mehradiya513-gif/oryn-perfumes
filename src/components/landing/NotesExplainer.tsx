@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 /* ————————————————————————————————————————————————————————————————
-   Interactive Olfactory Notes Pyramid & Sillage Timeline
+   Interactive Fragrance Notes Pyramid & Timeline
 ———————————————————————————————————————————————————————————————— */
 
 type Stage = {
@@ -23,46 +23,46 @@ const pyramidStages: Stage[] = [
   {
     id: 'top',
     label: 'Top Notes',
-    tier: 'Tier I · The Awakening',
+    tier: 'Stage 1 · First Spray',
     timeline: '0 – 15 Minutes',
-    duration: 'Rapid Volatility',
-    diffusion: 'High Radiance',
+    duration: 'Quick Freshness',
+    diffusion: 'Bright & Fresh',
     description:
-      'The initial rush that greets you upon the first spray. Composed of lighter molecules that evaporate quickly, setting the tone and mood of the composition before yielding to the deeper core.',
+      'The fresh scent you notice right after spraying. These lighter notes give you the first impression and last for 15 minutes before deeper notes emerge.',
     examples: ['Damask Rose Petals', 'Sweet Bergamot', 'Crushed Saffron', 'Wild Berries', 'Pear Blossom'],
     ingredients: [
-      { name: 'Saffron & Spices', origin: 'Kashmir & Grasse', role: 'Vibrant warmth & sparkling contrast' },
-      { name: 'Italian Bergamot', origin: 'Calabria, Italy', role: 'Bright, citrus illumination' },
+      { name: 'Saffron & Spices', origin: 'Kashmir & France', role: 'Warmth and spice' },
+      { name: 'Italian Bergamot', origin: 'Calabria, Italy', role: 'Bright, fresh citrus' },
     ],
   },
   {
     id: 'heart',
     label: 'Heart Notes',
-    tier: 'Tier II · The Soul',
+    tier: 'Stage 2 · The Heart',
     timeline: '30 Minutes – 3 Hours',
-    duration: 'Medium Tenacity',
-    diffusion: 'Warm Aura',
+    duration: 'Medium Lasting',
+    diffusion: 'Warm Scent',
     description:
-      'The true personality and signature trail of the fragrance. As top notes settle, the heart blooms with rich florals, botanical leaves, and spices that define your memorable scent memory.',
-    examples: ['Rare Assam Oud', 'Night Jasmine', 'White Peony', 'Roasted Patchouli', 'Marshmallow Accord'],
+      'The main body and character of the perfume. As the top notes fade, warm florals, woods, and spices bloom and stay for hours.',
+    examples: ['Rare Assam Oud', 'Night Jasmine', 'White Peony', 'Patchouli', 'Vanilla Accord'],
     ingredients: [
-      { name: 'Damask Rose & Jasmine', origin: 'Grasse & Kannauj', role: 'Sensual floral body & depth' },
-      { name: 'Dark Spices & Woods', origin: 'Indian Orchards', role: 'Complex and captivating texture' },
+      { name: 'Damask Rose & Jasmine', origin: 'France & India', role: 'Rich floral depth' },
+      { name: 'Warm Spices & Woods', origin: 'India', role: 'Smooth and attractive aroma' },
     ],
   },
   {
     id: 'base',
     label: 'Base Notes',
-    tier: 'Tier III · The Sillage',
+    tier: 'Stage 3 · Lasting Base',
     timeline: '3 – 12+ Hours',
-    duration: 'Extrait Longevity',
-    diffusion: 'Intimate Skin Trail',
+    duration: 'Longest Lasting',
+    diffusion: 'Deep & Lasting',
     description:
-      'The anchor and lingering signature that remains on skin, scarves, and clothing well into the next day. Deep resins, woods, amber, and skin musks that create the unforgettable aura people remember.',
-    examples: ['Smoked Oakwood', 'Dry Golden Amber', 'Skin Musk', 'Bourbon Vanilla Bean', 'Haitian Vetiver'],
+      'The deep, rich notes that anchor the perfume and stay on your skin and clothes for 8–12+ hours into the next day.',
+    examples: ['Smoked Oakwood', 'Dry Golden Amber', 'Skin Musk', 'Warm Vanilla Bean', 'Vetiver'],
     ingredients: [
-      { name: 'Rare Ambergris & Musk', origin: 'Botanical Resins', role: 'Fixative warmth & hypnotic trail' },
-      { name: 'Smoked Oakwood & Oud', origin: 'Aged Casks', role: 'Unshakable 12-hour staying power' },
+      { name: 'Amber & Musk', origin: 'Plant Resins', role: 'Warmth and long-lasting trail' },
+      { name: 'Smoked Oakwood & Oud', origin: 'Natural Woods', role: '12-hour staying power' },
     ],
   },
 ]
@@ -82,12 +82,12 @@ export default function NotesExplainer() {
       <div className="shell relative z-10">
         {/* Section Header */}
         <div className="mb-14 text-center">
-          <span className="section-tag mb-4">Olfactory Architecture</span>
+          <span className="section-tag mb-4">Fragrance Guide</span>
           <h2 id="notes-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
-            The Anatomy of an <span className="gold-gradient-text italic">Extrait</span>
+            How Perfume <span className="gold-gradient-text italic">Notes Work</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-[1.8] text-[#A8A29E]">
-            Fragrance is time made tangible. Tap each tier of the pyramid to witness how ORYN scents unfold from the first mist to midnight.
+            Perfumes change over time. Click each stage below to see how ORYN scents unfold from your first spray until night.
           </p>
         </div>
 

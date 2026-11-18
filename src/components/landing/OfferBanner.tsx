@@ -49,14 +49,14 @@ export default function OfferBanner() {
           />
 
           <div className="relative z-10">
-            <span className="section-tag mb-4">Limited Allocation</span>
+            <span className="section-tag mb-4">Special Offer</span>
             
             <h2 id="offer-heading" className="mx-auto max-w-3xl font-serif text-3xl font-semibold leading-[1.15] text-[#F5F2EB] md:text-5xl">
-              Select Any 2 Fragrances, Receive an Instant <span className="gold-gradient-text italic">10% Privilege</span>
+              Buy Any 2 Perfumes, Get an Instant <span className="gold-gradient-text italic">10% Off</span>
             </h2>
 
             <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#A8A29E]">
-              Discount applies automatically at checkout. Seamlessly combinable with complimentary express delivery above ₹499 and insured pan-India delivery.
+              Discount is added automatically at checkout. Enjoy free fast delivery on orders above ₹499 across India.
             </p>
 
             {/* Countdown Flip Clock Boxes */}

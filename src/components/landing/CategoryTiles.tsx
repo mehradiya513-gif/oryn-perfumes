@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { categories } from '@/lib/products'
 
 /* ————————————————————————————————————————————————————————————————
-   CategoryTiles — Luxury Olfactory Category Portals
+   CategoryTiles — Fragrance Category Portals
 ———————————————————————————————————————————————————————————————— */
 
 export default function CategoryTiles() {
@@ -22,13 +22,13 @@ export default function CategoryTiles() {
           className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
         >
           <div>
-            <span className="section-tag mb-4">Curated Families</span>
+            <span className="section-tag mb-4">Fragrance Types</span>
             <h2 id="categories-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
-              Explore by <span className="gold-gradient-text italic">Olfactory Mood</span>
+              Find Your <span className="gold-gradient-text italic">Favorite Scent</span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-[1.8] text-[#A8A29E]">
-            Each formulation is built around master-grade botanical essences and fine resins, created to evolve distinctively on your skin.
+            Every perfume is crafted with fine ingredients, made to smell fresh, bold, and long-lasting on your skin.
           </p>
         </motion.div>
 

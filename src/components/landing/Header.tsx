@@ -58,7 +58,7 @@ export default function Header() {
           {/* Brand Wordmark & Monogram */}
           <Link
             href="/"
-            aria-label="ORYN — Haute Parfumerie"
+            aria-label="ORYN Perfumes"
             className="group flex items-center gap-3.5"
           >
             <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C9A84C]/40 bg-gradient-to-b from-[#C9A84C]/20 to-transparent p-1.5 text-[#C9A84C] transition-all duration-300 group-hover:border-[#C9A84C] group-hover:shadow-gold-sm">

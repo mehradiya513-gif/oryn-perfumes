@@ -42,7 +42,7 @@ export default function Hero() {
             >
               <span className="text-[#C9A84C] text-xs">✦</span>
               <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A84C]">
-                Haute Parfumerie · Bombay &amp; Grasse
+                Luxury Perfumes · Mumbai &amp; France
               </span>
             </motion.div>
 
@@ -66,8 +66,8 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="mt-6 max-w-xl text-[16px] leading-[1.8] text-[#A8A29E] sm:text-[17.5px]"
             >
-              Blended slowly from rare French essences and bottled in Mumbai. High-concentration
-              extraits with 8–12 hour sillage, honest prices, and zero middleman markup. Always under ₹800.
+              Made with premium French perfume oils and bottled in Mumbai. Long-lasting perfumes
+              that stay for 8–12 hours, at honest prices with no middleman markup. Always under ₹800.
             </motion.p>
 
             {/* Call To Actions */}
@@ -108,7 +108,7 @@ export default function Hero() {
               </div>
               <span className="h-3 w-px bg-[#262626]" />
               <p className="text-xs text-[#78716C]">
-                Adored by <strong className="text-[#F5F2EB] font-semibold">14,000+ fragrance connoisseurs</strong> across India
+                Loved by <strong className="text-[#F5F2EB] font-semibold">14,000+ happy customers</strong> across India
               </p>
             </motion.div>
           </div>
@@ -140,7 +140,7 @@ export default function Hero() {
                   >
                     <Image
                       src="/images/oryn-gold-logo-transparent.png"
-                      alt="ORYN Haute Parfumerie"
+                      alt="ORYN Perfumes"
                       fill
                       priority
                       sizes="(max-width: 640px) 80vw, 380px"

@@ -20,34 +20,34 @@ const questions: {
 }[] = [
   {
     key: 'occasion',
-    title: 'Where will your fragrance leave its mark?',
-    subtitle: 'Select the primary atmosphere and setting you wish to enchant.',
+    title: 'When do you plan to wear this perfume?',
+    subtitle: 'Choose where you want to wear it most.',
     options: [
-      { label: 'Executive & Daily Wear', value: 'office', desc: 'Crisp, distinguished, and effortless from 9 to 5' },
-      { label: 'Evenings & Intimate Dates', value: 'evening', desc: 'Sensual, magnetic, and unforgettable after dusk' },
-      { label: 'Festive & Grand Occasions', value: 'festive', desc: 'Opulent, celebratory, with room-filling character' },
-      { label: 'Everyday Signature', value: 'all', desc: 'Versatile masterpiece for any hour or season' },
+      { label: 'Office & Work', value: 'office', desc: 'Clean, fresh, and perfect for daily wear from 9 to 5' },
+      { label: 'Evening & Dinner Dates', value: 'evening', desc: 'Warm, attractive, and memorable for nights out' },
+      { label: 'Parties & Weddings', value: 'festive', desc: 'Rich, bold, and long-lasting for celebrations' },
+      { label: 'Everyday Signature', value: 'all', desc: 'Easy to wear any time, in any season' },
     ],
   },
   {
     key: 'family',
-    title: 'Which olfactory family captivates your senses?',
-    subtitle: 'Your instinctual preference defines your core signature.',
+    title: 'What type of scents do you like best?',
+    subtitle: 'Pick the scent notes you enjoy smelling most.',
     options: [
-      { label: 'Deep Woody & Smoky Oud', value: 'woody', desc: 'Rare oud, aged cedarwood, amber, and incense' },
-      { label: 'Floral & Velvety Romance', value: 'floral', desc: 'Damask rose, night jasmine, and pear blossoms' },
-      { label: 'Sweet Gourmand & Warm Vanilla', value: 'sweet', desc: 'Bourbon vanilla bean, marshmallow, and tonka' },
-      { label: 'Fresh Botanical & Zesty Citrus', value: 'fresh', desc: 'Bergamot, green tea leaves, and wild mint' },
+      { label: 'Rich Woody & Oud', value: 'woody', desc: 'Warm cedarwood, amber, and rich oud' },
+      { label: 'Fresh Floral', value: 'floral', desc: 'Rose, fresh jasmine, and clean flower blossoms' },
+      { label: 'Sweet Vanilla', value: 'sweet', desc: 'Warm vanilla, caramel, and sweet notes' },
+      { label: 'Fresh & Citrus', value: 'fresh', desc: 'Fresh citrus, green tea leaves, and mint' },
     ],
   },
   {
     key: 'intensity',
-    title: 'How should your presence be remembered?',
-    subtitle: 'Choose your desired sillage and projection profile.',
+    title: 'How strong do you want your perfume to be?',
+    subtitle: 'Choose how noticeable you want your scent to be.',
     options: [
-      { label: 'Intimate Aura', value: 'soft', desc: 'Subtle elegance that only those closest will detect' },
-      { label: 'Confident Sillage', value: 'medium', desc: 'Harmonious scent trail that commands respect' },
-      { label: 'Commanding Extrait', value: 'strong', desc: 'Rich 12-hour projection that fills the room with poise' },
+      { label: 'Subtle & Gentle', value: 'soft', desc: 'Soft scent that people notice when they are close to you' },
+      { label: 'Balanced & Noticeable', value: 'medium', desc: 'Pleasant scent trail that people around you can easily smell' },
+      { label: 'Bold & Long-Lasting', value: 'strong', desc: 'Strong scent that lasts 10+ hours and turns heads' },
     ],
   },
 ]
@@ -125,19 +125,19 @@ export default function ScentFinder() {
             
             {/* Header info (Left 5 Cols) */}
             <div className="lg:col-span-5">
-              <span className="section-tag mb-4">Olfactory Matching</span>
+              <span className="section-tag mb-4">Fragrance Quiz</span>
               <h2 id="scent-finder-heading" className="font-serif text-3xl font-semibold leading-[1.1] text-[#F5F2EB] md:text-5xl">
-                Find Your <span className="gold-gradient-text italic">Signature</span> Sillage
+                Find Your <span className="gold-gradient-text italic">Perfect</span> Perfume
               </h2>
               <p className="mt-5 text-sm leading-[1.8] text-[#A8A29E]">
-                Three bespoke questions calibrated to your tastes, occasions, and skin chemistry. Uncover the fragrance created to become your signature.
+                Answer 3 quick questions about your style and favorite notes. We will recommend the exact perfume made for you.
               </p>
 
               {/* Progress Bar */}
               {!result && (
                 <div className="mt-8">
                   <div className="flex justify-between text-[11px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
-                    <span>Consultation Step</span>
+                    <span>Question {step + 1} of 3</span>
                     <span>{step + 1} of {questions.length}</span>
                   </div>
                   <div className="flex gap-2">
@@ -238,7 +238,7 @@ export default function ScentFinder() {
                       <div className="flex items-center gap-2">
                         <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">
-                          98% Olfactory Match
+                          98% Match For You
                         </span>
                       </div>
 
