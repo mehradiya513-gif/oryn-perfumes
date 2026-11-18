@@ -1,26 +1,50 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { verifySessionToken, ADMIN_COOKIE_NAME } from '@/lib/auth';
 
 export function middleware(request: NextRequest) {
-  const url = request.nextUrl.clone()
-  const pathname = url.pathname
+  const url = request.nextUrl.clone();
+  const pathname = url.pathname;
 
-  // 1. /admin routes are now accessible directly without a secret key
+  const sessionCookie = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+  const session = verifySessionToken(sessionCookie);
 
-  // 2. Protect GET requests to /api/orders
-  if (pathname === '/api/orders' && request.method === 'GET') {
-    const hasAdminSession = request.cookies.has('oryn_admin_session')
-    if (!hasAdminSession) {
-      return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { 'content-type': 'application/json' },
-      })
+  // 1. Protect Admin Pages
+  if (pathname.startsWith('/admin')) {
+    // Allow access to login page
+    if (pathname === '/admin/login') {
+      if (session.valid) {
+        // If already logged in, redirect straight to dashboard
+        url.pathname = '/admin';
+        return NextResponse.redirect(url);
+      }
+      return NextResponse.next();
+    }
+
+    // All other /admin routes require valid session
+    if (!session.valid) {
+      url.pathname = '/admin/login';
+      return NextResponse.redirect(url);
     }
   }
 
-  return NextResponse.next()
+  // 2. Protect Admin API Routes (GET orders, PATCH orders, GET leads)
+  if (
+    (pathname === '/api/orders' && request.method === 'GET') ||
+    (pathname.startsWith('/api/orders/') && request.method === 'PATCH') ||
+    (pathname === '/api/leads' && request.method === 'GET')
+  ) {
+    if (!session.valid) {
+      return new NextResponse(JSON.stringify({ error: 'Unauthorized: Admin access required' }), {
+        status: 401,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/orders'],
-}
+  matcher: ['/admin/:path*', '/api/orders/:path*', '/api/orders', '/api/leads'],
+};

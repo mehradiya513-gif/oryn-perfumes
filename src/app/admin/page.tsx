@@ -64,6 +64,7 @@ export default function AdminDashboardPage() {
   const [paymentFilter, setPaymentFilter] = useState<'all' | 'cod' | 'upi'>('all')
 
   // Settings state
+  const [currentPassword, setCurrentPassword] = useState('')
   const [newUsername, setNewUsername] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -71,17 +72,23 @@ export default function AdminDashboardPage() {
   const [settingsError, setSettingsError] = useState('')
   const [isSaving, setIsSaving] = useState(false)
 
-  // Verify authentication on mount
+  // Verify authentication on mount via server-side session
   useEffect(() => {
-    const isLogged = localStorage.getItem('oryn_seller_logged_in')
-    if (isLogged === 'true') {
-      setSellerLoggedIn(true)
-      fetchOrders()
-      fetchLeads()
-      setNewUsername(localStorage.getItem('oryn_seller_username') || 'seller')
-    } else {
-      router.replace('/admin/login')
-    }
+    fetch('/api/admin/auth')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.authenticated) {
+          setSellerLoggedIn(true)
+          if (data.username) setNewUsername(data.username)
+          fetchOrders()
+          fetchLeads()
+        } else {
+          router.replace('/admin/login')
+        }
+      })
+      .catch(() => {
+        router.replace('/admin/login')
+      })
   }, [router])
 
   const fetchOrders = async () => {
@@ -204,7 +211,7 @@ export default function AdminDashboardPage() {
   }, [orders, statusFilter, paymentFilter, searchQuery])
 
   // Update credentials
-  const handleUpdateCredentials = (e: React.FormEvent) => {
+  const handleUpdateCredentials = async (e: React.FormEvent) => {
     e.preventDefault()
     setSettingsError('')
     setSettingsSuccess('')
@@ -213,12 +220,16 @@ export default function AdminDashboardPage() {
     const password = newPassword.trim()
     const confirm = confirmPassword.trim()
 
+    if (!currentPassword) {
+      setSettingsError('Please enter your current password.')
+      return
+    }
     if (!username || username.length < 3) {
       setSettingsError('Username must be at least 3 characters.')
       return
     }
-    if (!password || password.length < 4) {
-      setSettingsError('Password must be at least 4 characters.')
+    if (!password || password.length < 6) {
+      setSettingsError('New password must be at least 6 characters.')
       return
     }
     if (password !== confirm) {
@@ -227,22 +238,42 @@ export default function AdminDashboardPage() {
     }
 
     setIsSaving(true)
-    setTimeout(() => {
-      localStorage.setItem('oryn_seller_username', username)
-      localStorage.setItem('oryn_seller_password', password)
-      document.cookie = 'oryn_admin_session=true; path=/; max-age=86400; SameSite=Lax'
-      setNewPassword('')
-      setConfirmPassword('')
-      setSettingsSuccess('Access credentials updated successfully!')
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          currentPassword,
+          newUsername: username,
+          newPassword: password,
+        }),
+      })
+
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setCurrentPassword('')
+        setNewPassword('')
+        setConfirmPassword('')
+        setSettingsSuccess('Access credentials updated successfully in database!')
+      } else {
+        setSettingsError(data.error || 'Failed to update credentials.')
+      }
+    } catch {
+      setSettingsError('Network error updating credentials.')
+    } finally {
       setIsSaving(false)
-    }, 400)
+    }
   }
 
   // Logout
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/auth', { method: 'DELETE' })
+    } catch {
+      // ignore
+    }
     setSellerLoggedIn(false)
     localStorage.removeItem('oryn_seller_logged_in')
-    document.cookie = 'oryn_admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
     router.push('/admin/login')
   }
 
@@ -267,7 +298,7 @@ export default function AdminDashboardPage() {
       )}
 
       <div className="mx-auto max-w-7xl space-y-10">
-        
+
         {/* Top Header Bar */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#262626]">
           <div className="flex items-center gap-4">
@@ -375,33 +406,30 @@ export default function AdminDashboardPage() {
             <button
               type="button"
               onClick={() => setActiveTab('orders')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
-                activeTab === 'orders'
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'orders'
                   ? 'bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] text-[#0A0A0A] shadow-gold-sm'
                   : 'border border-[#262626] bg-[#121212] text-[#A8A29E] hover:text-[#F5F2EB]'
-              }`}
+                }`}
             >
               Orders ({orders.length})
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('leads')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
-                activeTab === 'leads'
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'leads'
                   ? 'bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] text-[#0A0A0A] shadow-gold-sm'
                   : 'border border-[#262626] bg-[#121212] text-[#A8A29E] hover:text-[#F5F2EB]'
-              }`}
+                }`}
             >
               Inquiries &amp; Leads ({leads.length})
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('settings')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
-                activeTab === 'settings'
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${activeTab === 'settings'
                   ? 'bg-gradient-to-r from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] text-[#0A0A0A] shadow-gold-sm'
                   : 'border border-[#262626] bg-[#121212] text-[#A8A29E] hover:text-[#F5F2EB]'
-              }`}
+                }`}
             >
               Credentials
             </button>
@@ -424,7 +452,7 @@ export default function AdminDashboardPage() {
         {/* Tab 1: Orders View */}
         {activeTab === 'orders' && (
           <div className="space-y-6">
-            
+
             {/* Filter Bar */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 rounded-2xl border border-[#262626] bg-[#121212] p-4">
               {/* Search Bar */}
@@ -519,11 +547,10 @@ export default function AdminDashboardPage() {
                               📋 Copy
                             </button>
                             <span
-                              className={`rounded-full px-3 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
-                                order.paymentMethod === 'cod'
+                              className={`rounded-full px-3 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${order.paymentMethod === 'cod'
                                   ? 'border-amber-700/50 bg-amber-950/30 text-amber-300'
                                   : 'border-emerald-700/50 bg-emerald-950/30 text-emerald-300'
-                              }`}
+                                }`}
                             >
                               {order.paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : order.paymentMethod}
                             </span>
@@ -534,11 +561,10 @@ export default function AdminDashboardPage() {
                         {/* Status & Fulfillment Toggle */}
                         <div className="flex items-center gap-3">
                           <span
-                            className={`rounded-full px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider border ${
-                              isDispatched
+                            className={`rounded-full px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider border ${isDispatched
                                 ? 'border-emerald-500/40 bg-emerald-950/40 text-emerald-300'
                                 : 'border-amber-500/40 bg-amber-950/40 text-amber-300 animate-pulse'
-                            }`}
+                              }`}
                           >
                             {isDispatched ? '✓ Dispatched' : '⏳ Awaiting Dispatch'}
                           </span>
@@ -547,17 +573,16 @@ export default function AdminDashboardPage() {
                             type="button"
                             disabled={dispatchingId === order.id}
                             onClick={() => handleUpdateStatus(order.id, isDispatched ? 'pending' : 'dispatched')}
-                            className={`rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all disabled:opacity-50 ${
-                              isDispatched
+                            className={`rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all disabled:opacity-50 ${isDispatched
                                 ? 'border border-[#262626] bg-[#161616] text-[#A8A29E] hover:text-[#F5F2EB]'
                                 : 'btn-gold !py-2 !px-4'
-                            }`}
+                              }`}
                           >
                             {dispatchingId === order.id
                               ? 'Updating…'
                               : isDispatched
-                              ? 'Revert to Pending'
-                              : 'Mark as Dispatched 🚚'}
+                                ? 'Revert to Pending'
+                                : 'Mark as Dispatched 🚚'}
                           </button>
                         </div>
                       </div>
@@ -760,7 +785,21 @@ export default function AdminDashboardPage() {
             <form onSubmit={handleUpdateCredentials} className="space-y-4">
               <div>
                 <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
-                  Username
+                  Current Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={currentPassword}
+                  onChange={(e) => { setCurrentPassword(e.target.value); setSettingsError(''); setSettingsSuccess('') }}
+                  className="w-full rounded-xl border border-[#262626] bg-[#0A0A0A] px-4 py-3 text-xs text-[#F5F2EB] outline-none focus:border-[#C9A84C]"
+                  placeholder="Enter your current password"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
+                  New Admin Username
                 </label>
                 <input
                   type="text"
@@ -773,7 +812,7 @@ export default function AdminDashboardPage() {
 
               <div>
                 <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
-                  New Password
+                  New Password (min 6 chars)
                 </label>
                 <input
                   type="password"

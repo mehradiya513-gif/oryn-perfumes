@@ -149,7 +149,6 @@ export default function Footer() {
             <Link href="/privacy" className="hover:text-[#C9A84C] transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-[#C9A84C] transition-colors">Terms of Service</Link>
             <Link href="/shipping" className="hover:text-[#C9A84C] transition-colors">Shipping &amp; Delivery</Link>
-            <Link href="/admin" className="text-[#C9A84C]/80 hover:text-[#C9A84C] transition-colors font-bold">⚜️ Seller Portal</Link>
           </div>
         </div>
 

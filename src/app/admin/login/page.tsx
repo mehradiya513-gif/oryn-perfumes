@@ -1,66 +1,104 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 export default function SellerLoginPage() {
   const router = useRouter()
-  const [sellerUser, setSellerUser] = useState('')
-  const [sellerPass, setSellerPass] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [loginError, setLoginError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isChecking, setIsChecking] = useState(true)
+  const [needsSetup, setNeedsSetup] = useState(false)
 
-  // Redirect if already authenticated
+  // Verify status with server on mount
   useEffect(() => {
-    const isLogged = localStorage.getItem('oryn_seller_logged_in')
-    if (isLogged === 'true') {
-      router.replace('/admin')
-    }
+    fetch('/api/admin/auth')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.authenticated) {
+          router.replace('/admin')
+        } else if (!data.hasAdmin) {
+          setNeedsSetup(true)
+        }
+      })
+      .catch(() => {
+        // Fallback
+      })
+      .finally(() => {
+        setIsChecking(false)
+      })
   }, [router])
 
-  // Secret query bypass for owner
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search)
-      const secret = params.get('secret')
-      if (secret === 'oryn-owner-key') {
-        document.cookie = 'oryn_admin_session=true; path=/; max-age=86400; SameSite=Lax'
-        localStorage.setItem('oryn_seller_logged_in', 'true')
-        router.replace('/admin')
-      }
-    }
-  }, [router])
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoginError('')
 
-  const handleSellerLogin = (e?: React.FormEvent) => {
-    if (e) e.preventDefault()
-    const user = sellerUser.trim()
-    const pass = sellerPass.trim()
+    const u = username.trim().toLowerCase()
+    const p = password.trim()
 
-    if (!user || !pass) {
+    if (!u || !p) {
       setLoginError('Please enter both username and password.')
       return
     }
 
-    setIsLoading(true)
-    setTimeout(() => {
-      const storedUser = (localStorage.getItem('oryn_seller_username') || 'seller').toLowerCase()
-      const storedPass = localStorage.getItem('oryn_seller_password') || 'oryn123'
+    if (needsSetup) {
+      if (p.length < 6) {
+        setLoginError('Password must be at least 6 characters.')
+        return
+      }
+      if (p !== confirmPassword.trim()) {
+        setLoginError('Passwords do not match.')
+        return
+      }
+    }
 
-      if (user.toLowerCase() === storedUser && pass === storedPass) {
-        localStorage.setItem('oryn_seller_logged_in', 'true')
-        document.cookie = 'oryn_admin_session=true; path=/; max-age=86400; SameSite=Lax'
+    setIsLoading(true)
+
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: u,
+          password: p,
+          action: needsSetup ? 'setup' : 'login',
+        }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok && data.success) {
+        localStorage.setItem('oryn_admin_user', u)
         router.push('/admin')
       } else {
-        setLoginError('Invalid credentials. Default username is "seller" and password is "oryn123".')
-        setIsLoading(false)
+        if (data.needsSetup) {
+          setNeedsSetup(true)
+        }
+        setLoginError(data.error || 'Authentication failed. Please verify credentials.')
       }
-    }, 500)
+    } catch {
+      setLoginError('Network interruption. Please re-attempt.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (isChecking) {
+    return (
+      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center space-y-4 text-[#F5F2EB]">
+        <div className="h-8 w-8 border-2 border-[#262626] border-t-[#C9A84C] rounded-full animate-spin" />
+        <p className="text-xs text-[#78716C] uppercase tracking-widest font-mono">Verifying Access Gate…</p>
+      </div>
+    )
   }
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F5F2EB] flex items-center justify-center px-4 relative overflow-hidden py-12">
-      {/* Ambient background glows */}
+      {/* Ambient background glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#C9A84C]/10 blur-[130px] pointer-events-none" />
 
       <div className="relative w-full max-w-md rounded-3xl border border-[#262626] bg-[#121212]/95 backdrop-blur-xl p-8 sm:p-10 shadow-card space-y-7 z-10">
@@ -77,14 +115,16 @@ export default function SellerLoginPage() {
             />
           </div>
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A84C]">
-              Haute Parfumerie
-            </p>
-            <h1 className="font-serif text-3xl font-semibold tracking-wide text-[#F5F2EB] mt-1">
-              Seller Portal
+            <span className="inline-block rounded-full bg-[#161616] border border-[#C9A84C]/30 px-3 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] text-[#C9A84C] mb-2">
+              {needsSetup ? 'First-Time Setup' : 'Private Console'}
+            </span>
+            <h1 className="font-serif text-3xl font-semibold tracking-wide text-[#F5F2EB]">
+              {needsSetup ? 'Create Admin Account' : 'Admin Gate'}
             </h1>
-            <p className="text-xs text-[#78716C] mt-1">
-              Atelier Order Fulfillment &amp; Operations Registry
+            <p className="text-xs text-[#78716C] mt-1.5 leading-relaxed">
+              {needsSetup
+                ? 'Choose your private administrator username and password to secure this portal.'
+                : 'Restricted administrative portal. Authorized personnel only.'}
             </p>
           </div>
         </div>
@@ -93,17 +133,17 @@ export default function SellerLoginPage() {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-[#262626] to-transparent" />
 
         {/* Form */}
-        <form onSubmit={handleSellerLogin} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
-              Username
+              {needsSetup ? 'Choose Admin Username' : 'Admin Username'}
             </label>
             <input
               type="text"
               required
-              value={sellerUser}
-              onChange={(e) => { setSellerUser(e.target.value); setLoginError('') }}
-              placeholder="e.g. seller"
+              value={username}
+              onChange={(e) => { setUsername(e.target.value); setLoginError('') }}
+              placeholder={needsSetup ? 'e.g. Diya or Admin' : 'Enter username'}
               autoComplete="username"
               className="w-full rounded-xl border border-[#262626] bg-[#0A0A0A] px-4 py-3 text-sm text-[#F5F2EB] placeholder:text-[#78716C] outline-none focus:border-[#C9A84C] transition-colors"
             />
@@ -111,21 +151,38 @@ export default function SellerLoginPage() {
 
           <div>
             <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
-              Access Key / Password
+              {needsSetup ? 'Create Master Password (min 6 chars)' : 'Master Password'}
             </label>
             <input
               type="password"
               required
-              value={sellerPass}
-              onChange={(e) => { setSellerPass(e.target.value); setLoginError('') }}
+              value={password}
+              onChange={(e) => { setPassword(e.target.value); setLoginError('') }}
               placeholder="••••••••"
-              autoComplete="current-password"
+              autoComplete={needsSetup ? 'new-password' : 'current-password'}
               className="w-full rounded-xl border border-[#262626] bg-[#0A0A0A] px-4 py-3 text-sm text-[#F5F2EB] placeholder:text-[#78716C] outline-none focus:border-[#C9A84C] transition-colors"
             />
           </div>
 
+          {needsSetup && (
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] mb-2">
+                Confirm Master Password
+              </label>
+              <input
+                type="password"
+                required
+                value={confirmPassword}
+                onChange={(e) => { setConfirmPassword(e.target.value); setLoginError('') }}
+                placeholder="••••••••"
+                autoComplete="new-password"
+                className="w-full rounded-xl border border-[#262626] bg-[#0A0A0A] px-4 py-3 text-sm text-[#F5F2EB] placeholder:text-[#78716C] outline-none focus:border-[#C9A84C] transition-colors"
+              />
+            </div>
+          )}
+
           {loginError && (
-            <div className="rounded-xl border border-red-900/60 bg-red-950/40 p-3 text-xs text-red-300 text-center">
+            <div className="rounded-xl border border-red-900/60 bg-red-950/40 p-3 text-xs text-red-300 text-center leading-relaxed">
               ⚠️ {loginError}
             </div>
           )}
@@ -133,9 +190,13 @@ export default function SellerLoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="btn-gold w-full mt-2 !py-3.5 text-center disabled:opacity-50 cursor-pointer"
+            className="btn-gold w-full mt-2 !py-3.5 text-center disabled:opacity-50 cursor-pointer shadow-gold-sm"
           >
-            {isLoading ? 'Authenticating…' : 'Enter Seller Dashboard'}
+            {isLoading
+              ? 'Securing Session…'
+              : needsSetup
+              ? 'Save & Initialize Admin Access'
+              : 'Sign In to Admin Panel'}
           </button>
         </form>
 
