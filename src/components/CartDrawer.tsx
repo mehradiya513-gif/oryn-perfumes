@@ -160,7 +160,7 @@ export default function CartDrawer() {
               Proceed to Secure Checkout
             </button>
             <p className="text-[10px] text-center uppercase tracking-wider text-[#78716C]">
-              ✦ Verified COD &amp; Instant UPI Accepted
+              ✦ 100% Encrypted &amp; Instant UPI Accepted
             </p>
           </div>
         )}

@@ -26,10 +26,10 @@ Other useful routes that ship with the site: `/about`, `/contact`,
 
 ## Page structure (single page, in order)
 
-1. Announcement bar — free shipping / COD
+1. Announcement bar — free shipping / instant UPI
 2. Sticky header — transparent over hero, solid charcoal on scroll, search + cart + hamburger
 3. Hero — full-screen cinematic image, "Luxury You Can Actually Wear" (₹800 sub-line), 2 CTAs, scroll cue
-4. Trust strip — Long-lasting · Premium Ingredients · COD · Easy Returns
+4. Trust strip — Long-lasting · Premium Ingredients · Express Delivery · Easy Returns
 5. Shop by Category — For Him / For Her / Unisex / Gift Sets tiles
 6. Bestsellers — swipe carousel (mobile) / 4-column grid (desktop), MRP strike + discount badges + hover image swap
 7. Scent Finder — 3-question quiz that recommends a product
@@ -39,7 +39,7 @@ Other useful routes that ship with the site: `/about`, `/contact`,
 11. Offer Banner — "Buy 2, Get 10% off" with live countdown (resets daily at 00:00 IST)
 12. FAQ — accessible accordion (aria-expanded, keyboard operable)
 13. Newsletter — email + WhatsApp capture → `/api/leads`
-14. Footer — links, payment marks (UPI/VISA/MC/RuPay/COD), policies
+14. Footer — links, payment marks (UPI/VISA/MC/RuPay/NetBanking), policies
 
 Extras: floating WhatsApp order button, mobile sticky add-to-cart bar,
 mini cart drawer + checkout modal (shared with the whole site), product JSON-LD,
@@ -62,7 +62,7 @@ src/app/page.tsx              ← assembles all sections + JSON-LD
 src/app/layout.tsx            ← fonts (Playfair Display + Inter), SEO/OG metadata
 src/components/landing/       ← all 14 section components (one concern each)
 src/components/CartDrawer.tsx ← slide-in mini cart
-src/components/CheckoutModal.tsx ← COD / UPI checkout
+src/components/CheckoutModal.tsx ← Instant UPI prepaid checkout
 src/context/CartContext.tsx   ← cart state (localStorage-persisted)
 src/app/globals.css           ← palette hooks, grain texture, motion tokens
 ```

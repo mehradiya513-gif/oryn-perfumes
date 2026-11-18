@@ -56,7 +56,7 @@ export default function OfferBanner() {
             </h2>
 
             <p className="mx-auto mt-4 max-w-lg text-sm leading-[1.8] text-[#A8A29E]">
-              Discount applies automatically at checkout. Seamlessly combinable with complimentary express delivery above ₹499 and pan-India Cash on Delivery.
+              Discount applies automatically at checkout. Seamlessly combinable with complimentary express delivery above ₹499 and insured pan-India delivery.
             </p>
 
             {/* Countdown Flip Clock Boxes */}

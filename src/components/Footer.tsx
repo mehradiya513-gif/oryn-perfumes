@@ -28,10 +28,10 @@ export default function Footer() {
 
   const payments = [
     { label: 'UPI / GPay / PhonePe', mark: 'UPI' },
-    { label: 'Cash on Delivery', mark: 'COD' },
     { label: 'RuPay India', mark: 'RuPay' },
     { label: 'Visa Platinum', mark: 'VISA' },
     { label: 'Mastercard World', mark: 'MC' },
+    { label: 'Net Banking', mark: 'NETBANKING' },
   ]
 
   return (
@@ -135,7 +135,7 @@ export default function Footer() {
             </div>
             <p className="mt-5 text-xs leading-[1.7] text-[#78716C]">
               ✦ Free shipping on orders above ₹499<br />
-              ✦ Verified Cash on Delivery pan-India<br />
+              ✦ 100% Secure Instant UPI Checkout<br />
               ✦ Tamper-proof packaging guarantee
             </p>
           </div>

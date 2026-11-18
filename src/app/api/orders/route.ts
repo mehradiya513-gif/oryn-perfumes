@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       phone: body.phone || '',
       address: body.address || '',
       country: body.country || 'India',
-      paymentMethod: body.paymentMethod || 'cod',
+      paymentMethod: body.paymentMethod || 'upi',
       total: body.total || 0,
       items: body.items || [],
       freebies: body.freebies || [],

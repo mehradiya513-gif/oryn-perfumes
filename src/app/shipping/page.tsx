@@ -25,7 +25,7 @@ export default function ShippingPage() {
             <ul className="list-disc pl-6 space-y-2 text-smoke">
               <li>Metro Cities (Mumbai, Delhi, Bengaluru, etc.): 2–4 business days</li>
               <li>Tier 2 &amp; Regional Centers: 3–6 business days</li>
-              <li>Cash on Delivery: Available pan-India at no extra fee</li>
+              <li>Prepaid Orders (Instant UPI / Cards): Fast-track priority dispatch within 24 hours</li>
             </ul>
           </section>
 

@@ -34,7 +34,7 @@ const reviews = [
     city: 'Pune',
     scent: 'Black Oud',
     stars: 5,
-    text: 'Black Oud is my undisputed signature now. Deep, smoky, and projects through my whole 12-hour day. Cash on delivery made trying it zero risk.',
+    text: 'Black Oud is my undisputed signature now. Deep, smoky, and projects through my whole 12-hour day. Instant UPI checkout and express delivery made it effortless.',
   },
 ]
 

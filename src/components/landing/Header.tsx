@@ -292,7 +292,7 @@ export default function Header() {
               </div>
             </nav>
             <p className="px-8 pb-10 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C9A84C]">
-              Free express shipping above ₹499 · COD available pan-India
+              Free express shipping above ₹499 · Fast Pan-India Delivery
             </p>
           </motion.div>
         )}

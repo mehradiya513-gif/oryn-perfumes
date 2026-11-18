@@ -29,7 +29,7 @@ export default function RefundPage() {
           <section className="border-t border-[#262626] pt-8">
             <h2 className="font-serif text-2xl font-semibold text-pearl mb-3">3. Refund Settlement</h2>
             <p>
-              Refund requests are honoured only for pre-dispatch cancellations. Once your cancellation is confirmed, the refund is remitted to your original payment method (or UPI account for COD orders) within 5–7 business days.
+              Refund requests are honoured only for pre-dispatch cancellations. Once your cancellation is confirmed, the refund is remitted to your original payment method (UPI / bank account) within 5–7 business days.
             </p>
             <p>
               In the rare event an item is found to be defective or counterfeit upon verified inspection at our Mumbai atelier, a remedy will be arranged with our concierge team.

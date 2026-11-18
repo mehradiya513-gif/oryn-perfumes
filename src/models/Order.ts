@@ -56,7 +56,7 @@ const OrderSchema = new Schema<IOrder>({
   phone: { type: String, required: false, default: '' },
   address: { type: String, required: false, default: '' },
   country: { type: String, required: false, default: 'India' },
-  paymentMethod: { type: String, required: true, default: 'cod' },
+  paymentMethod: { type: String, required: true, default: 'upi' },
   total: { type: Number, required: true },
   items: { type: [OrderItemSchema], default: [] },
   freebies: { type: [FreebieItemSchema], default: [] },

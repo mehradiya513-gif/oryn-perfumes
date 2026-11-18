@@ -30,12 +30,12 @@ export const metadata: Metadata = {
     template: '%s — ORYN',
   },
   description:
-    'Accessible Indian luxury perfumes. Premium, long-lasting fragrances under ₹800 — free shipping above ₹499, COD available.',
-  keywords: ['/perfume', 'luxury perfume India', 'fragrance under 800', 'perfume gift', 'COD perfume'],
+    'Accessible Indian luxury perfumes. Premium, long-lasting fragrances under ₹800 — free shipping above ₹499 · fast pan-India delivery.',
+  keywords: ['/perfume', 'luxury perfume India', 'fragrance under 800', 'perfume gift', 'luxury perfume brand'],
   icons: { icon: '/images/oryn_logo.png' },
   openGraph: {
     title: 'ORYN — Luxury You Can Actually Wear',
-    description: 'Premium fragrances under ₹800. Free shipping above ₹499 · COD available.',
+    description: 'Premium fragrances under ₹800. Free shipping above ₹499 · Fast pan-India delivery.',
     url: 'https://oryn-perfumes.vercel.app',
     siteName: 'ORYN',
     images: [{ url: '/images/oryn-gold-logo-transparent.png', width: 1200, height: 630, alt: 'ORYN perfumes' }],
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ORYN — Luxury You Can Actually Wear',
-    description: 'Premium fragrances under ₹800. Free shipping above ₹499 · COD available.',
+    description: 'Premium fragrances under ₹800. Free shipping above ₹499 · Fast pan-India delivery.',
     images: ['/images/oryn-gold-logo-transparent.png'],
   },
 }

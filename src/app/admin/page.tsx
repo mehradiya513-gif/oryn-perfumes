@@ -61,7 +61,7 @@ export default function AdminDashboardPage() {
   // Search & Filter state
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'dispatched'>('all')
-  const [paymentFilter, setPaymentFilter] = useState<'all' | 'cod' | 'upi'>('all')
+  const [paymentFilter, setPaymentFilter] = useState<'all' | 'upi'>('all')
 
   // Settings state
   const [currentPassword, setCurrentPassword] = useState('')
@@ -156,7 +156,7 @@ export default function AdminDashboardPage() {
       `"${o.phone || ''}"`,
       `"${(o.address || '').replace(/"/g, '""')}"`,
       `"${o.country || 'India'}"`,
-      `"${o.paymentMethod || 'cod'}"`,
+      `"${o.paymentMethod || 'Prepaid UPI'}"`,
       `"${(o.items || []).map((i) => `${i.name} (x${i.quantity})`).join(', ').replace(/"/g, '""')}"`,
       o.total,
       `"${o.status || 'pending'}"`,
@@ -189,7 +189,6 @@ export default function AdminDashboardPage() {
       if (statusFilter === 'dispatched' && order.status !== 'dispatched') return false
 
       // Payment filter
-      if (paymentFilter === 'cod' && order.paymentMethod !== 'cod') return false
       if (paymentFilter === 'upi' && !order.paymentMethod?.toLowerCase().includes('upi')) return false
 
       // Search query
@@ -496,7 +495,6 @@ export default function AdminDashboardPage() {
                   className="rounded-xl border border-[#262626] bg-[#0A0A0A] px-3 py-2.5 text-xs text-[#F5F2EB] outline-none focus:border-[#C9A84C]"
                 >
                   <option value="all">Payment: All</option>
-                  <option value="cod">Payment: COD</option>
                   <option value="upi">Payment: UPI</option>
                 </select>
               </div>
@@ -524,7 +522,7 @@ export default function AdminDashboardPage() {
                   const rawPhone = order.phone || ''
                   const cleanPhone = rawPhone.replace(/[^0-9]/g, '')
                   const waNumber = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`
-                  const courierLabel = `Recipient: ${order.name}\nContact: ${order.phone}\nAddress:\n${order.address}\nCountry: ${order.country || 'India'}\nOrder: #${order.id}\nTotal: ₹${order.total} (${order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Prepaid UPI'})`
+                  const courierLabel = `Recipient: ${order.name}\nContact: ${order.phone}\nAddress:\n${order.address}\nCountry: ${order.country || 'India'}\nOrder: #${order.id}\nTotal: ₹${order.total} (Prepaid UPI)`
 
                   return (
                     <div
@@ -547,12 +545,9 @@ export default function AdminDashboardPage() {
                               📋 Copy
                             </button>
                             <span
-                              className={`rounded-full px-3 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${order.paymentMethod === 'cod'
-                                  ? 'border-amber-700/50 bg-amber-950/30 text-amber-300'
-                                  : 'border-emerald-700/50 bg-emerald-950/30 text-emerald-300'
-                                }`}
+                              className="rounded-full px-3 py-0.5 text-[9px] font-bold uppercase tracking-wider border border-emerald-700/50 bg-emerald-950/30 text-emerald-300"
                             >
-                              {order.paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : order.paymentMethod}
+                              {order.paymentMethod || 'Prepaid UPI'}
                             </span>
                           </div>
                           <p className="text-xs text-[#78716C]">Placed on: {order.created}</p>
@@ -659,7 +654,7 @@ export default function AdminDashboardPage() {
                               Payment Method
                             </p>
                             <p className="text-xs text-[#F5F2EB] font-semibold mt-1">
-                              {order.paymentMethod === 'cod' ? 'Cash on Delivery' : order.paymentMethod}
+                              {order.paymentMethod || 'Prepaid UPI'}
                             </p>
                           </div>
                           <div className="pt-3 border-t border-[#262626]">

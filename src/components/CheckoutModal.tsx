@@ -35,7 +35,7 @@ export default function CheckoutModal() {
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [country, setCountry] = useState('India')
-  const [paymentMethod, setPaymentMethod] = useState('cod')
+  const [paymentMethod, setPaymentMethod] = useState('upi')
   const [showUpiModal, setShowUpiModal] = useState(false)
   const [selectedUpiApp, setSelectedUpiApp] = useState<string | null>(null)
   const [upiId, setUpiId] = useState('')
@@ -146,15 +146,11 @@ export default function CheckoutModal() {
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (paymentMethod === 'upi') {
-      setShowUpiModal(true)
-      setUpiStep('select')
-      setSelectedUpiApp(null)
-      setUpiId('')
-      setStatus('')
-    } else {
-      await submitOrder('cod')
-    }
+    setShowUpiModal(true)
+    setUpiStep('select')
+    setSelectedUpiApp(null)
+    setUpiId('')
+    setStatus('')
   }
 
   if (!orderOpen) return null
@@ -210,11 +206,7 @@ export default function CheckoutModal() {
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-[#78716C] mb-1">Settlement</p>
                   <p className="text-[#C9A84C] font-semibold">
-                    {orderSuccess.paymentMethod === 'cod'
-                      ? 'Cash on Delivery'
-                      : orderSuccess.paymentMethod === 'upi'
-                        ? 'UPI Payment'
-                        : orderSuccess.paymentMethod}
+                    {orderSuccess.paymentMethod || 'Prepaid UPI'}
                   </p>
                 </div>
                 <div>
@@ -294,33 +286,19 @@ export default function CheckoutModal() {
 
                 <div>
                   <span className="block text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] mb-3">Settlement Method</span>
-                  <div className="grid grid-cols-2 gap-3">
-                    {[
-                      { id: 'cod', label: 'Cash on Delivery', desc: 'Pay courier on arrival' },
-                      { id: 'upi', label: 'Instant UPI Payment', desc: 'GPay, PhonePe, Paytm' },
-                    ].map((method) => (
-                      <label
-                        key={method.id}
-                        className={`rounded-xl border p-4 text-xs cursor-pointer transition-all duration-300 flex flex-col gap-1.5 ${
-                          paymentMethod === method.id
-                            ? 'border-[#C9A84C] bg-[#121212] text-[#F5F2EB] shadow-gold-sm'
-                            : 'border-[#262626] bg-[#161616] text-[#A8A29E] hover:border-[#C9A84C]/40'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="font-semibold text-[#F5F2EB]">{method.label}</span>
-                          <input
-                            type="radio"
-                            name="checkoutPaymentMethod"
-                            value={method.id}
-                            checked={paymentMethod === method.id}
-                            onChange={() => setPaymentMethod(method.id)}
-                            className="accent-[#C9A84C]"
-                          />
-                        </div>
-                        <span className="text-[11px] text-[#78716C]">{method.desc}</span>
-                      </label>
-                    ))}
+                  <div className="rounded-xl border border-[#C9A84C] bg-[#121212] p-4 text-xs flex items-center justify-between shadow-gold-sm">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-[#F5F2EB]">Prepaid — Instant UPI</span>
+                        <span className="rounded-full bg-[#C9A84C]/15 border border-[#C9A84C]/40 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#C9A84C]">
+                          100% Encrypted
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-[#78716C]">GPay, PhonePe, Paytm, QR &amp; any BHIM UPI</p>
+                    </div>
+                    <div className="h-4 w-4 rounded-full border-2 border-[#C9A84C] flex items-center justify-center">
+                      <div className="h-2 w-2 rounded-full bg-[#C9A84C]" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -387,7 +365,7 @@ export default function CheckoutModal() {
                     disabled={submitting}
                     className="btn-gold w-full mt-4 disabled:opacity-50"
                   >
-                    {submitting ? 'Authenticating…' : 'Confirm Order'}
+                    {submitting ? 'Authenticating…' : 'Proceed to UPI Payment'}
                   </button>
 
                   {status && (
