@@ -130,21 +130,21 @@ export default function Hero() {
                   className="pointer-events-none absolute inset-0 bg-radial-gradient from-[#C9A84C]/15 via-transparent to-transparent opacity-80"
                 />
 
-                {/* Featured New Collection Bottle Display */}
+                {/* Brand Logo Display */}
                 <div className="relative my-4 flex h-[280px] w-full items-center justify-center sm:h-[320px]">
                   <motion.div
                     initial={{ opacity: 0, y: 15, scale: 0.94 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.45 }}
-                    className="relative h-full w-full overflow-hidden rounded-2xl"
+                    className="relative h-full w-full"
                   >
                     <Image
-                      src="/images/sultan.png"
-                      alt="ORYN Sultan — Royal Purple Extrait"
+                      src="/images/oryn-gold-logo-transparent.png"
+                      alt="ORYN Perfumes"
                       fill
                       priority
                       sizes="(max-width: 640px) 80vw, 380px"
-                      className="object-cover drop-shadow-[0_20px_40px_rgba(201,168,76,0.45)]"
+                      className="object-contain p-4 drop-shadow-[0_20px_40px_rgba(201,168,76,0.45)]"
                     />
                   </motion.div>
                 </div>
