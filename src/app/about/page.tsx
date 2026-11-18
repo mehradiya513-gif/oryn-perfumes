@@ -73,7 +73,7 @@ export default function AboutPage() {
             <Reveal className="lg:col-span-5">
               <span className="section-tag mb-6">Why ORYN Exists</span>
               <h2 className="font-serif text-3xl font-semibold leading-[1.18] text-pearl md:text-5xl">
-                Perfume should not cost a <span className="gold-gradient-text italic">fortune.</span>
+                Authentic luxury shouldn&rsquo;t demand <span className="gold-gradient-text italic">a month&rsquo;s rent.</span>
               </h2>
               <p className="mt-7 max-w-md text-[15px] leading-[1.8] text-sand">
                 Most big perfume brands spend huge amounts of money on celebrity endorsements and luxury malls,

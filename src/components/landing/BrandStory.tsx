@@ -60,7 +60,7 @@ export default function BrandStory() {
           >
             <span className="section-tag mb-4">Our Story</span>
             <h2 id="brand-story-heading" className="font-serif text-3xl font-semibold leading-[1.12] text-[#F5F2EB] md:text-5xl">
-              Luxury perfume shouldn&rsquo;t cost <span className="gold-gradient-text italic">a fortune.</span>
+              Authentic luxury shouldn&rsquo;t demand <span className="gold-gradient-text italic">a month&rsquo;s rent.</span>
             </h2>
 
             <div className="mt-6 space-y-5 text-[15px] leading-[1.8] text-[#A8A29E]">
