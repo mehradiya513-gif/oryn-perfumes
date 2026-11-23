@@ -45,7 +45,7 @@ export default function BrandStory() {
                 “Everyone deserves a great signature perfume.”
               </p>
               <span className="mt-2 text-[10px] text-[#78716C] block">
-                Made in Mumbai · 100% Cruelty-Free
+                Founded &amp; Made in Ludhiana, Punjab · 100% Cruelty-Free
               </span>
             </div>
           </motion.div>
@@ -69,7 +69,7 @@ export default function BrandStory() {
                 not locked behind glass counters with ₹10,000 price tags.
               </p>
               <p>
-                We import our perfume oils directly from France and bottle them in Mumbai. We skip expensive
+                We import our perfume oils directly from France and bottle them in Ludhiana, Punjab. We skip expensive
                 celebrity ads, fancy showroom markups, and middleman fees. This allows us to offer you rich,
                 long-lasting luxury perfumes at an honest price.
               </p>

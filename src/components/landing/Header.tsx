@@ -76,7 +76,7 @@ export default function Header() {
                 Oryn
               </span>
               <span className="text-[8px] font-bold uppercase tracking-[0.32em] text-[#C9A84C]/80 mt-0.5">
-                Parfums · Bombay
+                Parfums · Ludhiana
               </span>
             </div>
           </Link>

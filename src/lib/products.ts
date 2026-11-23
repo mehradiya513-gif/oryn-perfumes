@@ -7,7 +7,7 @@
    All prices are in ₹. Every product must stay under ₹800.
 ———————————————————————————————————————————————————————————————— */
 
-export type Category = 'For Him' | 'For Her' | 'Unisex'
+export type Category = 'Unisex'
 
 export type Product = {
   id: string
@@ -31,10 +31,10 @@ export type Product = {
 }
 
 /** Shop-by-Category tiles */
-export const categories: { name: Category; blurb: string; image: string }[] = [
-  { name: 'For Him', blurb: 'Oud, rich woods & amber', image: '/images/sultan.png' },
-  { name: 'For Her', blurb: 'Sweet vanilla & berries', image: '/images/scarlet-kiss.png' },
-  { name: 'Unisex', blurb: 'Crisp, fresh & clean', image: '/images/vodka-ice.png' },
+export const categories: { name: string; blurb: string; image: string }[] = [
+  { name: 'Fresh & Crisp', blurb: 'Frosted vodka, citrus & herbs', image: '/images/vodka-ice.png' },
+  { name: 'Sweet & Warm', blurb: 'Bourbon vanilla, berries & orchid', image: '/images/scarlet-kiss.png' },
+  { name: 'Woody & Rich', blurb: 'Royal oud, amber & saffron', image: '/images/sultan.png' },
 ]
 
 export const products: Product[] = [
@@ -66,7 +66,7 @@ export const products: Product[] = [
       'Sun-ripened strawberries, crushed ruby berries, and warm bourbon vanilla — sweet, romantic, and irresistibly long-lasting.',
     price: 650,
     mrp: 899,
-    category: 'For Her',
+    category: 'Unisex',
     family: 'Fruity Sweet',
     concentration: 'Extrait de Parfum · 25%',
     topNotes: ['Fresh Strawberries', 'Ruby Berries', 'Sweet Mandarin'],
@@ -86,7 +86,7 @@ export const products: Product[] = [
       'A regal blend of rare royal oud, golden saffron, and warm dark amber — commanding, rich, and unforgettable with room-filling presence.',
     price: 750,
     mrp: 999,
-    category: 'For Him',
+    category: 'Unisex',
     family: 'Woody Amber',
     concentration: 'Extrait de Parfum · 25%',
     topNotes: ['Golden Saffron', 'Nutmeg', 'Cardamom'],
@@ -106,7 +106,7 @@ export const products: Product[] = [
       'A cozy, romantic gourmand of sweet marshmallow, delicate pink orchid, and velvety vanilla — soft, alluring, and quietly magnetic.',
     price: 550,
     mrp: 799,
-    category: 'For Her',
+    category: 'Unisex',
     family: 'Playful Gourmand',
     concentration: 'Extrait de Parfum · 22%',
     topNotes: ['Fluffy Marshmallow', 'Pink Pepper', 'Sweet Tangerine'],
@@ -126,7 +126,7 @@ export const products: Product[] = [
       'An electric clash of sharp lime zest, green botanical herbs, and dark smoky vetiver — fresh, daring, and powerfully addictive.',
     price: 650,
     mrp: 899,
-    category: 'For Him',
+    category: 'Unisex',
     family: 'Fresh Botanical',
     concentration: 'Extrait de Parfum · 22%',
     topNotes: ['Electric Lime Zest', 'Green Apple', 'Bergamot'],

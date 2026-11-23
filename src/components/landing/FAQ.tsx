@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     q: 'Where are ORYN perfumes made?',
-    a: 'Our fine fragrance oils are imported directly from France, and each bottle is carefully filled and packed in Mumbai, India.',
+    a: 'Our fine fragrance oils are imported directly from France, and each bottle is carefully filled and packed in Ludhiana, Punjab.',
   },
   {
     q: 'How long does delivery take, and is shipping free?',
