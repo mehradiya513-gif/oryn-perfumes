@@ -5,7 +5,6 @@ import BrandStory from '@/components/landing/BrandStory'
 import NotesExplainer from '@/components/landing/NotesExplainer'
 import OfferBanner from '@/components/landing/OfferBanner'
 import FAQ from '@/components/landing/FAQ'
-import Newsletter from '@/components/landing/Newsletter'
 import StickyAddToCart from '@/components/landing/StickyAddToCart'
 import { products } from '@/lib/products'
 
@@ -81,9 +80,6 @@ export default function HomePage() {
 
       {/* 12 · FAQ accordion */}
       <FAQ />
-
-      {/* 13 · Newsletter */}
-      <Newsletter />
 
       {/* Extras */}
       <StickyAddToCart />

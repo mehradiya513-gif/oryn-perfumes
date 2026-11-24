@@ -38,8 +38,7 @@ Other useful routes that ship with the site: `/about`, `/contact`,
 10. Social Proof — review cards + UGC grid (#WearORYN)
 11. Offer Banner — "Buy 2, Get 10% off" with live countdown (resets daily at 00:00 IST)
 12. FAQ — accessible accordion (aria-expanded, keyboard operable)
-13. Newsletter — email + WhatsApp capture → `/api/leads`
-14. Footer — links, payment marks (UPI/VISA/MC/RuPay/NetBanking), policies
+13. Footer — links, payment marks (UPI/VISA/MC/RuPay/NetBanking), policies
 
 Extras: floating WhatsApp order button, mobile sticky add-to-cart bar,
 mini cart drawer + checkout modal (shared with the whole site), product JSON-LD,
