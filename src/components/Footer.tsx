@@ -59,7 +59,7 @@ export default function Footer() {
             </Link>
 
             <p className="mt-5 max-w-sm text-sm leading-[1.8] text-[#A8A29E]">
-              Affordable luxury perfumes made in India. Long-lasting fragrances crafted with fine French oils. Direct to you, with no middlemen, and always under ₹800.
+              Affordable luxury perfumes made in India. Long-lasting fragrances crafted with pure perfume oils. Direct to you, with no middlemen, and always under ₹800.
             </p>
 
             <div className="mt-6 flex items-center gap-4">

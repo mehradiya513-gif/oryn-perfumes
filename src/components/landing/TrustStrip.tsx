@@ -15,8 +15,8 @@ const items = [
     ),
   },
   {
-    label: 'Fine French Oils',
-    sub: 'Imported fragrance oils bottled with care in Ludhiana, Punjab',
+    label: 'Pure Perfume Oils',
+    sub: 'High-concentration extraits crafted with care in Ludhiana, Punjab',
     icon: (
       <path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-4 3-6 5-9Zm-2 9a2 2 0 1 0 4 0" strokeLinecap="round" strokeLinejoin="round" />
     ),

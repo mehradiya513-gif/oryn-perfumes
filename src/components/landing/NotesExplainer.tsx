@@ -31,7 +31,7 @@ const pyramidStages: Stage[] = [
       'The fresh scent you notice right after spraying. These lighter notes give you the first impression and last for 15 minutes before deeper notes emerge.',
     examples: ['Damask Rose Petals', 'Sweet Bergamot', 'Crushed Saffron', 'Wild Berries', 'Pear Blossom'],
     ingredients: [
-      { name: 'Saffron & Spices', origin: 'Kashmir & France', role: 'Warmth and spice' },
+      { name: 'Saffron & Spices', origin: 'Kashmir, India', role: 'Warmth and spice' },
       { name: 'Italian Bergamot', origin: 'Calabria, Italy', role: 'Bright, fresh citrus' },
     ],
   },
@@ -46,7 +46,7 @@ const pyramidStages: Stage[] = [
       'The main body and character of the perfume. As the top notes fade, warm florals, woods, and spices bloom and stay for hours.',
     examples: ['Rare Assam Oud', 'Night Jasmine', 'White Peony', 'Patchouli', 'Vanilla Accord'],
     ingredients: [
-      { name: 'Damask Rose & Jasmine', origin: 'France & India', role: 'Rich floral depth' },
+      { name: 'Damask Rose & Jasmine', origin: 'Kannauj, India', role: 'Rich floral depth' },
       { name: 'Warm Spices & Woods', origin: 'India', role: 'Smooth and attractive aroma' },
     ],
   },

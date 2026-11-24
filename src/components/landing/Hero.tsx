@@ -42,7 +42,7 @@ export default function Hero() {
             >
               <span className="text-[#C9A84C] text-xs">✦</span>
               <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A84C]">
-                Luxury Perfumes · Ludhiana &amp; France
+                Luxury Perfumes · Ludhiana, Punjab
               </span>
             </motion.div>
 
@@ -66,7 +66,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="mt-6 max-w-xl text-[16px] leading-[1.8] text-[#A8A29E] sm:text-[17.5px]"
             >
-              Made with premium French perfume oils and bottled in Ludhiana, Punjab. Long-lasting perfumes
+              Crafted with high-concentration perfume oils and bottled in Ludhiana, Punjab. Long-lasting perfumes
               that stay for 8–12 hours, at honest prices with no middleman markup. Always under ₹800.
             </motion.p>
 

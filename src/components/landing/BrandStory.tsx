@@ -69,7 +69,7 @@ export default function BrandStory() {
                 not locked behind glass counters with ₹10,000 price tags.
               </p>
               <p>
-                We import our perfume oils directly from France and bottle them in Ludhiana, Punjab. We skip expensive
+                We craft our perfumes with premium fragrance oils and bottle them in Ludhiana, Punjab. We skip expensive
                 celebrity ads, fancy showroom markups, and middleman fees. This allows us to offer you rich,
                 long-lasting luxury perfumes at an honest price.
               </p>

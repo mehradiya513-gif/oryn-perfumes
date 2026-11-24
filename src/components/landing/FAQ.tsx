@@ -13,8 +13,8 @@ const faqs = [
     a: 'Our perfumes are made with high perfume oil concentration (up to 25%). They easily last 8–12 hours on skin, and often more than 24 hours on clothes.',
   },
   {
-    q: 'Where are ORYN perfumes made?',
-    a: 'Our fine fragrance oils are imported directly from France, and each bottle is carefully filled and packed in Ludhiana, Punjab.',
+    q: 'Are all ORYN perfumes unisex?',
+    a: 'Yes, every perfume in our collection is 100% unisex. We craft balanced blends with fine ingredients that smell fresh, bold, and luxurious on everyone.',
   },
   {
     q: 'How long does delivery take, and is shipping free?',

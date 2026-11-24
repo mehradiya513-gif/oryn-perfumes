@@ -77,7 +77,7 @@ export default function AboutPage() {
               </h2>
               <p className="mt-7 max-w-md text-[15px] leading-[1.8] text-sand">
                 Most big perfume brands spend huge amounts of money on celebrity endorsements and luxury malls,
-                then pass those costs onto you. We do things differently: fine French perfume oils, clean formulas,
+                then pass those costs onto you. We do things differently: premium perfume oils, clean formulas,
                 and direct prices under ₹800.
               </p>
             </Reveal>
@@ -87,7 +87,7 @@ export default function AboutPage() {
                 {
                   n: 'I',
                   title: 'Carefully Crafted Scents',
-                  copy: 'Every fragrance is made with fine French oils and matured carefully until the scent is smooth, rich, and well-balanced.',
+                  copy: 'Every fragrance is made with premium perfume oils and matured carefully until the scent is smooth, rich, and well-balanced.',
                 },
                 {
                   n: 'II',

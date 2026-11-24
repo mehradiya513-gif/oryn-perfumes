@@ -115,7 +115,7 @@ export default function Newsletter() {
             )}
 
             <div className="mt-8 flex items-center justify-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#78716C]">
-              <span>✦ Pure French Oils</span>
+              <span>✦ Pure Perfume Oils</span>
               <span>✦ Zero Spam Guarantee</span>
               <span>✦ Monthly Releases Only</span>
             </div>
